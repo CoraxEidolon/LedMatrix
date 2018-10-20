@@ -1,0 +1,53 @@
+body {
+    color:white;
+    background-color: #24292d;
+}
+
+.matrix {
+    border: 4px solid black;
+    background-color: #3b434a;
+    display:inline-block
+}
+.matrix tr {
+    min-height: 40px;
+    height: 40px;
+}
+
+.matrix td {
+    border: 1px solid black;
+    min-width: 40px;
+    width: 40px;
+    border-radius: 30px;
+}
+
+.ledON{background-color: #d70000;}
+#EditCharInAiphabet{background-color: #74d700;}
+.displayNone{display: none;}
+
+.tableAlphabet{
+    border-collapse: collapse;
+    background-color: #3b434a;
+    text-align: center;
+}
+
+.tableAlphabet td {
+    border: 1px solid black;
+    padding: 5px;
+    width: 300px;
+}
+.tableAlphabet th {
+    border: 1px solid black;
+    width:30px;
+}
+
+
+
+.div_TableAlphabet{
+    border: 4px solid black;
+    height: 346px;
+    margin-left: 10px;
+    overflow-y: scroll;
+    display:inline-block
+}
+
+
