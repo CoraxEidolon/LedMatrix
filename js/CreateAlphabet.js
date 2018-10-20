@@ -16,7 +16,6 @@ function OnOffLed(event) {
     }
 }
 
-
 /**
  * Выбор буквы из алфавита, для которой будет создаваться код
  * срабатывает при клике на свободное поле напротив нужной буквы
@@ -61,7 +60,6 @@ function SelectCharInAlphabet(event) {
     }
 }
 
-
 /**
  * Преобразовывает нарисованный символ на матрице в код и добавляет его в список алфавита
  * срабатывает при клике на соответствующую кнопку
@@ -92,13 +90,28 @@ function AddCodeCharInAlphabet() {
     /*Находим выделенную букву в списке алфавита и добавляем новый код*/
     document.getElementById("EditCharInAiphabet").innerHTML = result;
 }
+
 /**
  * Переключает таблицы языков русский, английский
  *срабатывает при клике на соответствующую кноаку
  * @constructor
  */
 function LanguageSelection() {
-    if(document.getElementById("LanguageSelection").classList.contains("russia")==true){
+    if (document.getElementById("LanguageSelection").classList.contains("russia") == true) {
+        LanguageSwitch("eng");
+    }
+    else {
+        LanguageSwitch("rus");
+    }
+}
+
+/**
+ * Осуществляет переключение языков и таблицы алфавитов
+ * @param choice - Выбор языка
+ * @constructor
+ */
+function LanguageSwitch(choice) {
+    if (choice == "eng") {
         document.getElementById("LanguageSelection").classList.remove("russia");
         document.getElementById("LanguageSelection").classList.add("unitedKingdom");
         document.getElementById("EditCharInAiphabet").removeAttribute("id");
@@ -106,7 +119,7 @@ function LanguageSelection() {
         document.getElementById("TableAlphabetEng").classList.remove("displayNone");
         document.getElementById("TableAlphabetRus").classList.add("displayNone");
     }
-    else{
+    if (choice == "rus") {
         document.getElementById("LanguageSelection").classList.remove("unitedKingdom");
         document.getElementById("LanguageSelection").classList.add("russia");
         document.getElementById("EditCharInAiphabet").removeAttribute("id");
@@ -114,7 +127,9 @@ function LanguageSelection() {
         document.getElementById("TableAlphabetRus").classList.remove("displayNone");
         document.getElementById("TableAlphabetEng").classList.add("displayNone");
     }
+
 }
+
 
 /**
  * Очищает все "включенные диоды" и удаляет соответствующие классы с матрицы
@@ -124,10 +139,12 @@ function LanguageSelection() {
  */
 function WashedMatrix(ask) {
     var ok;
-    if(ask==false){ok=false;} else{
-    ok = confirm("Очистить матрицу?");
+    if (ask == false) {
+        ok = false;
+    } else {
+        ok = confirm("Очистить матрицу?");
     }
-    if (ok==true) {
+    if (ok == true) {
         var elements = document.getElementsByClassName("ledON");
         while (elements.length > 0) {
             elements[0].removeAttribute("class");
@@ -140,12 +157,20 @@ function WashedMatrix(ask) {
  * @constructor
  */
 function GetListFonts() {
-    var keys=Object.keys(GLOBAL_Fonts);
-    for(var i=0; i<keys.length;i++){
-        var select = document.getElementById("FontSelection");
-        var newOption = new Option(keys[i]);
-        select.appendChild(newOption);
+    var keys = Object.keys(GLOBAL_Fonts);
+    var buf = "<table>";
+    for (var i = 0; i < keys.length; i++) {
+        buf += "<tr><td>" + keys[i] + "</td>";
+        if (GLOBAL_Fonts[keys[i]]["type"] == "rus") {
+            buf += "<td class='russia'>&emsp;</td>"
+        }
+        if (GLOBAL_Fonts[keys[i]]["type"] == "eng") {
+            buf += "<td class='unitedKingdom'>&emsp;</td>"
+        }
+        buf += "</tr>";
     }
+    buf += "</table>";
+    document.getElementById("FontSelection").innerHTML = buf;
 }
 
 /**
@@ -164,19 +189,25 @@ function SaveFile() {
         };
     var fontName = document.getElementById("NameDownloadFont").value;
     var textbox = "GLOBAL_Fonts[\"" + fontName + "\"]={\r\n";
+    textbox += "\"type\":";
+    if (document.getElementById("LanguageSelection").classList.contains("russia") == true) {
+        textbox += "\"rus\",\r\n";
+    } else {
+        textbox += "\"eng\",\r\n";
+    }
+    textbox += "\"Alphabet\":{\r\n"
     var ok = 1;
     for (var i = 0; i < document.getElementById('TableAlphabetRus').rows.length; i++) {
-        var a = document.getElementById('TableAlphabetRus').rows[i].cells[0].innerHTML;
-        var b = document.getElementById('TableAlphabetRus').rows[i].cells[1].innerHTML;
-        if (b == "?") {
+        var letter = document.getElementById('TableAlphabetRus').rows[i].cells[0].innerHTML;
+        var characterCode = document.getElementById('TableAlphabetRus').rows[i].cells[1].innerHTML;
+        if (characterCode == "?") {
             alert("Заполните все символы алфавита!");
             ok = 0;
             break;
         }
-        textbox += a + ":\"" + b + "\", \r\n";
+        textbox += "\"" + letter + "\":\"" + characterCode + "\", \r\n";
     }
-    textbox += "};";
-
+    textbox += "}\r\n};";
     if (ok == 1) {
         var link = document.getElementById('downloadlink');
         link.href = makeTextFile(textbox);
@@ -184,6 +215,37 @@ function SaveFile() {
         //link.style.display = 'block';
         document.getElementById('downloadlink').click();
     }
-
 }
 
+/**
+ * Производит загрузку выбранного шрифта в таблицу
+ * @param event - нажатый элемент, в данном случае шрифт
+ * @constructor
+ */
+function SelectFont(event) {
+    event = event || window.event;
+    var target = event.target || event.srcElement;
+    if (target.tagName == "TD") {
+        if (document.getElementById("CurrentSelectedFont") != null) {
+            document.getElementById("CurrentSelectedFont").removeAttribute("id")
+        }
+        target.id = "CurrentSelectedFont";
+
+        var fontName = document.getElementById("CurrentSelectedFont").innerHTML;
+        /* Пока два if, т.к возможно потом будут добавлены знаки препинания и тп */
+        var id = "";
+        if (GLOBAL_Fonts[fontName]["type"] == "rus") {
+            LanguageSwitch("rus");
+            id = "TableAlphabetRus";
+        }
+        if (GLOBAL_Fonts[fontName]["type"] == "eng") {
+            LanguageSwitch("eng");
+            id = "TableAlphabetEng";
+        }
+        for (var i = 0; i < Object.keys(GLOBAL_Fonts[fontName]["Alphabet"]).length; i++) {
+            var letter = document.getElementById(id).rows[i].cells[0].innerHTML;
+            document.getElementById(id).rows[i].cells[1].innerHTML = GLOBAL_Fonts[fontName]["Alphabet"][letter];
+        }
+    }
+
+}

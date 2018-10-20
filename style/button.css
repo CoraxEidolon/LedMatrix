@@ -156,22 +156,6 @@
     display: inline-block;
 }
 
-#FontSelection {
-    border-radius: 1em;
-    border: 2px solid #0080ab;
-    background-color: rgba(0, 173, 153, 0.42);
-    font-size: 1.2em;
-    padding-left: 10px;
-    color: white;
-    outline: none;
-
-}
-
-#FontSelection:focus {
-    background-color: rgba(0, 126, 120, 0.42);
-    color: black;
-}
-
 .inputDownloadFont {
     border-radius: 1em;
     border: 2px solid #b70029;
@@ -190,4 +174,21 @@
 .fontSize {
     font-size: 1.2em;
 }
+
+.fontSelection{
+    height: 100px;
+    margin-left: 10px;
+    overflow-y: scroll;
+    display:inline-block;
+    padding: 10px;
+    cursor: pointer;
+    border: 4px solid black;
+    background-color: #3b434a;
+    font-size: 1.2em;
+    color: white;
+}
+
+
+
+
 
