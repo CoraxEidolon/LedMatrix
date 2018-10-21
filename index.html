@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="style/button.css"/>
 </head>
 <body onload="onLoad()">
-
             <table class="matrix" id="Matrix">
                 <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
                 <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
@@ -23,13 +22,23 @@
             </table>
             <div class="buttonDiv">
                 <div id="LanguageSelection" class="roundButton countryFlag russia"></div>
-                <div id="WashedMatrix"  class="washedMatrix roundButton" > </div>
+                <div class="washedMatrix roundButton" >
+                    <div class="lala">
+                        <table>
+                            <tr>
+                                <td> <div id="WashedMatrix" class="roundButtonSmall leftArrow"></div></td>
+                                <td> <div id="WashedTableAlphabet" class="roundButtonSmall rightArrow "></div></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
                 <div id="AddCharInList" class="addCharInAlphabet roundButton"></div>
                 <div id="SaveAlphabet"  class="saveAlphabet roundButton"></div>
+
             </div>
             <div class="div_TableAlphabet">
                 <table class="tableAlphabet" id="TableAlphabetRus">
-                    <tr><th>А</th><td id="EditCharInAiphabet">?</td></tr>
+                    <tr><th>А</th><td id="EditCharInAlphabet">?</td></tr>
                     <tr><th>Б</th><td>?</td></tr>
                     <tr><th>В</th><td>?</td></tr>
                     <tr><th>Г</th><td>?</td></tr>
@@ -92,15 +101,12 @@
                     <tr><th>Z</th><td>?</td></tr>
                 </table>
             </div>
-<br>
+            <br>
             <div id="FontSelection" class="fontSelection"></div>
-            <label class="fontSize">Название шрифта: <input type="text" id="NameDownloadFont" class="inputDownloadFont"></label>
-<hr>
-<hr>
+            <table class="fontNameTable">
+                <tr> <td class="fontSize">Название шрифта:</td></tr>
+                <tr> <td> <input type="text" id="NameDownloadFont" class="inputDownloadFont"></td></tr>
+            </table>
             <a  id="downloadlink" style="display: none">Download</a>
-
-
-
-
 </body>
 </html>

@@ -64,7 +64,6 @@
 .roundButton {
     border-radius: 7em;
     cursor: pointer;
-
     width: 70px;
     height: 70px;
     display: block;
@@ -88,6 +87,51 @@
     transition: background-color 0.01s ease;
     transition-delay: 0s;
 }
+
+
+.lala{
+    display: none;
+    position: relative;
+}
+
+.washedMatrix:hover .lala{
+display: block;
+    left: -20px;
+    top:-10px;
+}
+
+
+.roundButtonSmall {
+    border-radius: 7em;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin: 5px;
+    border: 2px solid #d00015;
+}
+
+.roundButtonSmall:hover, .roundButtonSmall:focus {
+    background-color: #d00015;
+    transition: background-color 1s ease;
+    transition-delay: 0.1s;
+}
+
+.roundButtonSmall:active {
+    background-color: #ff0066;
+    transition: background-color 0.01s ease;
+    transition-delay: 0s;
+}
+
+.leftArrow {
+    background-image: url("../svg/leftArrow.svg");
+}
+
+.rightArrow {
+    background-image: url("../svg/rightArrow.svg");
+}
+
+
 
 /*Добавить нарисованный символ в алфавит*/
 .addCharInAlphabet {
@@ -179,13 +223,19 @@
     height: 100px;
     margin-left: 10px;
     overflow-y: scroll;
-    display:inline-block;
     padding: 10px;
-    cursor: pointer;
     border: 4px solid black;
     background-color: #3b434a;
     font-size: 1.2em;
     color: white;
+  display: inline-block;
+}
+
+.fontSelection TD{
+    cursor: pointer;
+}
+.fontNameTable{
+display: inline-block;
 }
 
 

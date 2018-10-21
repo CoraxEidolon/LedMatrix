@@ -26,8 +26,8 @@ function SelectCharInAlphabet(event) {
     event = event || window.event;
     var target = event.target || event.srcElement;
     if (target.tagName == "TD") {
-        document.getElementById("EditCharInAiphabet").removeAttribute("id");
-        target.id = "EditCharInAiphabet";
+        document.getElementById("EditCharInAlphabet").removeAttribute("id");
+        target.id = "EditCharInAlphabet";
         /*При клике на уже записанном коде буквы, она будет показываться на матрице*/
         if (target.innerHTML != "?") {
             /* Чтобы все точно работало, поэтапно убираем лишние символы и очищаем матрицу */
@@ -36,7 +36,7 @@ function SelectCharInAlphabet(event) {
             buf = buf.replace(/}/g, "");
             buf = buf.replace(/0x/g, "");
             buf = buf.split(",")
-            WashedMatrix(false);
+            ClearItem("Matrix");
             /*Вывод в матрицу*/
             for (var i = 0; i < document.getElementById('Matrix').rows[0].cells.length; i++) {
                 buf[i] = parseInt(buf[i], 16).toString(2);//Перевод из 16ричной в 2ичную
@@ -88,7 +88,7 @@ function AddCodeCharInAlphabet() {
     }
     result += "}";
     /*Находим выделенную букву в списке алфавита и добавляем новый код*/
-    document.getElementById("EditCharInAiphabet").innerHTML = result;
+    document.getElementById("EditCharInAlphabet").innerHTML = result;
 }
 
 /**
@@ -112,43 +112,73 @@ function LanguageSelection() {
  */
 function LanguageSwitch(choice) {
     if (choice == "eng") {
+        ClearItem("TableAlphabetRus");
         document.getElementById("LanguageSelection").classList.remove("russia");
         document.getElementById("LanguageSelection").classList.add("unitedKingdom");
-        document.getElementById("EditCharInAiphabet").removeAttribute("id");
-        document.getElementById('TableAlphabetEng').rows[0].cells[1].id = "EditCharInAiphabet";
+        document.getElementById("EditCharInAlphabet").removeAttribute("id");
+        document.getElementById('TableAlphabetEng').rows[0].cells[1].id = "EditCharInAlphabet";
         document.getElementById("TableAlphabetEng").classList.remove("displayNone");
         document.getElementById("TableAlphabetRus").classList.add("displayNone");
     }
     if (choice == "rus") {
+        ClearItem("TableAlphabetEng");
         document.getElementById("LanguageSelection").classList.remove("unitedKingdom");
         document.getElementById("LanguageSelection").classList.add("russia");
-        document.getElementById("EditCharInAiphabet").removeAttribute("id");
-        document.getElementById('TableAlphabetRus').rows[0].cells[1].id = "EditCharInAiphabet";
+        document.getElementById("EditCharInAlphabet").removeAttribute("id");
+        document.getElementById('TableAlphabetRus').rows[0].cells[1].id = "EditCharInAlphabet";
         document.getElementById("TableAlphabetRus").classList.remove("displayNone");
         document.getElementById("TableAlphabetEng").classList.add("displayNone");
     }
-
 }
-
 
 /**
  * Очищает все "включенные диоды" и удаляет соответствующие классы с матрицы
- * срабатывает при нажатии на соответствующую кнопку
- * @param ask - если равен false, то окно с вопросом не появится
+ * срабатывает при нажатии на левую стрелку
  * @constructor
  */
-function WashedMatrix(ask) {
-    var ok;
-    if (ask == false) {
-        ok = false;
-    } else {
-        ok = confirm("Очистить матрицу?");
-    }
+function WashedMatrix() {
+    var ok = confirm("Очистить матрицу?");
     if (ok == true) {
-        var elements = document.getElementsByClassName("ledON");
-        while (elements.length > 0) {
-            elements[0].removeAttribute("class");
+        ClearItem("Matrix");
+    }
+}
+
+/**
+ * Очищает таблицу алфавита, срабатывает при нажатие на правую стрелку
+ * @constructor
+ */
+function WashedTableAlphabet() {
+    var ok=confirm("Очистить таблицу символов текущего шрифта?");
+    if(ok==true) {
+        if (document.getElementById("LanguageSelection").classList.contains("russia") == true) {
+            ClearItem("TableAlphabetRus");
         }
+        else {
+            ClearItem("TableAlphabetEng");
+        }
+    }
+}
+
+/**
+ * Очищает элементы то стандартных значений
+ * @param element - Элемент, который необходимо очистить
+ * @constructor
+ */
+function ClearItem(element) {
+    switch (element) {
+        case "Matrix":
+            var elements = document.getElementsByClassName("ledON");
+            while (elements.length > 0) {
+                elements[0].removeAttribute("class");
+            }
+        case "TableAlphabetRus":
+            for (var i = 0; i < 33; i++) {
+                document.getElementById("TableAlphabetRus").rows[i].cells[1].innerHTML = "?";
+            }
+        case "TableAlphabetEng":
+            for (var i = 0; i < 26; i++) {
+                document.getElementById("TableAlphabetEng").rows[i].cells[1].innerHTML = "?";
+            }
     }
 }
 
@@ -232,7 +262,6 @@ function SelectFont(event) {
         target.id = "CurrentSelectedFont";
 
         var fontName = document.getElementById("CurrentSelectedFont").innerHTML;
-        /* Пока два if, т.к возможно потом будут добавлены знаки препинания и тп */
         var id = "";
         if (GLOBAL_Fonts[fontName]["type"] == "rus") {
             LanguageSwitch("rus");
@@ -246,6 +275,6 @@ function SelectFont(event) {
             var letter = document.getElementById(id).rows[i].cells[0].innerHTML;
             document.getElementById(id).rows[i].cells[1].innerHTML = GLOBAL_Fonts[fontName]["Alphabet"][letter];
         }
+        document.getElementById("NameDownloadFont").value = fontName;
     }
-
 }

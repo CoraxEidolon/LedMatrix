@@ -10,6 +10,7 @@ function onLoad() {
     document.getElementById("TableAlphabetEng").addEventListener("click", SelectCharInAlphabet);
     document.getElementById("AddCharInList").addEventListener("click", AddCodeCharInAlphabet);
     document.getElementById("WashedMatrix").addEventListener("click", WashedMatrix);
+    document.getElementById("WashedTableAlphabet").addEventListener("click",WashedTableAlphabet);
     document.getElementById("LanguageSelection").addEventListener("click", LanguageSelection);
     document.getElementById("FontSelection").addEventListener("click", SelectFont);
     GetListFonts();// Загружает список шрифтов в select
