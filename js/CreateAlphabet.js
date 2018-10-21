@@ -165,20 +165,19 @@ function WashedTableAlphabet() {
  * @constructor
  */
 function ClearItem(element) {
-    switch (element) {
-        case "Matrix":
-            var elements = document.getElementsByClassName("ledON");
-            while (elements.length > 0) {
-                elements[0].removeAttribute("class");
-            }
-        case "TableAlphabetRus":
-            for (var i = 0; i < 33; i++) {
-                document.getElementById("TableAlphabetRus").rows[i].cells[1].innerHTML = "?";
-            }
-        case "TableAlphabetEng":
-            for (var i = 0; i < 26; i++) {
-                document.getElementById("TableAlphabetEng").rows[i].cells[1].innerHTML = "?";
-            }
+    if (element == "Matrix") {
+        var elements = document.getElementsByClassName("ledON");
+        while (elements.length > 0) {
+            elements[0].removeAttribute("class");
+        }
+    } else if (element == "TableAlphabetRus") {
+        for (var i = 0; i < 33; i++) {
+            document.getElementById("TableAlphabetRus").rows[i].cells[1].innerHTML = "?";
+        }
+    } else if (element == "TableAlphabetEng") {
+        for (var i = 0; i < 26; i++) {
+            document.getElementById("TableAlphabetEng").rows[i].cells[1].innerHTML = "?";
+        }
     }
 }
 

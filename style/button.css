@@ -88,18 +88,16 @@
     transition-delay: 0s;
 }
 
-
-.lala{
+.arrowClearDiv{
     display: none;
     position: relative;
 }
 
-.washedMatrix:hover .lala{
+.washedMatrix:hover .arrowClearDiv{
 display: block;
     left: -20px;
     top:-10px;
 }
-
 
 .roundButtonSmall {
     border-radius: 7em;
