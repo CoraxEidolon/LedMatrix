@@ -97,7 +97,7 @@ function AddCodeCharInAlphabet() {
  * @constructor
  */
 function LanguageSelection() {
-    if (document.getElementById("LanguageSelection").classList.contains("russia") == true) {
+    if (document.getElementById("LanguageSelection").classList.contains("russiaSVG") == true) {
         LanguageSwitch("eng");
     }
     else {
@@ -113,8 +113,8 @@ function LanguageSelection() {
 function LanguageSwitch(choice) {
     if (choice == "eng") {
         ClearItem("TableAlphabetRus");
-        document.getElementById("LanguageSelection").classList.remove("russia");
-        document.getElementById("LanguageSelection").classList.add("unitedKingdom");
+        document.getElementById("LanguageSelection").classList.remove("russiaSVG");
+        document.getElementById("LanguageSelection").classList.add("unitedKingdomSVG");
         document.getElementById("EditCharInAlphabet").removeAttribute("id");
         document.getElementById('TableAlphabetEng').rows[0].cells[1].id = "EditCharInAlphabet";
         document.getElementById("TableAlphabetEng").classList.remove("displayNone");
@@ -122,8 +122,8 @@ function LanguageSwitch(choice) {
     }
     if (choice == "rus") {
         ClearItem("TableAlphabetEng");
-        document.getElementById("LanguageSelection").classList.remove("unitedKingdom");
-        document.getElementById("LanguageSelection").classList.add("russia");
+        document.getElementById("LanguageSelection").classList.remove("unitedKingdomSVG");
+        document.getElementById("LanguageSelection").classList.add("russiaSVG");
         document.getElementById("EditCharInAlphabet").removeAttribute("id");
         document.getElementById('TableAlphabetRus').rows[0].cells[1].id = "EditCharInAlphabet";
         document.getElementById("TableAlphabetRus").classList.remove("displayNone");
@@ -150,7 +150,7 @@ function WashedMatrix() {
 function WashedTableAlphabet() {
     var ok=confirm("Очистить таблицу символов текущего шрифта?");
     if(ok==true) {
-        if (document.getElementById("LanguageSelection").classList.contains("russia") == true) {
+        if (document.getElementById("LanguageSelection").classList.contains("russiaSVG") == true) {
             ClearItem("TableAlphabetRus");
         }
         else {
@@ -191,10 +191,10 @@ function GetListFonts() {
     for (var i = 0; i < keys.length; i++) {
         buf += "<tr><td>" + keys[i] + "</td>";
         if (GLOBAL_Fonts[keys[i]]["type"] == "rus") {
-            buf += "<td class='russia'>&emsp;</td>"
+            buf += "<td class='russiaSVG'>&emsp;</td>"
         }
         if (GLOBAL_Fonts[keys[i]]["type"] == "eng") {
-            buf += "<td class='unitedKingdom'>&emsp;</td>"
+            buf += "<td class='unitedKingdomSVG'>&emsp;</td>"
         }
         buf += "</tr>";
     }
@@ -219,16 +219,19 @@ function SaveFile() {
     var fontName = document.getElementById("NameDownloadFont").value;
     var textbox = "GLOBAL_Fonts[\"" + fontName + "\"]={\r\n";
     textbox += "\"type\":";
-    if (document.getElementById("LanguageSelection").classList.contains("russia") == true) {
+    var ID="";
+    if (document.getElementById("LanguageSelection").classList.contains("russiaSVG") == true) {
         textbox += "\"rus\",\r\n";
+        ID="TableAlphabetRus";
     } else {
         textbox += "\"eng\",\r\n";
+        ID="TableAlphabetEng";
     }
     textbox += "\"Alphabet\":{\r\n"
     var ok = 1;
-    for (var i = 0; i < document.getElementById('TableAlphabetRus').rows.length; i++) {
-        var letter = document.getElementById('TableAlphabetRus').rows[i].cells[0].innerHTML;
-        var characterCode = document.getElementById('TableAlphabetRus').rows[i].cells[1].innerHTML;
+    for (var i = 0; i < document.getElementById(ID).rows.length; i++) {
+        var letter = document.getElementById(ID).rows[i].cells[0].innerHTML;
+        var characterCode = document.getElementById(ID).rows[i].cells[1].innerHTML;
         if (characterCode == "?") {
             alert("Заполните все символы алфавита!");
             ok = 0;
@@ -276,4 +279,33 @@ function SelectFont(event) {
         }
         document.getElementById("NameDownloadFont").value = fontName;
     }
+}
+
+/**
+ * Проверка корректности введённого имени шрифта, запрет на спец символы и тп
+ * @constructor
+ */
+function ValidationNameDownloadFont() {
+   var fontName= document.getElementById("NameDownloadFont").value;
+    fontName=fontName.replace(/[(,),{,},\[,\],.,\,,!,@,\$,%,^,&,\*,:,;,~,\+,\-,\=,\\,\/,?]/g, "");
+
+if (fontName.length>20){
+    var cut=fontName.length-20;
+    fontName=fontName.substr(0,fontName.length-cut);
+}
+    fontName= document.getElementById("NameDownloadFont").value=fontName;
+}
+
+/**
+ * Добавляет подключенные шрифты в окно списка шрифтов
+ * @constructor
+ */
+function AddFont() {
+    if (FontList.length==0){
+        document.getElementById("FontSelection").classList.add("packageSVG");
+    }
+    for(var i=0; i<FontList.length;i++){
+        addScript("font/"+FontList[i],GetListFonts);
+    }
+
 }

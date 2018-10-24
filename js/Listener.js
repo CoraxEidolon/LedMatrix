@@ -13,5 +13,6 @@ function onLoad() {
     document.getElementById("WashedTableAlphabet").addEventListener("click",WashedTableAlphabet);
     document.getElementById("LanguageSelection").addEventListener("click", LanguageSelection);
     document.getElementById("FontSelection").addEventListener("click", SelectFont);
-    GetListFonts();// Загружает список шрифтов в select
+    document.getElementById("NameDownloadFont").addEventListener("change", ValidationNameDownloadFont);
+    AddFont();
 }

@@ -3,14 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Matrix Example</title>
-    <script type="text/javascript" src="js/Fonts.js"></script>
-    <script type="text/javascript" src="js/Listener.js"></script>
+    <script type="text/javascript">var GLOBAL_Fonts=[];</script>
+    <script type="text/javascript" src="js/AddScript.js"></script>
     <script type="text/javascript" src="js/CreateAlphabet.js"></script>
+    <script type="text/javascript" src="font/.FontList.js"></script>
+    <script type="text/javascript" src="js/Listener.js"></script>
+
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
     <link rel="stylesheet" type="text/css" href="style/button.css"/>
+    <link rel="stylesheet" type="text/css" href="style/svg.css"/>
 </head>
 <body onload="onLoad()">
-            <table class="matrix" id="Matrix">
+<div class="menu menuSVG">
+    <div class="subMenu">
+        <div class="roundButtonSmall createFontSVG"></div>
+        <div class="roundButtonSmall runSVG"></div>
+        <div class="roundButtonSmall testSVG"></div>
+        <div class="roundButtonSmall helpSVG"></div>
+    </div>
+</div>
+<table class="matrix" id="Matrix">
                 <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
                 <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
                 <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
@@ -21,19 +33,19 @@
                 <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
             </table>
             <div class="buttonDiv">
-                <div id="LanguageSelection" class="roundButton countryFlag russia" title="Смена языка, для которого будет создан шрифт"></div>
-                <div class="washedMatrix roundButton" title="Очистка элементов до стандартных значений">
+                <div id="LanguageSelection" class="roundButton countryFlag russiaSVG" title="Смена языка, для которого будет создан шрифт"></div>
+                <div class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
                     <div class="arrowClearDiv">
                         <table>
                             <tr>
-                                <td> <div id="WashedMatrix" class="roundButtonSmall leftArrow" title="Очистить матрицу"></div></td>
-                                <td> <div id="WashedTableAlphabet" class="roundButtonSmall rightArrow" title="Очистить таблицу символов текущего шрифта"></div></td>
+                                <td> <div id="WashedMatrix" class="roundButtonSmall leftArrowSVG" title="Очистить матрицу"></div></td>
+                                <td> <div id="WashedTableAlphabet" class="roundButtonSmall rightArrowSVG" title="Очистить таблицу символов текущего шрифта"></div></td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                <div id="AddCharInList" class="addCharInAlphabet roundButton" title="Добавить созданный символ в таблицу"></div>
-                <div id="SaveAlphabet"  class="saveAlphabet roundButton" title="Сохранить шрифт"></div>
+                <div id="AddCharInList" class="addCharInAlphabet roundButton plusSVG" title="Добавить созданный символ в таблицу"></div>
+                <div id="SaveAlphabet"  class="saveAlphabet roundButton saveSVG" title="Сохранить шрифт"></div>
 
             </div>
             <div class="div_TableAlphabet">

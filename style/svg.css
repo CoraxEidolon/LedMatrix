@@ -1,0 +1,65 @@
+/*Файл содержит классы SVG файлов*/
+.packageSVG{
+    background-image: url("../svg/Package.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.unitedKingdomSVG{
+    background-image: url("../svg/united-kingdom.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80% 80%;
+}
+
+.russiaSVG{
+    background-image: url("../svg/Russia.svg");
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.leftArrowSVG {
+    background-image: url("../svg/leftArrow.svg");
+}
+
+.rightArrowSVG {
+    background-image: url("../svg/rightArrow.svg");
+}
+
+.plusSVG{
+    background-image: url("../svg/Plus.svg");
+}
+
+.saveSVG{
+    background-image: url("../svg/Save.svg");
+}
+
+.washedSVG{
+    background-image: url("../svg/Washed.svg");
+}
+
+.menuSVG{
+    background-image: url("../svg/pro.svg");
+}
+
+.createFontSVG{
+    background-image: url("../svg/pencilPictogram.svg");
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.runSVG{
+    background-image: url("../svg/running.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80% 80%;
+}
+.helpSVG{
+    background-image: url("../svg/help.svg");
+}
+
+.testSVG{
+    background-image: url("../svg/test.svg");
+}
