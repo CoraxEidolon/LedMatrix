@@ -1,0 +1,46 @@
+
+.loader {
+    position: absolute;
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
+}
+
+.loader, .loader:before, .loader:after {
+    position: absolute;
+    border: 3px solid transparent;
+    border-top: 3px solid hsl(83, 82%, 53%);
+    border-radius: 50%;
+    animation: rotate linear infinite;
+    content: '';
+}
+
+.loader {
+    height: 100px;
+    width: 100px;
+    animation-duration: 1.05s;
+}
+
+.loader:before {
+    height: 75px;
+    width: 75px;
+    top: 10px;
+    left: 10px;
+    animation-duration: 10s;
+}
+
+.loader:after {
+    height: 50px;
+    width: 50px;
+    top: 22px;
+    left: 22px;
+    animation-duration: 4s;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotateZ(360deg);
+    }
+    to {
+        transform: rotateZ(0deg);
+    }
+}

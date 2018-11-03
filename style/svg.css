@@ -3,6 +3,7 @@
     background-image: url("../svg/Package.svg");
     background-repeat: no-repeat;
     background-position: center;
+    opacity: 0.3;
 }
 
 .unitedKingdomSVG{
@@ -63,3 +64,30 @@
 .testSVG{
     background-image: url("../svg/test.svg");
 }
+
+.numberSVG{
+    background-image: url("../svg/Symbol_pi.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 90% 90%;
+}
+
+.tickerSVG{
+    background-image: url("../svg/correr.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 95% 95%;
+}
+
+.buildSVG{
+    background-image: url("../svg/Noun-project.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 95% 95%;
+}
+.arduinoLogoSVG{
+     background-image: url("../svg/Arduino_Logo.svg");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 70% 70%;
+ }

@@ -112,6 +112,40 @@ display: block;
     transition-delay: 0s;
 }
 
+.createTicker{
+    border: 2px solid rgb(255, 13, 0);
+    display: inline-block;
+}
+
+.createTicker:hover, .createTicker:focus {
+    background-color: rgb(176, 22, 0);
+    transition: background-color 1s ease;
+    transition-delay: 0.1s;
+}
+.createTicker:active{
+    background-color: rgb(255, 36, 0);
+    transition: background-color 0.01s ease;
+    transition-delay: 0s;
+}
+
+
+
+.saveArduinoCode{
+    border: 2px solid rgb(191, 31, 255);
+    display: inline-block;
+}
+.saveArduinoCode:hover, .saveArduinoCode:focus {
+    background-color: rgb(110, 24, 146);
+    transition: background-color 1s ease;
+    transition-delay: 0.1s;
+}
+.saveArduinoCode:active{
+    background-color: rgb(191, 0, 255);
+    transition: background-color 0.01s ease;
+    transition-delay: 0s;
+}
+
+
 /*Меню******/
 .menu{
     float:right;
@@ -120,13 +154,14 @@ display: block;
     border: 2px solid #b70029;
     border-radius: 10px 10px 90px 90px ;
     cursor: pointer;
+    margin-bottom: 1%;
 }
 
 .menu:hover .subMenu{
     display: inline-block;
 }
 .menu:hover{
-    background-color: #d00015;
+    background-color: #ff001b;
     transition: background-color 1s ease;
     transition-delay: 0.1s;
 }

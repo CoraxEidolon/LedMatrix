@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Работа со шрифтами</title>
+    <script type="text/javascript">var GLOBAL_Fonts=[];</script>
+    <script type="text/javascript" src="../js/AddScript.js"></script>
+    <script type="text/javascript" src="../js/CreateAlphabet.js"></script>
+    <script type="text/javascript" src="../font/.FontList.js"></script>
+    <script type="text/javascript" src="../js/ListenerAlphabet.js"></script>
+
+    <link rel="shortcut icon" href="../style/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../style/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/button.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/svg.css"/>
+</head>
+<body onload="onLoad()">
+<div class="menu menuSVG">
+    <div class="subMenu">
+        <div class="roundButtonSmall createFontSVG"></div>
+        <a href="ticker.html"> <div class="roundButtonSmall runSVG"></div></a>
+        <div class="roundButtonSmall testSVG"></div>
+        <div class="roundButtonSmall helpSVG"></div>
+    </div>
+</div>
+<table class="matrix" id="Matrix">
+                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+            </table>
+            <div class="buttonDiv">
+                <div id="LanguageSelection" class="roundButton countryFlag russiaSVG" title="Смена языка, для которого будет создан шрифт"></div>
+                <div class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
+                    <div class="arrowClearDiv">
+                        <table>
+                            <tr>
+                                <td> <div id="WashedMatrix" class="roundButtonSmall leftArrowSVG" title="Очистить матрицу"></div></td>
+                                <td> <div id="WashedTableAlphabet" class="roundButtonSmall rightArrowSVG" title="Очистить таблицу символов текущего шрифта"></div></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="AddCharInList" class="addCharInAlphabet roundButton plusSVG" title="Добавить созданный символ в таблицу"></div>
+                <div id="SaveAlphabet"  class="saveAlphabet roundButton saveSVG" title="Сохранить шрифт"></div>
+
+            </div>
+            <div class="div_TableAlphabet">
+                <table class="tableAlphabet" id="TableAlphabetRus">
+                    <tr><th>А</th><td id="EditCharInAlphabet">?</td></tr>
+                    <tr><th>Б</th><td>?</td></tr>
+                    <tr><th>В</th><td>?</td></tr>
+                    <tr><th>Г</th><td>?</td></tr>
+                    <tr><th>Д</th><td>?</td></tr>
+                    <tr><th>Е</th><td>?</td></tr>
+                    <tr><th>Ё</th><td>?</td></tr>
+                    <tr><th>Ж</th><td>?</td></tr>
+                    <tr><th>З</th><td>?</td></tr>
+                    <tr><th>И</th><td>?</td></tr>
+                    <tr><th>Й</th><td>?</td></tr>
+                    <tr><th>К</th><td>?</td></tr>
+                    <tr><th>Л</th><td>?</td></tr>
+                    <tr><th>М</th><td>?</td></tr>
+                    <tr><th>Н</th><td>?</td></tr>
+                    <tr><th>О</th><td>?</td></tr>
+                    <tr><th>П</th><td>?</td></tr>
+                    <tr><th>Р</th><td>?</td></tr>
+                    <tr><th>С</th><td>?</td></tr>
+                    <tr><th>Т</th><td>?</td></tr>
+                    <tr><th>У</th><td>?</td></tr>
+                    <tr><th>Ф</th><td>?</td></tr>
+                    <tr><th>Х</th><td>?</td></tr>
+                    <tr><th>Ц</th><td>?</td></tr>
+                    <tr><th>Ч</th><td>?</td></tr>
+                    <tr><th>Ш</th><td>?</td></tr>
+                    <tr><th>Щ</th><td>?</td></tr>
+                    <tr><th>Ъ</th><td>?</td></tr>
+                    <tr><th>Ы</th><td>?</td></tr>
+                    <tr><th>Ь</th><td>?</td></tr>
+                    <tr><th>Э</th><td>?</td></tr>
+                    <tr><th>Ю</th><td>?</td></tr>
+                    <tr><th>Я</th><td>?</td></tr>
+                </table>
+                <table class="tableAlphabet displayNone" id="TableAlphabetEng">
+                    <tr><th>A</th><td>?</td></tr>
+                    <tr><th>B</th><td>?</td></tr>
+                    <tr><th>C</th><td>?</td></tr>
+                    <tr><th>D</th><td>?</td></tr>
+                    <tr><th>E</th><td>?</td></tr>
+                    <tr><th>F</th><td>?</td></tr>
+                    <tr><th>G</th><td>?</td></tr>
+                    <tr><th>H</th><td>?</td></tr>
+                    <tr><th>I</th><td>?</td></tr>
+                    <tr><th>J</th><td>?</td></tr>
+                    <tr><th>K</th><td>?</td></tr>
+                    <tr><th>L</th><td>?</td></tr>
+                    <tr><th>M</th><td>?</td></tr>
+                    <tr><th>N</th><td>?</td></tr>
+                    <tr><th>O</th><td>?</td></tr>
+                    <tr><th>P</th><td>?</td></tr>
+                    <tr><th>Q</th><td>?</td></tr>
+                    <tr><th>R</th><td>?</td></tr>
+                    <tr><th>S</th><td>?</td></tr>
+                    <tr><th>T</th><td>?</td></tr>
+                    <tr><th>U</th><td>?</td></tr>
+                    <tr><th>V</th><td>?</td></tr>
+                    <tr><th>W</th><td>?</td></tr>
+                    <tr><th>X</th><td>?</td></tr>
+                    <tr><th>Y</th><td>?</td></tr>
+                    <tr><th>Z</th><td>?</td></tr>
+                </table>
+
+                <table class="tableAlphabet displayNone" id="TableAlphabetNum">
+                    <tr><th>0</th><td>?</td></tr>
+                    <tr><th>1</th><td>?</td></tr>
+                    <tr><th>2</th><td>?</td></tr>
+                    <tr><th>3</th><td>?</td></tr>
+                    <tr><th>4</th><td>?</td></tr>
+                    <tr><th>5</th><td>?</td></tr>
+                    <tr><th>6</th><td>?</td></tr>
+                    <tr><th>7</th><td>?</td></tr>
+                    <tr><th>8</th><td>?</td></tr>
+                    <tr><th>9</th><td>?</td></tr>
+                    <tr><th>+</th><td>?</td></tr>
+                    <tr><th>-</th><td>?</td></tr>
+                    <tr><th>*</th><td>?</td></tr>
+                    <tr><th>/</th><td>?</td></tr>
+                    <tr><th>=</th><td>?</td></tr>
+                    <tr><th>(</th><td>?</td></tr>
+                    <tr><th>)</th><td>?</td></tr>
+                    <tr><th>?</th><td>?</td></tr>
+                    <tr><th>!</th><td>?</td></tr>
+                </table>
+
+
+            </div>
+            <br>
+            <div id="FontSelection" class="fontSelection"></div>
+            <table class="fontNameTable">
+                <tr> <td class="fontSize">Название шрифта:</td></tr>
+                <tr> <td> <input type="text" id="NameDownloadFont" class="inputDownloadFont"></td></tr>
+            </table>
+            <a  id="downloadlink" style="display: none">Download</a>
+</body>
+</html>

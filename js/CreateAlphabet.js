@@ -48,7 +48,7 @@ function SelectCharInAlphabet(event) {
                 result += buf[i];
                 for (var j = document.getElementById('Matrix').rows.length - 1; j >= 0; j--) {
 
-                    if (result[document.getElementById('Matrix').rows.length - 1 - j] == "1") {
+                    if (result[document.getElementById('Matrix').rows.length - 1 - j] === "1") {
                         document.getElementById('Matrix').rows[j].cells[i].classList.add("ledON");
                     }
                     else {
@@ -81,7 +81,7 @@ function AddCodeCharInAlphabet() {
         if (row.length < 2) {
             result += "0";
         }
-        result += row;
+        result += row.toUpperCase();;
         if (i != document.getElementById('Matrix').rows[0].cells.length - 1) {
             result += ",";
         }
@@ -97,12 +97,20 @@ function AddCodeCharInAlphabet() {
  * @constructor
  */
 function LanguageSelection() {
-    if (document.getElementById("LanguageSelection").classList.contains("russiaSVG") == true) {
+    if (document.getElementById("LanguageSelection").classList.contains("russiaSVG") === true) {
         LanguageSwitch("eng");
-    }
-    else {
+    } else
+    if (document.getElementById("LanguageSelection").classList.contains("unitedKingdomSVG") === true) {
+        LanguageSwitch("num");
+    } else
+
+   if (document.getElementById("LanguageSelection").classList.contains("numberSVG") === true) {
         LanguageSwitch("rus");
     }
+
+
+
+
 }
 
 /**
@@ -111,24 +119,50 @@ function LanguageSelection() {
  * @constructor
  */
 function LanguageSwitch(choice) {
-    if (choice == "eng") {
+    if (choice === "eng") {
         ClearItem("TableAlphabetRus");
         document.getElementById("LanguageSelection").classList.remove("russiaSVG");
+        document.getElementById("LanguageSelection").classList.remove("numberSVG");
+
         document.getElementById("LanguageSelection").classList.add("unitedKingdomSVG");
         document.getElementById("EditCharInAlphabet").removeAttribute("id");
         document.getElementById('TableAlphabetEng').rows[0].cells[1].id = "EditCharInAlphabet";
         document.getElementById("TableAlphabetEng").classList.remove("displayNone");
+
         document.getElementById("TableAlphabetRus").classList.add("displayNone");
+        document.getElementById("TableAlphabetNum").classList.add("displayNone");
     }
-    if (choice == "rus") {
+    if (choice === "rus") {
         ClearItem("TableAlphabetEng");
         document.getElementById("LanguageSelection").classList.remove("unitedKingdomSVG");
+        document.getElementById("LanguageSelection").classList.remove("numberSVG");
+
         document.getElementById("LanguageSelection").classList.add("russiaSVG");
         document.getElementById("EditCharInAlphabet").removeAttribute("id");
         document.getElementById('TableAlphabetRus').rows[0].cells[1].id = "EditCharInAlphabet";
         document.getElementById("TableAlphabetRus").classList.remove("displayNone");
+
         document.getElementById("TableAlphabetEng").classList.add("displayNone");
+        document.getElementById("TableAlphabetNum").classList.add("displayNone");
     }
+
+    if (choice === "num") {
+        ClearItem("TableAlphabetEng");
+        document.getElementById("LanguageSelection").classList.remove("unitedKingdomSVG");
+        document.getElementById("LanguageSelection").classList.remove("russiaSVG");
+
+        document.getElementById("LanguageSelection").classList.add("numberSVG");
+        document.getElementById("EditCharInAlphabet").removeAttribute("id");
+        document.getElementById('TableAlphabetNum').rows[0].cells[1].id = "EditCharInAlphabet";
+        document.getElementById("TableAlphabetNum").classList.remove("displayNone");
+
+        document.getElementById("TableAlphabetEng").classList.add("displayNone");
+        document.getElementById("TableAlphabetRus").classList.add("displayNone");
+    }
+
+
+
+
 }
 
 /**
@@ -160,7 +194,7 @@ function WashedTableAlphabet() {
 }
 
 /**
- * Очищает элементы то стандартных значений
+ * Очищает элементы до стандартных значений
  * @param element - Элемент, который необходимо очистить
  * @constructor
  */
@@ -182,27 +216,6 @@ function ClearItem(element) {
 }
 
 /**
- * Получает список всех имеющихся шрифтов. Срабатывает раз, при загрузки страницы
- * @constructor
- */
-function GetListFonts() {
-    var keys = Object.keys(GLOBAL_Fonts);
-    var buf = "<table>";
-    for (var i = 0; i < keys.length; i++) {
-        buf += "<tr><td>" + keys[i] + "</td>";
-        if (GLOBAL_Fonts[keys[i]]["type"] == "rus") {
-            buf += "<td class='russiaSVG'>&emsp;</td>"
-        }
-        if (GLOBAL_Fonts[keys[i]]["type"] == "eng") {
-            buf += "<td class='unitedKingdomSVG'>&emsp;</td>"
-        }
-        buf += "</tr>";
-    }
-    buf += "</table>";
-    document.getElementById("FontSelection").innerHTML = buf;
-}
-
-/**
  * Генерирует файл шрифта и скачивает его на ПК пользователя
  * @constructor
  */
@@ -220,13 +233,21 @@ function SaveFile() {
     var textbox = "GLOBAL_Fonts[\"" + fontName + "\"]={\r\n";
     textbox += "\"type\":";
     var ID="";
-    if (document.getElementById("LanguageSelection").classList.contains("russiaSVG") == true) {
+    if (document.getElementById("LanguageSelection").classList.contains("russiaSVG")) {
         textbox += "\"rus\",\r\n";
         ID="TableAlphabetRus";
-    } else {
+    }
+
+    if (document.getElementById("LanguageSelection").classList.contains("unitedKingdomSVG")){
         textbox += "\"eng\",\r\n";
         ID="TableAlphabetEng";
     }
+
+    if (document.getElementById("LanguageSelection").classList.contains("numberSVG")){
+        textbox += "\"num\",\r\n";
+        ID="TableAlphabetNum";
+    }
+
     textbox += "\"Alphabet\":{\r\n"
     var ok = 1;
     for (var i = 0; i < document.getElementById(ID).rows.length; i++) {
@@ -258,20 +279,24 @@ function SelectFont(event) {
     event = event || window.event;
     var target = event.target || event.srcElement;
     if (target.tagName == "TD") {
-        if (document.getElementById("CurrentSelectedFont") != null) {
+        if (document.getElementById("CurrentSelectedFont") !== null) {
             document.getElementById("CurrentSelectedFont").removeAttribute("id")
         }
         target.id = "CurrentSelectedFont";
 
         var fontName = document.getElementById("CurrentSelectedFont").innerHTML;
         var id = "";
-        if (GLOBAL_Fonts[fontName]["type"] == "rus") {
+        if (GLOBAL_Fonts[fontName]["type"] === "rus") {
             LanguageSwitch("rus");
             id = "TableAlphabetRus";
-        }
-        if (GLOBAL_Fonts[fontName]["type"] == "eng") {
+        } else
+        if (GLOBAL_Fonts[fontName]["type"] === "eng") {
             LanguageSwitch("eng");
             id = "TableAlphabetEng";
+        } else
+        if (GLOBAL_Fonts[fontName]["type"] === "num") {
+            LanguageSwitch("num");
+            id = "TableAlphabetNum";
         }
         for (var i = 0; i < Object.keys(GLOBAL_Fonts[fontName]["Alphabet"]).length; i++) {
             var letter = document.getElementById(id).rows[i].cells[0].innerHTML;
@@ -287,25 +312,10 @@ function SelectFont(event) {
  */
 function ValidationNameDownloadFont() {
    var fontName= document.getElementById("NameDownloadFont").value;
-    fontName=fontName.replace(/[(,),{,},\[,\],.,\,,!,@,\$,%,^,&,\*,:,;,~,\+,\-,\=,\\,\/,?]/g, "");
-
+    fontName=fontName.replace(/[^А-яЁёa-zA-Z-0-9]/g, "");
 if (fontName.length>20){
     var cut=fontName.length-20;
     fontName=fontName.substr(0,fontName.length-cut);
 }
-    fontName= document.getElementById("NameDownloadFont").value=fontName;
-}
-
-/**
- * Добавляет подключенные шрифты в окно списка шрифтов
- * @constructor
- */
-function AddFont() {
-    if (FontList.length==0){
-        document.getElementById("FontSelection").classList.add("packageSVG");
-    }
-    for(var i=0; i<FontList.length;i++){
-        addScript("font/"+FontList[i],GetListFonts);
-    }
-
+    document.getElementById("NameDownloadFont").value=fontName;
 }

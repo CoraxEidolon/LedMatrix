@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Бегущая строка</title>
+    <script type="text/javascript">var GLOBAL_Fonts = [];</script>
+    <script type="text/javascript" src="../js/AddScript.js"></script>
+    <script type="text/javascript" src="../js/ListenerTicker.js"></script>
+    <script type="text/javascript" src="../font/.FontList.js"></script>
+    <script type="text/javascript" src="../js/CreateTicker.js"></script>
+    <link rel="shortcut icon" href="../style/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../style/svg.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/button.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/loading.css"/>
+</head>
+<body onload="onLoad()">
+<div class="menu menuSVG">
+    <div class="subMenu">
+        <a href="Alphabet.html">
+            <div class="roundButtonSmall createFontSVG"></div>
+        </a>
+        <div class="roundButtonSmall runSVG"></div>
+        <div class="roundButtonSmall testSVG"></div>
+        <div class="roundButtonSmall helpSVG"></div>
+    </div>
+</div>
+<h2>Текст бегущей строки:</h2>
+<textarea id="TickerInput" class="tickerTextBox"></textarea>
+<br>
+<b>Выбор шрифта:</b><br>
+<div id="FontSelection" class="fontSelection"></div>
+
+<div class="div_inline-block">
+    <label>Длинна пробела:<br>
+        <input type="number" min="1" value="5" id="SpaceLength" class="inputNumber">
+    </label>
+    <br>
+    <label> Кернинг:<br>
+        <input type="number" min="1" value="1" id="SpacingBetweenLetters" class="inputNumber">
+    </label>
+    <br>
+    <label> Скорость вывода:<br>
+        <input type="number" min="1" value="50" id="speedTicker" class="inputNumber">
+    </label>
+</div>
+<div class="div_inline-block">
+    <b>Количество матриц:</b><br>
+    <label>Столбцов:<br>
+        <input type="number" min="1" value="1" id="MatrixColumns" class="inputNumber">
+    </label>
+    <br>
+    <label>Строк:<br>
+        <input type="number" min="1" value="1" id="MatrixRows" class="inputNumber" disabled>
+    </label><br>
+</div>
+<br>
+<h3>Подключение к микроконтроллеру:</h3>
+<div id="Div_MatrixTableInput">
+    <table id="TableInput" class="tableInput">
+        <tbody>
+        <tr>
+            <td>CLK:
+                <input type="number" min="0" value='0' class="inputNumber" id="0_0_CLK">
+                <br>
+                CS&ensp;:
+                <input type="number" min="0" value='0' class="inputNumber" id="0_0_CS">
+                <br>
+                DIN:
+                <input type="number" min="0" value='0' class="inputNumber" id="0_0_DIN"><br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="CreateTicker" class="roundButton createTicker tickerSVG"></div>
+<div id="SaveArduinoCode" class="roundButton saveArduinoCode arduinoLogoSVG"></div>
+
+<div id="Loading"></div>
+<textarea id="CodeTickerResult" class="textarea_codeTickerResult packageSVG" readonly></textarea>
+<a  id="downloadlink" style="display: none">Download</a>
+</body>
+</html>
