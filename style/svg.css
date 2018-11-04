@@ -20,12 +20,18 @@
     background-position: center;
 }
 
-.leftArrowSVG {
-    background-image: url("../svg/leftArrow.svg");
+.matrixClearSVG {
+    background-image: url("../svg/matrix.svg");
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.rightArrowSVG {
-    background-image: url("../svg/rightArrow.svg");
+.washedAlphabetSVG {
+    background-image: url("../svg/dictionary_pictogram.svg");
+    background-size: 83% 83%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .plusSVG{
@@ -80,10 +86,7 @@
 }
 
 .buildSVG{
-    background-image: url("../svg/Noun-project.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 95% 95%;
+
 }
 .arduinoLogoSVG{
      background-image: url("../svg/Arduino_Logo.svg");
@@ -91,3 +94,18 @@
      background-position: center;
      background-size: 70% 70%;
  }
+
+.codeSVG{
+    background-image: url("../svg/code-break.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.letterASVG{
+    background-image: url("../svg/letterA.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 85% 85%;
+
+}

@@ -399,3 +399,25 @@ function SaveArduinoFile() {
         link.download = SketchName + ".ino";
         document.getElementById('downloadlink').click();
 }
+
+/**
+ * Очищает текст поля бегущей строки
+ * @constructor
+ */
+function WashedTickerInput() {
+    var ok = confirm("Очистить текст бегущей строки?");
+    if (ok === true) {
+        document.getElementById("TickerInput").value="";
+    }
+}
+/**
+ * Очищает поле программного кода
+ * @constructor
+ */
+function WashedCodeTickerResult() {
+    var ok = confirm("Очистить полученный программный код?");
+    if (ok === true) {
+        document.getElementById("CodeTickerResult").value="";
+        document.getElementById("CodeTickerResult").classList.add("packageSVG");
+    }
+}

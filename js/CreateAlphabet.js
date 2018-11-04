@@ -172,7 +172,7 @@ function LanguageSwitch(choice) {
  */
 function WashedMatrix() {
     var ok = confirm("Очистить матрицу?");
-    if (ok == true) {
+    if (ok === true) {
         ClearItem("Matrix");
     }
 }
@@ -183,7 +183,7 @@ function WashedMatrix() {
  */
 function WashedTableAlphabet() {
     var ok=confirm("Очистить таблицу символов текущего шрифта?");
-    if(ok==true) {
+    if(ok===true) {
         if (document.getElementById("LanguageSelection").classList.contains("russiaSVG") == true) {
             ClearItem("TableAlphabetRus");
         }

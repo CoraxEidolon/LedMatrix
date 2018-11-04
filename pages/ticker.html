@@ -74,9 +74,19 @@
     </table>
 </div>
 
-<div id="CreateTicker" class="roundButton createTicker tickerSVG"></div>
-<div id="SaveArduinoCode" class="roundButton saveArduinoCode arduinoLogoSVG"></div>
+<div id="CreateTicker" class="roundButton createTicker tickerSVG" title="Получить программный код бегущей строки"></div>
+<div id="SaveArduinoCode" class="roundButton saveArduinoCode arduinoLogoSVG" title="Сохранить программный код Arduino"></div>
 
+<div class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
+    <div class="subClearDiv">
+        <table>
+            <tr>
+                <td> <div id="WashedTickerInput" class="roundButtonSmall letterASVG" title="Очистить текст бегущей строки"></div></td>
+                <td> <div id="WashedCodeTickerResult" class="roundButtonSmall codeSVG" title="Очистить программный код"></div></td>
+            </tr>
+        </table>
+    </div>
+</div>
 <div id="Loading"></div>
 <textarea id="CodeTickerResult" class="textarea_codeTickerResult packageSVG" readonly></textarea>
 <a  id="downloadlink" style="display: none">Download</a>

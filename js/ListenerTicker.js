@@ -10,5 +10,7 @@ function onLoad() {
     document.getElementById("MatrixColumns").addEventListener("change", BuildTable);
     document.getElementById("TickerInput").addEventListener("change", ValidationTickerTextBox);
     document.getElementById("SaveArduinoCode").addEventListener("click",SaveArduinoFile);
+    document.getElementById("WashedTickerInput").addEventListener("click",WashedTickerInput);
+    document.getElementById("WashedCodeTickerResult").addEventListener("click",WashedCodeTickerResult);
     AddFont("../font/");
 }
