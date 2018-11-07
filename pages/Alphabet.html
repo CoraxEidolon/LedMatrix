@@ -13,6 +13,14 @@
     <link rel="stylesheet" type="text/css" href="../style/style.css"/>
     <link rel="stylesheet" type="text/css" href="../style/button.css"/>
     <link rel="stylesheet" type="text/css" href="../style/svg.css"/>
+    <style>
+        .matrix td {
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+    </style>
 </head>
 <body onload="onLoad()">
 <div class="menu menuSVG">
@@ -24,125 +32,127 @@
     </div>
 </div>
 <table class="matrix" id="Matrix">
-                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
-                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
-                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
-                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
-                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
-                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
-                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
-                <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
-            </table>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+</table>
             <div class="div_TableAlphabet">
                 <table class="tableAlphabet" id="TableAlphabetRus">
-                    <tr><th>А</th><td id="EditCharInAlphabet">?</td></tr>
-                    <tr><th>Б</th><td>?</td></tr>
-                    <tr><th>В</th><td>?</td></tr>
-                    <tr><th>Г</th><td>?</td></tr>
-                    <tr><th>Д</th><td>?</td></tr>
-                    <tr><th>Е</th><td>?</td></tr>
-                    <tr><th>Ё</th><td>?</td></tr>
-                    <tr><th>Ж</th><td>?</td></tr>
-                    <tr><th>З</th><td>?</td></tr>
-                    <tr><th>И</th><td>?</td></tr>
-                    <tr><th>Й</th><td>?</td></tr>
-                    <tr><th>К</th><td>?</td></tr>
-                    <tr><th>Л</th><td>?</td></tr>
-                    <tr><th>М</th><td>?</td></tr>
-                    <tr><th>Н</th><td>?</td></tr>
-                    <tr><th>О</th><td>?</td></tr>
-                    <tr><th>П</th><td>?</td></tr>
-                    <tr><th>Р</th><td>?</td></tr>
-                    <tr><th>С</th><td>?</td></tr>
-                    <tr><th>Т</th><td>?</td></tr>
-                    <tr><th>У</th><td>?</td></tr>
-                    <tr><th>Ф</th><td>?</td></tr>
-                    <tr><th>Х</th><td>?</td></tr>
-                    <tr><th>Ц</th><td>?</td></tr>
-                    <tr><th>Ч</th><td>?</td></tr>
-                    <tr><th>Ш</th><td>?</td></tr>
-                    <tr><th>Щ</th><td>?</td></tr>
-                    <tr><th>Ъ</th><td>?</td></tr>
-                    <tr><th>Ы</th><td>?</td></tr>
-                    <tr><th>Ь</th><td>?</td></tr>
-                    <tr><th>Э</th><td>?</td></tr>
-                    <tr><th>Ю</th><td>?</td></tr>
-                    <tr><th>Я</th><td>?</td></tr>
+                    <tr><th>А</th><td data-letterCode="" id="EditCharInAlphabet">&#9746;</td></tr>
+                    <tr><th>Б</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>В</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Г</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Д</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Е</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Ё</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Ж</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>З</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>И</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Й</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>К</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Л</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>М</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Н</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>О</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>П</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Р</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>С</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Т</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>У</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Ф</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Х</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Ц</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Ч</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Ш</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Щ</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Ъ</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Ы</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Ь</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Э</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Ю</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Я</th><td data-letterCode="">&#9746;</td></tr>
                 </table>
                 <table class="tableAlphabet displayNone" id="TableAlphabetEng">
-                    <tr><th>A</th><td>?</td></tr>
-                    <tr><th>B</th><td>?</td></tr>
-                    <tr><th>C</th><td>?</td></tr>
-                    <tr><th>D</th><td>?</td></tr>
-                    <tr><th>E</th><td>?</td></tr>
-                    <tr><th>F</th><td>?</td></tr>
-                    <tr><th>G</th><td>?</td></tr>
-                    <tr><th>H</th><td>?</td></tr>
-                    <tr><th>I</th><td>?</td></tr>
-                    <tr><th>J</th><td>?</td></tr>
-                    <tr><th>K</th><td>?</td></tr>
-                    <tr><th>L</th><td>?</td></tr>
-                    <tr><th>M</th><td>?</td></tr>
-                    <tr><th>N</th><td>?</td></tr>
-                    <tr><th>O</th><td>?</td></tr>
-                    <tr><th>P</th><td>?</td></tr>
-                    <tr><th>Q</th><td>?</td></tr>
-                    <tr><th>R</th><td>?</td></tr>
-                    <tr><th>S</th><td>?</td></tr>
-                    <tr><th>T</th><td>?</td></tr>
-                    <tr><th>U</th><td>?</td></tr>
-                    <tr><th>V</th><td>?</td></tr>
-                    <tr><th>W</th><td>?</td></tr>
-                    <tr><th>X</th><td>?</td></tr>
-                    <tr><th>Y</th><td>?</td></tr>
-                    <tr><th>Z</th><td>?</td></tr>
+                    <tr><th>A</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>B</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>C</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>D</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>E</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>F</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>G</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>H</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>I</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>J</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>K</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>L</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>M</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>N</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>O</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>P</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Q</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>R</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>S</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>T</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>U</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>V</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>W</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>X</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Y</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>Z</th><td data-letterCode="">&#9746;</td></tr>
                 </table>
-
                 <table class="tableAlphabet displayNone" id="TableAlphabetNum">
-                    <tr><th>0</th><td>?</td></tr>
-                    <tr><th>1</th><td>?</td></tr>
-                    <tr><th>2</th><td>?</td></tr>
-                    <tr><th>3</th><td>?</td></tr>
-                    <tr><th>4</th><td>?</td></tr>
-                    <tr><th>5</th><td>?</td></tr>
-                    <tr><th>6</th><td>?</td></tr>
-                    <tr><th>7</th><td>?</td></tr>
-                    <tr><th>8</th><td>?</td></tr>
-                    <tr><th>9</th><td>?</td></tr>
-                    <tr><th>+</th><td>?</td></tr>
-                    <tr><th>-</th><td>?</td></tr>
-                    <tr><th>*</th><td>?</td></tr>
-                    <tr><th>/</th><td>?</td></tr>
-                    <tr><th>=</th><td>?</td></tr>
-                    <tr><th>(</th><td>?</td></tr>
-                    <tr><th>)</th><td>?</td></tr>
-                    <tr><th>?</th><td>?</td></tr>
-                    <tr><th>!</th><td>?</td></tr>
+                    <tr><th>0</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>1</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>2</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>3</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>4</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>5</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>6</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>7</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>8</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>9</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>+</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>-</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>*</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>/</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>=</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>(</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>)</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>?</th><td data-letterCode="">&#9746;</td></tr>
+                    <tr><th>!</th><td data-letterCode="">&#9746;</td></tr>
                 </table>
             </div>
 <br>
 <div class="buttonDiv">
-    <div id="LanguageSelection" class="roundButton countryFlag russiaSVG" title="Смена языка, для которого будет создан шрифт"></div>
+    <div id="LanguageSelection" class="roundButton countryFlag russiaSVG" title="Смена языка, для которого будет создан шрифт">
+         <div id="RusLang" class="blob blobRus russiaSVG"></div>
+         <div id="EngLang" class="blob blobEng unitedKingdomSVG"></div>
+         <div id="NumLang" class="blob blobNum numberSVG"></div>
+    </div>
     <div class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
-        <div class="subClearDiv">
-            <table>
-                <tr>
-                    <td> <div id="WashedMatrix" class="roundButtonSmall matrixClearSVG" title="Очистить матрицу"></div></td>
-                    <td> <div id="WashedTableAlphabet" class="roundButtonSmall washedAlphabetSVG" title="Очистить таблицу символов текущего шрифта"></div></td>
-                </tr>
-            </table>
-        </div>
+        <div id="WashedTableAlphabet" class="washedAlphabetButton washedAlphabetSVG" title="Очистить таблицу символов текущего шрифта"></div>
+        <div id="WashedMatrix" class="matrixClearButton matrixClearSVG" title="Очистить матрицу"></div>
     </div>
     <div id="AddCharInList" class="addCharInAlphabet roundButton plusSVG" title="Добавить созданный символ в таблицу"></div>
     <div id="SaveAlphabet"  class="saveAlphabet roundButton saveSVG" title="Сохранить шрифт"></div>
-
 </div>
-            <br>
-            <div id="FontSelection" class="fontSelection"></div>
-            <table class="fontNameTable">
-                <tr> <td class="fontSize">Название шрифта:</td></tr>
-                <tr> <td> <input type="text" id="NameDownloadFont" class="inputDownloadFont"></td></tr>
-            </table>
-            <a  id="downloadlink" style="display: none">Download</a>
+<br>
+<div id="FontSelection" class="fontSelection div_inline-block"></div>
+<div class="div_inline-block">
+    <span class="fontSize">Размер матрицы:</span> <input id="MatrixSize" type="number" class="inputNumber" min="1" value="1"><br>
+    <span class="fontSize">Размер "диода":</span> <input id="DiodeSize" type="number" class="inputNumber" min="1" value="10"><br>
+ <span class="fontSize">Название шрифта:</span><br>
+<input type="text" id="NameDownloadFont" class="inputDownloadFont">
+</div>
+<a  id="downloadlink" style="display: none">Download</a>
+
+
+<div class='circle'><span class='sector'></span></div>
+
 </body>
 </html>

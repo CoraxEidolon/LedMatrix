@@ -15,6 +15,7 @@
 .washedMatrix {
     border: 2px solid #ffe700;
     display: inline-block;
+    transition: all 2s;
 }
 
 .washedMatrix:hover, .washedMatrix:focus {
@@ -28,17 +29,52 @@
     transition: background-color 0.01s ease;
     transition-delay: 0s;
 }
-/*div, содержащий стрелки (кнопка очистки)*/
-.subClearDiv{
+/*div, содержащий кнопка очистки*/
+.washedAlphabetButton{
     display: none;
     position: relative;
+    width: 50%;
+    height: 100%;
+    border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+    background-color: white;
+    left:50%;
+}
+.washedAlphabetButton:hover, .washedAlphabetButton:focus{
+    transition-duration:1s;
+    filter: invert(100%);
+}
+.washedAlphabetButton:active{
+    background-color: #00f7ff;
+    transition: background-color 0.02s ease;
 }
 
-.washedMatrix:hover .subClearDiv{
-display: block;
-    left: -20px;
-    top:-10px;
+.matrixClearButton{
+    display: none;
+    position: relative;
+    background-color:white;
+    width: 50%;
+    height: 100%;
+    border-radius: 100% 0 0 100% / 50% 0 0 50%;
+    top:-100%;
 }
+
+.matrixClearButton:hover, .matrixClearButton:focus{
+    transition-duration:1s;
+    filter: invert(100%);
+}
+
+.matrixClearButton:active{
+    background-color: #00f7ff;
+    transition: background-color 0.02s ease;
+}
+
+.washedMatrix:hover .matrixClearButton {
+    display: block;
+}
+.washedMatrix:hover .washedAlphabetButton{
+    display: block;
+}
+
 
 .roundButtonSmall {
     border-radius: 7em;
@@ -103,12 +139,14 @@ display: block;
 .countryFlag {
     border: 2px solid rgba(226, 74, 8, 1);
     display: inline-block;
+    transition: all 1s;
 }
 
-.countryFlag:hover, .countryFlag:focus {
+.countryFlag:hover, .countryFlag:focus .blob {
     background-color: rgba(226, 74, 8, 0.76);
     transition: background-color 1s ease;
     transition-delay: 0.1s;
+    display: inline-block;
 }
 .countryFlag:active{
     background-color: #fdfef5;
@@ -116,8 +154,63 @@ display: block;
     transition-delay: 0s;
 }
 
+
+.countryFlag:hover .blob {
+    display: block;
+}
+
+
+.blob {
+    display: none;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 169, 0, 0.6);
+    position: absolute;
+    border: 1px solid rgb(19, 19, 19);
+}
+
+.blob:hover, .blob:focus {
+    background-color: rgba(191, 255, 16, 0.6);
+    transition: background-color 1s ease;
+    border: 1px solid rgb(255, 20, 0);
+    transition-delay: 0.2s;
+}
+
+.blob:active{
+    background-color: rgba(255, 87, 10, 0.81);
+    transition: background-color 0.2s ease;
+    transition-delay: 0s;
+}
+
+
+.blobRus{
+    position: relative;
+    top: -28px;
+    left: 5px;
+    transform: rotate(40deg);
+    border-radius: 4em 4em 0em 4em;
+}
+
+.blobEng{
+    position: relative;
+    top: -50px;
+    left: 49px;
+    transform: rotate(118deg);
+    border-radius: 4em 4em 0em 4em;
+}
+
+.blobNum{
+    position: relative;
+    top: -50px;
+    left: 35px;
+    transform: rotate(10deg);
+    border-radius: 0em 4em 4em 4em;
+}
+
+
+
 .createTicker{
-    border: 2px solid rgb(255, 13, 0);
+    border: 1px solid rgb(255, 13, 0);
     display: inline-block;
 }
 
@@ -131,8 +224,6 @@ display: block;
     transition: background-color 0.01s ease;
     transition-delay: 0s;
 }
-
-
 
 .saveArduinoCode{
     border: 2px solid rgb(191, 31, 255);
@@ -176,10 +267,5 @@ display: block;
     top:48px;
     right: 0;
 }
-
-
-
-
-
 
 

@@ -8,16 +8,10 @@ body {
     background-color: #3b434a;
     display:inline-block
 }
-.matrix tr {
-    min-height: 40px;
-    height: 40px;
-}
 
 .matrix td {
     border: 1px solid black;
-    min-width: 40px;
-    width: 40px;
-    border-radius: 30px;
+    border-radius:3em;
 }
 
 .ledON{background-color: #d70000;}
@@ -25,34 +19,37 @@ body {
 .displayNone{display: none;}
 
 .tableAlphabet{
-    border-collapse: collapse;
-    background-color: #3b434a;
+    border-collapse: separate;
     text-align: center;
 }
 
 .tableAlphabet td {
     border: 1px solid black;
+    border-radius: 0em 1em 1em 0em;
     padding: 5px;
-    width: 350px;
+    width: 130px;
     cursor: pointer;
+    background-color: #3b434a;
 }
 .tableAlphabet th {
     border: 1px solid black;
-    width:30px;
+    border-radius: 1em 0em 0em 1em;
+    width:40px;
+    background-color: #3b434a;
+    color: #ffbf03;
 }
 
-.div_TableAlphabet{
-    border: 4px solid black;
-    height: 346px;
+.div_TableAlphabet {
+    height: 350px;
+    width: 130px;
     margin-left: 10px;
     overflow-y: scroll;
-    display:inline-block
+    display: inline-block;
 }
 
 
 #CurrentSelectedFont{
     border-radius: 1em;
-    border: 2px solid #00d0c2;
     background-color: rgba(41, 90, 255, 0.64);
     color: #daff00;
 }
@@ -108,12 +105,8 @@ body {
     border-radius: 1em 0 0 1em ;
 }
 
-
 .fontSelection TD{
     cursor: pointer;
-}
-.fontNameTable{
-    display: inline-block;
 }
 
 .buttonDiv {
@@ -163,4 +156,19 @@ body {
     border: 2px solid black;
     border-radius: 1em;
     padding: 5px;
+}
+
+/*Полоса прокрутки*/
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(185, 3, 0, 0.7);
 }

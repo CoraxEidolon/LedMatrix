@@ -21,7 +21,7 @@
 }
 
 .matrixClearSVG {
-    background-image: url("../svg/matrix.svg");
+    background-image: url("../svg/dot-matrix.svg");
     background-size: 80% 80%;
     background-repeat: no-repeat;
     background-position: center;
@@ -85,9 +85,6 @@
     background-size: 95% 95%;
 }
 
-.buildSVG{
-
-}
 .arduinoLogoSVG{
      background-image: url("../svg/Arduino_Logo.svg");
      background-repeat: no-repeat;
@@ -107,5 +104,4 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: 85% 85%;
-
 }

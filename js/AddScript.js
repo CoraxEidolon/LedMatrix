@@ -47,6 +47,7 @@ function GetListFonts() {
         if (GLOBAL_Fonts[keys[i]]["type"] === "num") {
             buf += "<th class='numberSVG'>&emsp;</th>"
         }
+        buf += "<th>"+GLOBAL_Fonts[keys[i]]["size"]+"</th>"
         buf += "</tr>";
     }
     buf += "</table>";
