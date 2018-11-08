@@ -12,9 +12,9 @@ function onLoad() {
     document.getElementById("AddCharInList").addEventListener("click", AddCodeCharInAlphabet);
     document.getElementById("WashedMatrix").addEventListener("click", WashedMatrix);
     document.getElementById("WashedTableAlphabet").addEventListener("click",WashedTableAlphabet);
-    document.getElementById("RusLang").addEventListener("click", LanguageSelection);
-    document.getElementById("EngLang").addEventListener("click", LanguageSelection);
-    document.getElementById("NumLang").addEventListener("click", LanguageSelection);
+    document.getElementById("rus").addEventListener("click", LanguageSelection);
+    document.getElementById("eng").addEventListener("click", LanguageSelection);
+    document.getElementById("num").addEventListener("click", LanguageSelection);
     document.getElementById("FontSelection").addEventListener("click", SelectFont);
     document.getElementById("NameDownloadFont").addEventListener("change", ValidationNameDownloadFont);
     document.getElementById("DiodeSize").addEventListener("change",  DiodeSize);

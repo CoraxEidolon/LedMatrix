@@ -40,10 +40,8 @@ function runOnKeys(func) {
         e = e || window.event;
         delete pressed[e.keyCode];
         document.getElementById("Matrix").removeEventListener("mouseover", OnOffLed);
-
     };
 }
-
 
 /**
  * Выбор буквы из алфавита, для которой будет создаваться код
@@ -111,11 +109,13 @@ function AddCodeCharInAlphabet() {
     /*Находим выделенную букву в списке алфавита и добавляем новый код*/
     document.getElementById("EditCharInAlphabet").setAttribute("data-letterCode",result);
     document.getElementById("EditCharInAlphabet").innerHTML="&#9745;";
+    document.getElementById("EditCharInAlphabet").classList.add("addOk");
+    /*убираем класс с вращением, чтобы при новом нажатие вращение работало*/
+    setTimeout(function(){document.getElementById("EditCharInAlphabet").removeAttribute("class");}, 500);
 }
 
 /**
- * Переключает таблицы языков русский, английский
- *срабатывает при клике на соответствующую кноаку
+ * Переключает таблицы языков срабатывает при клике на соответствующую кноаку
  * @constructor
  */
 function LanguageSelection(event) {
@@ -130,46 +130,25 @@ function LanguageSelection(event) {
  * @constructor
  */
 function LanguageSwitch(choice) {
-    if (choice === "EngLang") {
-        ClearItem("TableAlphabetRus");
-        document.getElementById("LanguageSelection").classList.remove("russiaSVG");
-        document.getElementById("LanguageSelection").classList.remove("numberSVG");
+    var FontType = []
+    FontType = {
+        "rus": {"TableID": "TableAlphabetRus", "img": "russiaSVG"},
+        "eng": {"TableID": "TableAlphabetEng", "img": "unitedKingdomSVG"},
+        "num": {"TableID": "TableAlphabetNum", "img": "numberSVG"}
+    };
+    var keys = Object.keys(FontType);
 
-        document.getElementById("LanguageSelection").classList.add("unitedKingdomSVG");
-        document.getElementById("EditCharInAlphabet").removeAttribute("id");
-        document.getElementById('TableAlphabetEng').rows[0].cells[1].id = "EditCharInAlphabet";
-        document.getElementById("TableAlphabetEng").classList.remove("displayNone");
-
-        document.getElementById("TableAlphabetRus").classList.add("displayNone");
-        document.getElementById("TableAlphabetNum").classList.add("displayNone");
+    for (var i = 0; i < keys.length; i++) {
+        if (keys[i] !== choice) {
+            ClearItem(FontType[keys[i]]["TableID"]);
+            document.getElementById("LanguageSelection").classList.remove(FontType[keys[i]]["img"]);
+            document.getElementById(FontType[keys[i]]["TableID"]).classList.add("displayNone");
+        }
     }
-    if (choice === "RusLang") {
-        ClearItem("TableAlphabetEng");
-        document.getElementById("LanguageSelection").classList.remove("unitedKingdomSVG");
-        document.getElementById("LanguageSelection").classList.remove("numberSVG");
-
-        document.getElementById("LanguageSelection").classList.add("russiaSVG");
-        document.getElementById("EditCharInAlphabet").removeAttribute("id");
-        document.getElementById('TableAlphabetRus').rows[0].cells[1].id = "EditCharInAlphabet";
-        document.getElementById("TableAlphabetRus").classList.remove("displayNone");
-
-        document.getElementById("TableAlphabetEng").classList.add("displayNone");
-        document.getElementById("TableAlphabetNum").classList.add("displayNone");
-    }
-
-    if (choice === "NumLang") {
-        ClearItem("TableAlphabetEng");
-        document.getElementById("LanguageSelection").classList.remove("unitedKingdomSVG");
-        document.getElementById("LanguageSelection").classList.remove("russiaSVG");
-
-        document.getElementById("LanguageSelection").classList.add("numberSVG");
-        document.getElementById("EditCharInAlphabet").removeAttribute("id");
-        document.getElementById('TableAlphabetNum').rows[0].cells[1].id = "EditCharInAlphabet";
-        document.getElementById("TableAlphabetNum").classList.remove("displayNone");
-
-        document.getElementById("TableAlphabetEng").classList.add("displayNone");
-        document.getElementById("TableAlphabetRus").classList.add("displayNone");
-    }
+    document.getElementById("EditCharInAlphabet").removeAttribute("id");
+    document.getElementById(FontType[choice]["TableID"]).rows[0].cells[1].id = "EditCharInAlphabet";
+    document.getElementById("LanguageSelection").classList.add(FontType[choice]["img"]);
+    document.getElementById(FontType[choice]["TableID"]).classList.remove("displayNone");
 }
 
 /**
@@ -183,6 +162,7 @@ function WashedMatrix() {
         ClearItem("Matrix");
     }
 }
+
 /***
  * Определяет тип текущего шрифта
  * @returns {Array} - Возвращает id его таблицы и краткое наименование шрифта
@@ -259,9 +239,8 @@ function SaveFile() {
     var Table=CurrentTypeFont();
     textbox += "\""+Table["Short"]+"\",\r\n";
     ID=Table["Table"];
-
     textbox += "\"size\":" + "\""+document.getElementById("MatrixSize").value+"\",\n";
-    textbox += "\"Alphabet\":{\r\n"
+    textbox += "\"Alphabet\":{\r\n";
     var ok = true;
     for (var i = 0; i < document.getElementById(ID).rows.length; i++) {
         var letter = document.getElementById(ID).rows[i].cells[0].innerHTML;
@@ -278,7 +257,6 @@ function SaveFile() {
         var link = document.getElementById('downloadlink');
         link.href = makeTextFile(textbox);
         link.download = fontName + ".js";
-        //link.style.display = 'block';
         document.getElementById('downloadlink').click();
     }
 }
@@ -298,17 +276,18 @@ function SelectFont(event) {
         target.id = "CurrentSelectedFont";
         var fontName = document.getElementById("CurrentSelectedFont").innerHTML;
         BuildMatrix(GLOBAL_Fonts[fontName]["size"]);
+        document.getElementById("MatrixSize").value=GLOBAL_Fonts[fontName]["size"];
         var id = "";
         if (GLOBAL_Fonts[fontName]["type"] === "rus") {
-            LanguageSwitch("RusLang");
+            LanguageSwitch("rus");
             id = "TableAlphabetRus";
         } else
         if (GLOBAL_Fonts[fontName]["type"] === "eng") {
-            LanguageSwitch("EngLang");
+            LanguageSwitch("eng");
             id = "TableAlphabetEng";
         } else
         if (GLOBAL_Fonts[fontName]["type"] === "num") {
-            LanguageSwitch("NumLang");
+            LanguageSwitch("num");
             id = "TableAlphabetNum";
         }
         for (var i = 0; i < Object.keys(GLOBAL_Fonts[fontName]["Alphabet"]).length; i++) {
@@ -334,6 +313,10 @@ if (fontName.length>20){
     document.getElementById("NameDownloadFont").value=fontName;
 }
 
+/**
+ * Определяет размер "диода" в таблице создания символа
+ * @constructor
+ */
 function DiodeSize() {
     var size=document.getElementById("DiodeSize").value+"px";
     var styles = document.getElementsByTagName('style'); // все стили
