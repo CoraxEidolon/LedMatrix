@@ -96,11 +96,12 @@
     background-image: url("../svg/code-break.svg");
     background-repeat: no-repeat;
     background-position: center;
+    background-size: 90% 90%;
 
 }
 
-.letterASVG{
-    background-image: url("../svg/letterA.svg");
+.bookASVG{
+    background-image: url("../svg/open-book.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 85% 85%;

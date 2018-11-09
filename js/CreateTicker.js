@@ -42,174 +42,157 @@ function SelectFont(event) {
  * Так при вводе огромного текста, расчеты занимают время и чтобы пользователь понимал,
  * что программа считает появляется окно загрузки.
  * В следствии этого данная функция вызывается асинхронна из функции loading();
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * Ps Пока тут очень много всего и прям мясо, потом нужно разбить на функции...
- * Или наконец запилить класс хз =)
  * @constructor
  */
 function CreateTicker() {
-    var fontList = document.getElementsByClassName("tickerSelectFont");//список выбранных шрифтов
-    /*fontTypeList-Первичный ключ будет содержать тип шрифта, который содержит имя выбранного шрифта*/
+    var text = document.getElementById("TickerInput").value;//Текст бегущей строки
+        var binaryFont = GetBinary(text);//Двоичное представление бегущей строки по столбцам
+        console.log(binaryFont);
+        /*Размер шрифта, определяется от количествка строк в матрице*/
+        var fontSize = Number(document.getElementById("MatrixRows").value);
+
+        /*Результирующий массив, содержит готовый массив бегущей строки, для загрузки в МК*/
+        var arResult = new Array(fontSize);
+        for (var i = 0; i < fontSize; i++) {
+            arResult[i] = GetTicker(binaryFont[i]);
+        }
+
+        CodeOutput(arResult);
+
+        console.log(arResult);
+        /*После того, как код бегущей строки получен, отключаем загрузку и показываем окно кода*/
+        document.getElementById("Loading").classList.remove("loader");
+        document.getElementById("CodeTickerResult").classList.remove("displayNone");
+}
+
+
+/**
+ * Создает бинарное представление бегущей строки
+ * @param text -Текст бегущей строки
+ * @returns {Array} - Возвращает бинарное представление всей бегущей строки
+ * @constructor
+ */
+function GetBinary(text) {
+
+    /*определяет длину пустого столбца (только нули) */
+    function ZeroLength(fontSize) {
+        var zeroBuf = "";
+        for (var i = 0; i < fontSize; i++) {
+            zeroBuf += "00000000";
+        }
+        return (zeroBuf);
+    }
+
+    /*список выбранных шрифтов*/
+    var fontList = document.getElementsByClassName("tickerSelectFont");
+
+    /* В fontTypeList-Первичный ключ будет содержать тип шрифта, который содержит имя выбранного шрифта*/
     var fontTypeList = [];
     for (var i = 0; i < fontList.length; i++) {
         fontTypeList.push(GLOBAL_Fonts[fontList[i].innerHTML]["type"]);
         fontTypeList[GLOBAL_Fonts[fontList[i].innerHTML]["type"]] = fontList[i].innerHTML;
     }
-    var text = document.getElementById("TickerInput").value;//Текст бегущей строки
-    var binaryFont = [];//Двоичное представление бегущей строки по столбцам, например 00000000
+
+    /*Результирующий массив, который будет содержать конечный результат (бинарное представление строки) */
+    var binaryTickerResult = [];
+
     for (var i = 0; i < text.length; i++) {
         var buf = text[i];//Берем по одному символу строки
+
+        /*Так как все символы алфавита записаны в верхнем регистре, переводим символ в верхний регистр*/
         buf = buf.toUpperCase();
-        var letter = "";
+
+        /*Шестнадцатеричное представление полученного символа*/
+        var letter16 = "";
+
         /*Проверяем, к какому типу алфавитов относится символ*/
         if (/[А-яЁё]/.test(buf)) {
-            letter = GLOBAL_Fonts[fontTypeList["rus"]]["Alphabet"][buf];
+            letter16 = GLOBAL_Fonts[fontTypeList["rus"]]["Alphabet"][buf];
         } else if (/[a-zA-Z]/.test(buf)) {
-            letter = GLOBAL_Fonts[fontTypeList["eng"]]["Alphabet"][buf];
+            letter16 = GLOBAL_Fonts[fontTypeList["eng"]]["Alphabet"][buf];
         } else if (/[0-9,+\-*/=()?!]/.test(buf)) {
-            letter = GLOBAL_Fonts[fontTypeList["num"]]["Alphabet"][buf];
+            letter16 = GLOBAL_Fonts[fontTypeList["num"]]["Alphabet"][buf];
         }
-        /*Удаляем все лишние элементы, оставляя "чистый" код*/
-        letter = letter.replace(/{/g, "");
-        letter = letter.replace(/}/g, "");
-        letter = letter.replace(/0x/g, "");
-        letter = letter.split(",");
+
+        /*Размер шрифта, определяется от количествка строк в матрице*/
+        var fontSize = document.getElementById("MatrixRows").value;
+
+        /*Удаляем все лишние элементы, оставляя "чистый" код символы*/
+        letter16 = letter16.split(",");
+
         /*Так как пробел представляет отдельную группу и для него отдельная
-        настройка длинны, то имеем отдельное правило*/
+         настройка длинны, то имеем отдельное правило*/
         if (/[\s]/.test(buf)) {
+
             /*Длина пробела, в зависимости от заданной*/
             var spaceLength = document.getElementById("SpaceLength").value;
             for (var spaceCounter = 0; spaceCounter < spaceLength; spaceCounter++) {
-                binaryFont.push("00000000");
+                binaryTickerResult.push(ZeroLength(fontSize));
             }
         } else {
+
             /*Удаляем пустые лишние строки из начала(лево), оставляя только "чистый" символ*/
             while (true) {
-                if (letter[0] === "00") {
-                    letter.shift();
+                if (letter16[0] === "0") {
+                    letter16.shift();
                 } else break;
             }
             /*Удаляем пустые лишние строки из конца(право),оставляя только "чистый" символ*/
             while (true) {
-                if (letter[letter.length - 1] === "00") {
-                    letter.pop();
+                if (letter16[letter16.length - 1] === "0") {
+                    letter16.pop();
                 } else break;
             }
 
             /*Так как js при расчётах убирает не значащие нули, возвращаем их, так как нам они нужны.
-            Добиваемся, длинны 8 (размер одной матрицы)*/
-            for (var j = 0; j < letter.length; j++) {
-                var bufBinary = letter[j];
+             Добиваемся, нужной длинны: fontSize*8 */
+            for (var j = 0; j < letter16.length; j++) {
+                var bufBinary = letter16[j];
                 bufBinary = parseInt(bufBinary, 16).toString(2);
-                if (buf.length < 8) {
+                if (bufBinary.length < (fontSize * 8)) {
                     var zeroAdd = "";
-                    for (var z = 0; z < 8 - bufBinary.length; z++) {
+                    for (var z = 0; z < (fontSize * 8) - bufBinary.length; z++) {
                         zeroAdd += "0";
                     }
                     zeroAdd += bufBinary;
                     bufBinary = zeroAdd;
                 }
-                binaryFont.push(bufBinary);
+                binaryTickerResult.push(bufBinary);
             }//j
-            /*Добавляем расстояние между символами, в зависимости от заданного*/
-            var spacingBetweenLetters = document.getElementById("SpacingBetweenLetters").value;
-            for (var distance = 0; distance < spacingBetweenLetters; distance++) {
-                binaryFont.push("00000000");
+
+            /*Проверяем не выходит ли следующий символ, за длину строки*/
+            if (text.length >= (i + 1)) {
+                /*Если следующий символ пробел, то расстояние между символами не добавляем*/
+                if (/[\s]/.test(text[i + 1]) === false) {
+                    /*Добавляем расстояние между символами, в зависимости от заданного*/
+                    var spacingBetweenLetters = document.getElementById("SpacingBetweenLetters").value;
+                    for (var distance = 0; distance < spacingBetweenLetters; distance++) {
+                        binaryTickerResult.push(ZeroLength(fontSize));
+                    }
+                }
             }
         }//i
     }//не пробел
+
+    var MatrixLength = document.getElementById("MatrixColumns").value;//Количество матриц по горизонтали (столбцы)
     /*Чтобы текст прошел полностью, плюс пустые матрицы по окончанию*/
-    for (var i = 0; i <32; i++) {
-        binaryFont.push("00000000");
+    for (var i = 0; i < (MatrixLength * 8); i++) {
+        binaryTickerResult.push(ZeroLength(fontSize));
     }
-    /*Результирующий массив, содержит готовый массив, для загрузки в МК*/
-    var arResult = GetTicker(binaryFont);
 
-    /*________________________ВЫВОД________________________*/
-    var Columns = document.getElementById("MatrixColumns").value;
-    var Rows = document.getElementById("MatrixRows").value;
-    document.getElementById("CodeTickerResult").value+="int i;\nint j;\n";
-    /*Подключение к микроконтроллеру.
-    В этот раз все удобно, расположение матриц на экране, соответствует матрицам в жизни*/
-    for (var i = 0; i < Columns; i++) {
-        document.getElementById("CodeTickerResult").value +="//Матрица "+i+"\n";
-        document.getElementById("CodeTickerResult").value +="int M"+i+"_CLK ="+document.getElementById("0_"+i+"_CLK").value+";\n";
-        document.getElementById("CodeTickerResult").value +="int M"+i+"_CS ="+document.getElementById("0_"+i+"_CS").value+";\n";
-        document.getElementById("CodeTickerResult").value +="int M"+i+"_DIN ="+document.getElementById("0_"+i+"_DIN").value+";\n";
+    /*Разбиваем полученный массив на массивы для каждой строки (по 8 элементов)*/
+    var binaryMas = new Array(Number(fontSize));
+    for (var i = 0; i < binaryMas.length; i++) {
+        binaryMas[i] = new Array(binaryTickerResult.length);
     }
-    document.getElementById("CodeTickerResult").value +="const uint8_t line0["+arResult.length+"][8]PROGMEM ={\n";
-
-    /*Вывод массива бегущей строки*/
-    for (var i = 0; i < arResult.length; i++) {
-        document.getElementById("CodeTickerResult").value += arResult[i] + ",\n";
+    for (var i = 0; i < binaryTickerResult.length; i++) {
+        for (var j = 0; j < fontSize; j++) {
+            binaryMas[j][i] = binaryTickerResult[i].substr(j * 8, 8);
+        }
     }
-    document.getElementById("CodeTickerResult").value +="};\n\n";
 
-    /*Функции вывода*/
-    document.getElementById("CodeTickerResult").value +="void Write_Matr_byte(unsigned char DATA, int CS, int CLK, int DIN) {\n";
-    document.getElementById("CodeTickerResult").value +="   unsigned char i;\n";
-    document.getElementById("CodeTickerResult").value +="    digitalWrite(CS,LOW);\n";
-    document.getElementById("CodeTickerResult").value +="    for(i=8;i>=1;i--) {\n";
-    document.getElementById("CodeTickerResult").value +="        digitalWrite(CLK,LOW);\n";
-    document.getElementById("CodeTickerResult").value +="        digitalWrite(DIN,DATA&0x80);\n";
-    document.getElementById("CodeTickerResult").value +="        DATA = DATA<<1;\n";
-    document.getElementById("CodeTickerResult").value +="        digitalWrite(CLK,HIGH);\n";
-    document.getElementById("CodeTickerResult").value +="    }\n";
-    document.getElementById("CodeTickerResult").value +=" }\n\n";
-    document.getElementById("CodeTickerResult").value +="void Write_Matr(unsigned char address,unsigned char dat, int CS, int CLK, int DIN){\n";
-    document.getElementById("CodeTickerResult").value +="    digitalWrite(CS,LOW);\n";
-    document.getElementById("CodeTickerResult").value +="    Write_Matr_byte(address,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value +="    Write_Matr_byte(dat,CS,CLK,DIN);\n";
-    document.getElementById("CodeTickerResult").value +="    digitalWrite(CS,HIGH);\n";
-    document.getElementById("CodeTickerResult").value +="}\n\n";
-    document.getElementById("CodeTickerResult").value +=" void Init_Matr(int CS, int CLK, int DIN){\n";
-    document.getElementById("CodeTickerResult").value +="    Write_Matr(0x09, 0x00,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value +="    Write_Matr(0x0a, 0x03,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value +="    Write_Matr(0x0b, 0x07,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value +="    Write_Matr(0x0c, 0x01,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value +="    Write_Matr(0x0f, 0x00,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value +="}\n\n";
-    document.getElementById("CodeTickerResult").value +="void setup() {\n";
-
-    /*Настраиваем пинов вывода матрицы*/
-    for (var i = 0; i < Columns; i++) {
-        document.getElementById("CodeTickerResult").value +="//Настраиваем выводы матрицы "+i+" как выходы:\n";
-        document.getElementById("CodeTickerResult").value +="pinMode(M"+i+"_CLK,OUTPUT);\n";
-        document.getElementById("CodeTickerResult").value +="pinMode(M"+i+"_CS,OUTPUT);\n";
-        document.getElementById("CodeTickerResult").value +="pinMode(M"+i+"_DIN,OUTPUT);\n";
-    }
-    document.getElementById("CodeTickerResult").value +="delay(50);\n";
-
-    /*Инициализация матриц*/
-    for (var i = 0; i < Columns; i++) {
-        document.getElementById("CodeTickerResult").value +="Init_Matr(M"+i+"_CS, M"+i+"_CLK, M"+i+"_DIN);\n";
-    }
-    document.getElementById("CodeTickerResult").value +="}\n\n";
-    document.getElementById("CodeTickerResult").value +="void loop(){\n\n";
-    document.getElementById("CodeTickerResult").value +="for (j = 0; j < "+arResult.length+"; j++) {\n";
-    for (var i = Columns-1; i >=0; i--) {
-        var coefficient=(Columns-1)-i;
-      if(i===(Columns-1)){
-          document.getElementById("CodeTickerResult").value +="for (i = 1; i < 9; i++) {\n";
-          document.getElementById("CodeTickerResult").value +="    Write_Matr(i, pgm_read_byte( &line0[j][i - 1]), M"+i+"_CS, M"+i+"_CLK, M"+i+"_DIN);\n";
-          document.getElementById("CodeTickerResult").value +="}\n\n";
-      }else{
-          document.getElementById("CodeTickerResult").value +="if (j <= "+(coefficient*8-1)+") {\n";
-          document.getElementById("CodeTickerResult").value +="    Write_Matr(i, 0x00, M"+i+"_CS, M"+i+"_CLK, M"+i+"_DIN);\n";
-          document.getElementById("CodeTickerResult").value +="} else {\n";
-          document.getElementById("CodeTickerResult").value +="    for (i = 1; i < 9; i++) {\n";
-          document.getElementById("CodeTickerResult").value +="        Write_Matr(i, pgm_read_byte( &line0[j - "+(coefficient*8)+"][i - 1]), M"+i+"_CS, M"+i+"_CLK, M"+i+"_DIN);\n";
-          document.getElementById("CodeTickerResult").value +="    }\n";
-          document.getElementById("CodeTickerResult").value +="}\n\n";
-      }///!
-    }/////!
-    document.getElementById("CodeTickerResult").value +="delay("+document.getElementById("speedTicker").value+");//Скорость вывода\n";
-    document.getElementById("CodeTickerResult").value +="    }\n";
-    document.getElementById("CodeTickerResult").value +="}\n";
-    /*После того, как код бегущей строки получен, отключаем загрузку и показываем окно кода*/
-    document.getElementById("Loading").classList.remove("loader");
-    document.getElementById("CodeTickerResult").classList.remove("displayNone");
-}
+    return (binaryMas);
+}//GetBinary
 
 /**
  * Принимает двоичное представление бегущей строки (0-диод не горит, 1 горит) и преобразует его в 16ричный код, понятный микроконтроллеру.
@@ -264,6 +247,108 @@ function GetTicker(binaryFont) {
 }
 
 /**
+ * Выводит код пригодный для загрузки в МК в соответствующее поле на экране
+ * @param arResult - Массив содержащий шестнадцатеричный код бегущей строки
+ * @constructor
+ */
+function CodeOutput(arResult) {
+    /*________________________ВЫВОД________________________*/
+    var Columns = Number(document.getElementById("MatrixColumns").value);
+    var Rows = Number(document.getElementById("MatrixRows").value);
+    document.getElementById("CodeTickerResult").value += "int i;\nint j;\n";
+    /*Подключение к микроконтроллеру.
+     В этот раз все удобно, расположение матриц на экране, соответствует матрицам в жизни*/
+    document.getElementById("CodeTickerResult").value +="//M_Строка_Столбец\n";
+    for (var j = 0; j < Rows; j++) {
+        for (var i = 0; i < Columns; i++) {
+            document.getElementById("CodeTickerResult").value += "//Матрица " + j + "_" + i + "\n";
+            document.getElementById("CodeTickerResult").value += "int M_" + j + "_" + i + "_CLK =" + document.getElementById(j + "_" + i + "_CLK").value + ";\n";
+            document.getElementById("CodeTickerResult").value += "int M_" + j + "_" + i + "_CS =" + document.getElementById(j + "_" + i + "_CS").value + ";\n";
+            document.getElementById("CodeTickerResult").value += "int M_" + j + "_" + i + "_DIN =" + document.getElementById(j + "_" + i + "_DIN").value + ";\n";
+        }
+    }
+
+    for (var j = 0; j < Rows; j++) {
+        document.getElementById("CodeTickerResult").value += "const uint8_t line" + j + "[" + arResult[j].length + "][8]PROGMEM ={\n";
+
+        /*Вывод массива бегущей строки*/
+        for (var i = 0; i < arResult[j].length; i++) {
+            document.getElementById("CodeTickerResult").value += arResult[j][i] + ",\n";
+        }
+        document.getElementById("CodeTickerResult").value += "};\n\n";
+    }
+    document.getElementById("CodeTickerResult").value += "\n";
+    /*Функции вывода*/
+    document.getElementById("CodeTickerResult").value += "void Write_Matr_byte(unsigned char DATA, int CS, int CLK, int DIN) {\n";
+    document.getElementById("CodeTickerResult").value += "   unsigned char i;\n";
+    document.getElementById("CodeTickerResult").value += "    digitalWrite(CS,LOW);\n";
+    document.getElementById("CodeTickerResult").value += "    for(i=8;i>=1;i--) {\n";
+    document.getElementById("CodeTickerResult").value += "        digitalWrite(CLK,LOW);\n";
+    document.getElementById("CodeTickerResult").value += "        digitalWrite(DIN,DATA&0x80);\n";
+    document.getElementById("CodeTickerResult").value += "        DATA = DATA<<1;\n";
+    document.getElementById("CodeTickerResult").value += "        digitalWrite(CLK,HIGH);\n";
+    document.getElementById("CodeTickerResult").value += "    }\n";
+    document.getElementById("CodeTickerResult").value += " }\n\n";
+    document.getElementById("CodeTickerResult").value += "void Write_Matr(unsigned char address,unsigned char dat, int CS, int CLK, int DIN){\n";
+    document.getElementById("CodeTickerResult").value += "    digitalWrite(CS,LOW);\n";
+    document.getElementById("CodeTickerResult").value += "    Write_Matr_byte(address,CS, CLK, DIN);\n";
+    document.getElementById("CodeTickerResult").value += "    Write_Matr_byte(dat,CS,CLK,DIN);\n";
+    document.getElementById("CodeTickerResult").value += "    digitalWrite(CS,HIGH);\n";
+    document.getElementById("CodeTickerResult").value += "}\n\n";
+    document.getElementById("CodeTickerResult").value += " void Init_Matr(int CS, int CLK, int DIN){\n";
+    document.getElementById("CodeTickerResult").value += "    Write_Matr(0x09, 0x00,CS, CLK, DIN);\n";
+    document.getElementById("CodeTickerResult").value += "    Write_Matr(0x0a, 0x03,CS, CLK, DIN);\n";
+    document.getElementById("CodeTickerResult").value += "    Write_Matr(0x0b, 0x07,CS, CLK, DIN);\n";
+    document.getElementById("CodeTickerResult").value += "    Write_Matr(0x0c, 0x01,CS, CLK, DIN);\n";
+    document.getElementById("CodeTickerResult").value += "    Write_Matr(0x0f, 0x00,CS, CLK, DIN);\n";
+    document.getElementById("CodeTickerResult").value += "}\n\n";
+    document.getElementById("CodeTickerResult").value += "void setup() {\n";
+
+    /*Настраиваем пинов вывода матрицы*/
+    for (var j = 0; j < Rows; j++) {
+        for (var i = 0; i < Columns; i++) {
+            document.getElementById("CodeTickerResult").value += "//Настраиваем выводы матрицы " + i + " как выходы:\n";
+            document.getElementById("CodeTickerResult").value += "pinMode(M_" + j + "_" + i + "_CLK,OUTPUT);\n";
+            document.getElementById("CodeTickerResult").value += "pinMode(M_" + j + "_" + i + "_CS,OUTPUT);\n";
+            document.getElementById("CodeTickerResult").value += "pinMode(M_" + j + "_" + i + "_DIN,OUTPUT);\n";
+        }
+    }
+    document.getElementById("CodeTickerResult").value += "delay(50);\n";
+
+    /*Инициализация матриц*/
+    for (var j = 0; j < Rows; j++) {
+        for (var i = 0; i < Columns; i++) {
+            document.getElementById("CodeTickerResult").value += "Init_Matr(M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+        }
+    }
+    document.getElementById("CodeTickerResult").value += "}\n\n";
+    document.getElementById("CodeTickerResult").value += "void loop(){\n\n";
+    document.getElementById("CodeTickerResult").value += "for (j = 0; j < " + arResult[0].length + "; j++) {\n";
+
+    for (var j = 0; j < Rows; j++) {
+        for (var i = Columns - 1; i >= 0; i--) {
+            var coefficient = (Columns - 1) - i;
+            if (i === (Columns - 1)) {
+                document.getElementById("CodeTickerResult").value += "for (i = 1; i < 9; i++) {\n";
+                document.getElementById("CodeTickerResult").value += "    Write_Matr(i, pgm_read_byte( &line" + j + "[j][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+                document.getElementById("CodeTickerResult").value += "}\n\n";
+            } else {
+                document.getElementById("CodeTickerResult").value += "if (j <= " + (coefficient * 8 - 1) + ") {\n";
+                document.getElementById("CodeTickerResult").value += "    Write_Matr(i, 0x00, M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+                document.getElementById("CodeTickerResult").value += "} else {\n";
+                document.getElementById("CodeTickerResult").value += "    for (i = 1; i < 9; i++) {\n";
+                document.getElementById("CodeTickerResult").value += "        Write_Matr(i, pgm_read_byte( &line" + j + "[j - " + (coefficient * 8) + "][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+                document.getElementById("CodeTickerResult").value += "    }\n";
+                document.getElementById("CodeTickerResult").value += "}\n\n";
+            }///!
+        }//i
+    }//j
+    document.getElementById("CodeTickerResult").value += "delay(" + document.getElementById("speedTicker").value + ");//Скорость вывода\n";
+    document.getElementById("CodeTickerResult").value += "    }\n";
+    document.getElementById("CodeTickerResult").value += "}\n";
+}
+
+/**
  * Сопоставляет типы введённого текста для бегущей строки с выбранными шрифтами
  * @returns {boolean} -Возвращает true, типы введенного шрифта совпадают с типами выбранного иначе false
  * @constructor
@@ -271,6 +356,12 @@ function GetTicker(binaryFont) {
 function CheckAvailableFonts() {
     /*Получаем список используемых шрифтов*/
     var fontList = document.getElementsByClassName("tickerSelectFont");//список выбранных шрифтов
+
+    var text = document.getElementById("TickerInput").value;//Текст бегущей строки
+    if(text.length===0){
+        alert("Введите текст бегущей строки!");
+        return false;
+    } else
     if (fontList.length === 0) {
         alert("Выберете шрифты для работы!");
         return false;
@@ -281,7 +372,6 @@ function CheckAvailableFonts() {
         for (var i = 0; i < fontList.length; i++) {
             fontTypeList.push(GLOBAL_Fonts[fontList[i].innerHTML]["type"]);
         }
-        var text = document.getElementById("TickerInput").value;//Текст бегущей строки
 
         /*Проверяем, содержит ли текст РУССКИЕ буквы и выбран ли соответствующий шрифт*/
         if (text.search(/[А-яЁё]/) >= 0) {
@@ -310,7 +400,7 @@ function CheckAvailableFonts() {
                 alert("Текст бегущей строки содержит английские символы, однако соответствующий шрифт не выбран");
             }
         }//eng
-        /*Проверяем, содержит ли текст ЦИФРЫ, СКОБКИ, МАТ ЗНАКИ буквы и выбран ли соответствующий шрифт*/
+        /*Проверяем, содержит ли текст ЦИФРЫ, СКОБКИ, МАТ ЗНАКИ и выбран ли соответствующий шрифт*/
         if (text.search(/[0-9+\-*/=()?!]/) >= 0) {
             var ok = false; //Если все необходимые типы шрифтов содержатся, то переменная будет равна true
             for (var i = 0; i < fontTypeList.length; i++) {
@@ -348,7 +438,7 @@ function loading() {
         document.getElementById("CodeTickerResult").classList.add("displayNone");
         document.getElementById("Loading").classList.add("loader");
         document.getElementById("CodeTickerResult").classList.remove("packageSVG");
-        setTimeout(CreateTicker, 0);//Асинхронный запуск, самый простой вариант, работает =)
+        setTimeout(CreateTicker, 0);//Асинхронный запуск, самый простой вариант, но работает =)
     }
 }
 
@@ -357,18 +447,27 @@ function loading() {
  * @constructor
  */
 function BuildTable() {
+
+    var SelectfontList = document.getElementsByClassName("tickerSelectFont");//список выбранных шрифтов
+
+    /*Убираем выделения с выбранных шрифтов, так как под новый размер они могут не подойти*/
+    for (var i = 0; i < SelectfontList.length; i++) {
+        SelectfontList[i].classList.remove("tickerSelectFont");
+    }
+
     document.getElementById('Div_MatrixTableInput').innerHTML = "";
     document.getElementById('Div_MatrixTableInput').innerHTML = "<table id='TableInput' class='tableInput'> </table>";
+    SizeFontShow(document.getElementById("MatrixRows").value);
     for (var i = 0; i < document.getElementById("MatrixRows").value; i++) {
         var buf = "<tr>";
         for (var j = 0; j < document.getElementById("MatrixColumns").value; j++) {
             buf += "<td>";
             var id = i + "_" + j + "_CLK";
             buf += "CLK:<input type='number' min='0' value='0' class='inputNumber' id='" + id + "' ><br>";
-             id = i + "_" + j + "_CS";
-            buf += "CS&ensp;:<input type='number' min='0' value='0'  class='inputNumber'  id='" + id + "' ><br>";
-             id = i + "_" + j + "_DIN";
-            buf += "DIN:<input type='number' min='0' value='0'  class='inputNumber'  id='" + id + "' ><br>";
+            id = i + "_" + j + "_CS";
+            buf += "CS:&nbsp;&ensp;<input type='number' min='0' value='0'  class='inputNumber'  id='" + id + "' ><br>";
+            id = i + "_" + j + "_DIN";
+            buf += "DIN:&nbsp;<input type='number' min='0' value='0'  class='inputNumber'  id='" + id + "' ><br>";
             buf += "</td>";
         }//j
         buf += "</tr>";
@@ -377,10 +476,10 @@ function BuildTable() {
 }
 
 /**
-* Загружает на устройство скетч Arduino.
-* После чего его можно открыть в Arduino IDE и загрузить в МК.
-* @constructor
-*/
+ * Загружает на устройство скетч Arduino.
+ * После чего его можно открыть в Arduino IDE и загрузить в МК.
+ * @constructor
+ */
 function SaveArduinoFile() {
     var textFile = null,
         makeTextFile = function (text) {
@@ -392,12 +491,12 @@ function SaveArduinoFile() {
             return textFile;
         };
     var d = new Date();
-    var SketchName = "Sketch_"+d.getDate()+"."+Number(d.getMonth() + 1)+"."+d.getFullYear()+"_"+d.getHours()+"-"+d.getMinutes();
+    var SketchName = "Sketch_" + d.getDate() + "." + Number(d.getMonth() + 1) + "." + d.getFullYear() + "_" + d.getHours() + "-" + d.getMinutes();
     var text = document.getElementById("CodeTickerResult").value;
-        var link = document.getElementById('downloadlink');
-        link.href = makeTextFile(text);
-        link.download = SketchName + ".ino";
-        document.getElementById('downloadlink').click();
+    var link = document.getElementById('downloadlink');
+    link.href = makeTextFile(text);
+    link.download = SketchName + ".ino";
+    document.getElementById('downloadlink').click();
 }
 
 /**
@@ -407,7 +506,7 @@ function SaveArduinoFile() {
 function WashedTickerInput() {
     var ok = confirm("Очистить текст бегущей строки?");
     if (ok === true) {
-        document.getElementById("TickerInput").value="";
+        document.getElementById("TickerInput").value = "";
     }
 }
 /**
@@ -417,7 +516,33 @@ function WashedTickerInput() {
 function WashedCodeTickerResult() {
     var ok = confirm("Очистить полученный программный код?");
     if (ok === true) {
-        document.getElementById("CodeTickerResult").value="";
+        document.getElementById("CodeTickerResult").value = "";
         document.getElementById("CodeTickerResult").classList.add("packageSVG");
     }
 }
+
+/**
+ * Показывает шрифты заданного размера (количество матриц по вертикали)
+ * @param sizeFont - количество матриц по вертикали (строки)
+ * @constructor
+ */
+function SizeFontShow(sizeFont) {
+    if (sizeFont === undefined) {
+        sizeFont = "1";
+    }
+    var fontTable = document.getElementById("FontSelection").firstElementChild;
+    for (var i = 0; i < fontTable.rows.length; i++) {
+        if (fontTable.rows[i].cells[2].innerHTML === sizeFont) {
+            if (fontTable.rows[i].classList.contains("displayNone") === true) {
+                fontTable.rows[i].classList.remove("displayNone");
+            }
+        } else {
+            if (fontTable.rows[i].classList.contains("displayNone") === false) {
+                fontTable.rows[i].classList.add("displayNone");
+            }
+        }
+    }
+}
+
+
+

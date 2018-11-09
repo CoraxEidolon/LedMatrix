@@ -51,7 +51,7 @@
     </label>
     <br>
     <label>Строк:<br>
-        <input type="number" min="1" value="1" id="MatrixRows" class="inputNumber" disabled>
+        <input type="number" min="1" value="1" id="MatrixRows" class="inputNumber">
     </label><br>
 </div>
 <br>
@@ -63,10 +63,10 @@
             <td>CLK:
                 <input type="number" min="0" value='0' class="inputNumber" id="0_0_CLK">
                 <br>
-                CS&ensp;:
+                CS:&nbsp;&ensp;
                 <input type="number" min="0" value='0' class="inputNumber" id="0_0_CS">
                 <br>
-                DIN:
+                DIN:&nbsp;
                 <input type="number" min="0" value='0' class="inputNumber" id="0_0_DIN"><br>
             </td>
         </tr>
@@ -78,15 +78,12 @@
 <div id="SaveArduinoCode" class="roundButton saveArduinoCode arduinoLogoSVG" title="Сохранить программный код Arduino"></div>
 
 <div class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
-    <div class="subClearDiv">
-        <table>
-            <tr>
-                <td> <div id="WashedTickerInput" class="roundButtonSmall letterASVG" title="Очистить текст бегущей строки"></div></td>
-                <td> <div id="WashedCodeTickerResult" class="roundButtonSmall codeSVG" title="Очистить программный код"></div></td>
-            </tr>
-        </table>
-    </div>
+    <div id="WashedCodeTickerResult" class="washedAlphabetButton codeSVG" title="Очистить программный код"></div>
+    <div id="WashedTickerInput" class="matrixClearButton bookASVG" title="Очистить текст бегущей строки"></div>
 </div>
+
+
+
 <div id="Loading"></div>
 <textarea id="CodeTickerResult" class="textarea_codeTickerResult packageSVG" readonly></textarea>
 <a  id="downloadlink" style="display: none">Download</a>

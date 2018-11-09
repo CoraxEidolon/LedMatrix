@@ -10,7 +10,7 @@ function addScript(src, callBack) {
     var script = document.createElement('script');
     script.src = src;
     script.type = "text/javascript";
-    script.async = false; // чтобы гарантировать порядок
+    script.async = true; // чтобы гарантировать порядок
     script.onreadystatechange = callBack;
     script.onload = callBack;
     document.head.appendChild(script);
@@ -36,8 +36,16 @@ function AddFont(way) {
 function GetListFonts() {
     var keys = Object.keys(GLOBAL_Fonts);
     var buf = "<table>";
+    var href=String(window.location);
+    var ticker=false;
+    if(href.indexOf("/pages/ticker")>=0){ ticker=true;}
     for (var i = 0; i < keys.length; i++) {
-        buf += "<tr><td>" + keys[i] + "</td>";
+        if (ticker === true && GLOBAL_Fonts[keys[i]]["size"]!=="1") {
+            buf += "<tr class='displayNone'>";
+        } else {
+            buf += "<tr>";
+        }
+        buf += "<td>" + keys[i] + "</td>";
         if (GLOBAL_Fonts[keys[i]]["type"] === "rus") {
             buf += "<th class='russiaSVG'>&emsp;</th>"
         }else
