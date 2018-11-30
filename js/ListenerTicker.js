@@ -9,8 +9,10 @@ function onLoad() {
     document.getElementById("MatrixRows").addEventListener("change", BuildTable);
     document.getElementById("MatrixColumns").addEventListener("change", BuildTable);
     document.getElementById("TickerInput").addEventListener("change", ValidationTickerTextBox);
-    document.getElementById("SaveArduinoCode").addEventListener("click",SaveArduinoFile);
+    document.getElementById("SaveArduinoCode").addEventListener("click",SaveArduinoFile.bind(null,"CodeTickerResult", "downloadlink"));
     document.getElementById("WashedTickerInput").addEventListener("click",WashedTickerInput);
-    document.getElementById("WashedCodeTickerResult").addEventListener("click",WashedCodeTickerResult);
-    AddFont("../font/");
+    document.getElementById("WashedCodeTickerResult").addEventListener("click",WashedCodeTickerResult.bind(null,"CodeTickerResult"));
+    document.getElementById("ShowHideConnectMicrocontroller").addEventListener("click", Ticker_ShowHide);
+    document.getElementById("ShowHideArduinoCode").addEventListener("click", Ticker_ShowHide);
+    GetListFonts();
 }

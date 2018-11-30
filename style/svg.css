@@ -20,6 +20,13 @@
     background-position: center;
 }
 
+.numberSVG{
+    background-image: url("../svg/maths.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
+}
+
 .matrixClearSVG {
     background-image: url("../svg/dot-matrix.svg");
     background-size: 80% 80%;
@@ -35,15 +42,24 @@
 }
 
 .plusSVG{
-    background-image: url("../svg/Plus.svg");
+    background-image: url("../svg/like.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
 }
 
 .saveSVG{
-    background-image: url("../svg/Save.svg");
+    background-image: url("../svg/diskette.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
 }
 
 .washedSVG{
     background-image: url("../svg/Washed.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
 }
 
 .menuSVG{
@@ -71,22 +87,15 @@
     background-image: url("../svg/test.svg");
 }
 
-.numberSVG{
-    background-image: url("../svg/Symbol_pi.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 90% 90%;
-}
-
 .tickerSVG{
-    background-image: url("../svg/correr.svg");
+    background-image: url("../svg/sneaker.svg");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 95% 95%;
+    background-size: 70% 70%;
 }
 
 .arduinoLogoSVG{
-     background-image: url("../svg/Arduino_Logo.svg");
+     background-image: url("../svg/download.svg");
      background-repeat: no-repeat;
      background-position: center;
      background-size: 70% 70%;
@@ -105,4 +114,65 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: 85% 85%;
+}
+
+.photoSVG{
+    background-image: url("../svg/photo.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80% 80%;
+}
+
+.cameraSVG{
+    background-image: url("../svg/camera.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
+}
+
+.homeSVG{
+    background-image: url("../svg/mansion.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 85% 85%;
+}
+.showSVG{
+    background-image: url("../svg/view.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 85% 85%;
+}
+.hideSVG{
+     background-image: url("../svg/hide.svg");
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: 85% 85%;
+ }
+.clapperboardSVG{
+    background-image: url("../svg/clapperboard.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
+}
+
+.clearAllFrameSVG{
+    background-image: url("../svg/edit-video.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 85% 85%;
+}
+
+.folderSVG{
+    background-image: url("../svg/folder.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
+}
+
+
+.videoCassetteSVG{
+    background-image: url("../svg/vhs.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
 }

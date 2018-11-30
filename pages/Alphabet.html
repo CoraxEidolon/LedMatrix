@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Работа со шрифтами</title>
-    <script type="text/javascript">var GLOBAL_Fonts=[];</script>
-    <script type="text/javascript" src="../js/AddScript.js"></script>
+
+    <script type="text/javascript" src="../js/AddFont.js"></script>
     <script type="text/javascript" src="../js/CreateAlphabet.js"></script>
-    <script type="text/javascript" src="../font/.FontList.js"></script>
+
+
+   <script type="text/javascript" src="../font/.FontList.js"></script>
     <script type="text/javascript" src="../js/ListenerAlphabet.js"></script>
 
     <link rel="shortcut icon" href="../style/favicon.ico" type="image/x-icon">
@@ -25,9 +27,10 @@
 <body onload="onLoad()">
 <div class="menu menuSVG">
     <div class="subMenu">
+        <a href="../index.html"><div class="roundButtonSmall homeSVG"></div></a>
         <div class="roundButtonSmall createFontSVG"></div>
-        <a href="ticker.html"> <div class="roundButtonSmall runSVG"></div></a>
-        <div class="roundButtonSmall testSVG"></div>
+        <a href="Ticker.html"> <div class="roundButtonSmall runSVG"></div></a>
+        <a href="Animation.html"><div class="roundButtonSmall testSVG"></div></a>
         <div class="roundButtonSmall helpSVG"></div>
     </div>
 </div>
@@ -129,17 +132,19 @@
             </div>
 <br>
 <div class="buttonDiv">
-    <div id="LanguageSelection" class="roundButton countryFlag russiaSVG" title="Смена языка, для которого будет создан шрифт">
-         <div id="rus" class="blob blobRus russiaSVG"></div>
-         <div id="eng" class="blob blobEng unitedKingdomSVG"></div>
-         <div id="num" class="blob blobNum numberSVG"></div>
+    <div id="LanguageSelection" class="roundButton countryFlag russiaSVG" data-CurrentLanguage="rus" title="Смена языка, для которого будет создан шрифт">
+<table class="subMenuLanguageSelection">
+    <tr><td id="rus" class="russiaSVG"> </td></tr>
+    <tr><td id="eng" class="unitedKingdomSVG"></td></tr>
+    <tr><td id="num" class="numberSVG"></td></tr>
+</table>
     </div>
-    <div class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
+    <div class="roundButton washedMatrix washedSVG" title="Очистка элементов до стандартных значений">
         <div id="WashedTableAlphabet" class="washedAlphabetButton washedAlphabetSVG" title="Очистить таблицу символов текущего шрифта"></div>
         <div id="WashedMatrix" class="matrixClearButton matrixClearSVG" title="Очистить матрицу"></div>
     </div>
-    <div id="AddCharInList" class="addCharInAlphabet roundButton plusSVG" title="Добавить созданный символ в таблицу"></div>
-    <div id="SaveAlphabet"  class="saveAlphabet roundButton saveSVG" title="Сохранить шрифт"></div>
+    <div id="AddCharInList" class="roundButton plusSVG" title="Добавить созданный символ в таблицу"></div>
+    <div id="SaveAlphabet"  class="roundButton saveSVG" title="Сохранить шрифт"></div>
 </div>
 <br>
 <div id="FontSelection" class="fontSelection div_inline-block"></div>
@@ -147,12 +152,9 @@
     <span class="fontSize">Размер матрицы:</span> <input id="MatrixSize" type="number" class="inputNumber" min="1" value="1"><br>
     <span class="fontSize">Размер "диода":</span> <input id="DiodeSize" type="number" class="inputNumber" min="1" value="10"><br>
  <span class="fontSize">Название шрифта:</span><br>
-<input type="text" id="NameDownloadFont" class="inputDownloadFont">
+<input type="text" id="NameDownloadFont" class="inputDownloadName">
 </div>
 <a  id="downloadlink" style="display: none">Download</a>
-
-
 <div class='circle'><span class='sector'></span></div>
-
 </body>
 </html>

@@ -7,28 +7,24 @@
     cursor: pointer;
     width: 70px;
     height: 70px;
-    display: block;
     margin: 5px;
-}
-
-/*Очистить матрицу******/
-.washedMatrix {
-    border: 2px solid #ffe700;
+    border: 2px outset #ec560d;
     display: inline-block;
-    transition: all 2s;
 }
 
-.washedMatrix:hover, .washedMatrix:focus {
-    background-color: #ffe700;
+.roundButton:hover, .roundButton:focus {
+    background-color: rgb(0, 0, 0);
     transition: background-color 1s ease;
+    border-style: dotted;
     transition-delay: 0.1s;
 }
-
-.washedMatrix:active {
-    background-color: #ffa900;
+.roundButton:active{
+    background-color: rgb(163, 7, 0);
     transition: background-color 0.01s ease;
     transition-delay: 0s;
 }
+
+
 /*div, содержащий кнопка очистки*/
 .washedAlphabetButton{
     display: none;
@@ -68,6 +64,7 @@
     transition: background-color 0.02s ease;
 }
 
+
 .washedMatrix:hover .matrixClearButton {
     display: block;
 }
@@ -75,6 +72,44 @@
     display: block;
 }
 
+
+.subMenuWashed{
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: 0.5s linear;
+    background-color: transparent;
+    position: relative;
+    top: -20%;
+    left: -20%;
+}
+
+.washedMatrix:hover .subMenuWashed{
+    width: 130%;
+    opacity: 99;
+    display: table;
+    animation-delay: 1s;
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+.subMenuWashed td {
+    border: 1px solid #7f7f7f;
+    border-radius: 20%;
+    background-color: #ffffff;
+    width: 40px;
+    height: 40px;
+}
+
+.subMenuWashed td:hover{
+    transition-duration:1s;
+    filter: invert(100%);
+}
+
+.subMenuWashed td:active{
+    background-color: #00f7ff;
+    transition: background-color 0.02s ease;
+}
 
 .roundButtonSmall {
     border-radius: 7em;
@@ -99,157 +134,79 @@
     transition-delay: 0s;
 }
 
-/*Добавить нарисованный символ в алфавит******/
-.addCharInAlphabet {
-    border: 2px solid #5aff05;
-    display: inline-block;
-}
 
-.addCharInAlphabet:hover, .addCharInAlphabet:focus {
-    background-color: #5aff05;
-    transition: background-color 1s ease;
-    transition-delay: 0.1s;
-}
-
-.addCharInAlphabet:active {
-    background-color: #c8ff00;
-    transition: background-color 0.01s ease;
-    transition-delay: 0s;
-}
-
-/*Сохранить алфавит******/
-.saveAlphabet {
-    border: 2px solid #0068ff;
-    display: inline-block;
-}
-
-.saveAlphabet:hover, .saveAlphabet:focus {
-    background-color: #007dff;
-    transition: background-color 1s ease;
-    transition-delay: 0.1s;
-}
-
-.saveAlphabet:active {
-    background-color: #00ffa0;
-    transition: background-color 0.01s ease;
-    transition-delay: 0s;
-}
-
-/*Смена языка шрифта******/
-.countryFlag {
-    border: 2px solid rgba(226, 74, 8, 1);
-    display: inline-block;
-    transition: all 1s;
-}
-
-.countryFlag:hover, .countryFlag:focus .blob {
-    background-color: rgba(226, 74, 8, 0.76);
-    transition: background-color 1s ease;
-    transition-delay: 0.1s;
-    display: inline-block;
-}
-.countryFlag:active{
-    background-color: #fdfef5;
-    transition: background-color 0.01s ease;
-    transition-delay: 0s;
-}
-
-
-.countryFlag:hover .blob {
-    display: block;
-}
-
-
-.blob {
-    display: none;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(255, 169, 0, 0.6);
-    position: absolute;
-    border: 1px solid rgb(19, 19, 19);
-}
-
-.blob:hover, .blob:focus {
-    background-color: rgba(191, 255, 16, 0.6);
-    transition: background-color 1s ease;
-    border: 1px solid rgb(255, 20, 0);
-    transition-delay: 0.2s;
-}
-
-.blob:active{
-    background-color: rgba(255, 87, 10, 0.81);
-    transition: background-color 0.2s ease;
-    transition-delay: 0s;
-}
-
-
-.blobRus{
+.subMenuLanguageSelection{
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: 0.5s linear;
     position: relative;
-    top: -28px;
-    left: 5px;
-    transform: rotate(40deg);
-    border-radius: 4em 4em 0em 4em;
+    top: -50%;
 }
 
-.blobEng{
-    position: relative;
-    top: -50px;
-    left: 49px;
-    transform: rotate(118deg);
-    border-radius: 4em 4em 0em 4em;
+.countryFlag:hover .subMenuLanguageSelection{
+    opacity: 99;
+    display: table;
+    animation-delay: 1s;
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
 }
 
-.blobNum{
-    position: relative;
-    top: -50px;
-    left: 35px;
-    transform: rotate(10deg);
-    border-radius: 0em 4em 4em 4em;
+.subMenuLanguageSelection td {
+    border: 1px solid rgb(225, 77, 23);
+    background-color: rgb(214, 140, 0);
+    border-radius: 50%;
+    width: 70px;
+    height: 40px;
+
+}
+.subMenuLanguageSelection td:hover{
+    transition-duration:1s;
+    background-color: rgb(33, 214, 18);
+    border: 1px solid rgb(3, 255, 104);
 }
 
+.subMenuLanguageSelection td:active{
+    background-color: #ff4f22;
+    transition: background-color 0.02s ease;
+}
 
-
-.createTicker{
-    border: 1px solid rgb(255, 13, 0);
+/*Показать, скрыть*/
+.show-hide {
+    border-radius: 7em;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
     display: inline-block;
+    margin:2px;
+    border: 1px solid #0096d0;
+    background-color: rgba(11, 78, 147, 0.51);
+    position: relative;
+    top:13px;
 }
 
-.createTicker:hover, .createTicker:focus {
-    background-color: rgb(176, 22, 0);
+.show-hide:hover, .show-hide:focus {
+    background-color: rgba(11, 151, 255, 0.61);
     transition: background-color 1s ease;
     transition-delay: 0.1s;
 }
-.createTicker:active{
-    background-color: rgb(255, 36, 0);
+
+.show-hide:active {
+    background-color: rgb(20, 162, 255);
     transition: background-color 0.01s ease;
     transition-delay: 0s;
 }
 
-.saveArduinoCode{
-    border: 2px solid rgb(191, 31, 255);
-    display: inline-block;
-}
-.saveArduinoCode:hover, .saveArduinoCode:focus {
-    background-color: rgb(110, 24, 146);
-    transition: background-color 1s ease;
-    transition-delay: 0.1s;
-}
-.saveArduinoCode:active{
-    background-color: rgb(191, 0, 255);
-    transition: background-color 0.01s ease;
-    transition-delay: 0s;
-}
-
-
-/*Меню******/
+/******Меню******/
 .menu{
-    float:right;
     width: 40px;
     height: 40px;
     border: 2px solid #b70029;
     border-radius: 10px 10px 90px 90px ;
     cursor: pointer;
     margin-bottom: 1%;
+    position: fixed;
+    left:95%;
 }
 
 .menu:hover .subMenu{
@@ -264,8 +221,8 @@
 .subMenu{
     display: none;
     position: absolute;
-    top:48px;
-    right: 0;
+    top: 84%;
+    right: -20%;
 }
 
 

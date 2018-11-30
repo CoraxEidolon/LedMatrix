@@ -1,6 +1,11 @@
 body {
     color:white;
     background-color: #24292d;
+    /*запрет выделения текста*/
+    -moz-user-select: none; /* Mozilla Firefox */
+    -ms-user-select: none; /* Internet Explorer (не поддерживается) */
+    -o-user-select: none; /* Opera Presto (не поддерживается) */
+    -webkit-user-select: none; /* Google Chrome, Opera Next, Safari */
 }
 
 .matrix {
@@ -47,15 +52,13 @@ body {
     display: inline-block;
 }
 
-
 #CurrentSelectedFont{
     border-radius: 1em;
     background-color: rgba(41, 90, 255, 0.64);
     color: #daff00;
 }
 
-
-.inputDownloadFont {
+.inputDownloadName {
     border-radius: 1em;
     border: 2px solid #b70029;
     background-color: rgba(183, 106, 102, 0.42);
@@ -66,7 +69,7 @@ body {
     width: 100%;
 }
 
-.inputDownloadFont:focus {
+.inputDownloadName:focus {
     background-color: rgba(183, 0, 41, 0.42);
     color: white;
 }
@@ -170,6 +173,52 @@ body {
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
+
+
+.animationFrame{
+    display: inline-block;
+    border: 1px solid rgb(5, 75, 179);
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    background-color: rgba(11, 206, 169, 0.54);
+    margin: 2px;
+}
+
+#SelectAnimationFrame{
+    border-radius:0;
+    border: 1px solid rgb(202, 188, 12);
+    background-color: rgba(205, 4, 14, 0.54);
+}
+
+.frameAmountText{
+    font-size: 1.2em;
+}
+#FrameAmount{
+    font-size: 1.2em;
+    color: #ffe700;
+    text-shadow: #d50000 1px 1px 0;
+}
+
+
+.AnimationSetting{
+    display: inline-block;
+}
+
+
+.div_AnimationFrame {
+    white-space: nowrap;
+    width: 95%;
+    margin-left: 10px;
+    overflow-x: scroll;
+    display: inline-block;
+    padding-right: 5px;
+}
+
+
+
+
 
 /*Полоса прокрутки*/
 ::-webkit-scrollbar {

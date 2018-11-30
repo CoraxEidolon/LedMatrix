@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Анимация</title>
+    <script type="text/javascript">var GLOBAL_Animation=[];</script>
+    <link rel="shortcut icon" href="../style/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../style/svg.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/button.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/frameSVG.css"/>
+    <script type="text/javascript" src="../js/CreateAlphabet.js"></script>
+    <script type="text/javascript" src="../js/CreateTicker.js"></script>
+    <script type="text/javascript" src="../js/CreateAnimation.js"></script>
+    <script type="text/javascript" src="../js/ListenerAnimation.js"></script>
+
+
+    <script type="text/javascript" src="" id="LoadAnimation"> </script>
+
+
+    <style>
+        .matrix td {
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body onload="onLoad()">
+<div class="menu menuSVG">
+    <div class="subMenu">
+        <a href="../index.html"><div class="roundButtonSmall homeSVG"></div></a>
+        <a href="Alphabet.html"><div class="roundButtonSmall createFontSVG"></div></a>
+        <a href="Ticker.html"> <div class="roundButtonSmall runSVG"></div></a>
+        <div class="roundButtonSmall testSVG"></div>
+        <div class="roundButtonSmall helpSVG"></div>
+    </div>
+</div>
+<b class="frameAmountText">Количество кадров:</b><b id="FrameAmount">0</b>
+<div id="AnimationFrame" class="div_AnimationFrame"></div>
+<table class="AnimationSetting">
+    <tr><td>Количество матриц по горизонтали:</td><td><input type="number" min="1" value="1" id="MatrixColumns" class="inputNumber"></td></tr>
+    <tr><td>Количество матриц по вертикали:</td><td><input type="number" min="1" value="1" id="MatrixLine" class="inputNumber"></td></tr>
+    <tr><td>Размер "диода":</td><td><input id="DiodeSize" type="number" class="inputNumber" min="1" value="10"></td></tr>
+    <tr><td>Скорость:</td><td><input id="AnimationSpeed" type="number" class="inputNumber" min="1" value="40"></td></tr>
+    <tr><td>Название анимации:</td><td><input id="AnimationName" type="text" class="inputDownloadName"></td></tr>
+</table>
+
+
+
+<br>
+
+<div id="SaveArduinoCode" class="roundButton arduinoLogoSVG" title="Сохранить программный код Arduino"></div>
+<div id="SaveAnimation"  class="roundButton videoCassetteSVG" title="Сохранить анимацию"></div>
+
+<div class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
+<table class="subMenuWashed">
+    <tr> <td id="DeleteCurrentFrame" class="photoSVG" title="Удалить текущий кадр"></td> <td id="ClearAllFrame" class="clearAllFrameSVG" title="Удалить все кадры"></td> </tr>
+    <tr> <td id="WashedMatrix" class="matrixClearSVG" title="Очистить матрицу"></td> <td  id="WashedCodeFrameResult" class="codeSVG" title="Очистить программный код"></td> </tr>
+</table>
+</div>
+<div id="CreateFrame" class="roundButton cameraSVG" title="Создать кадр"></div>
+<div id="CreateAnimation" class="roundButton clapperboardSVG" title="Склеить анимацию из кадров"></div>
+
+
+<div id="OpenAnimationFileButton" class="roundButton folderSVG" title="Открыть файл анимации"></div>
+<br>
+
+<table class="matrix" id="Matrix">
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+    <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
+</table>
+<h3>Подключение к микроконтроллеру:<div id="ShowHideConnectMicrocontroller" class="show-hide hideSVG"></div></h3>
+<div id="Div_MatrixTableInput">
+    <table id="TableInput" class="tableInput">
+        <tbody>
+        <tr>
+            <td>CLK:
+                <input type="number" min="0" value='0' class="inputNumber" id="0_0_CLK">
+                <br>
+                CS:&nbsp;&ensp;
+                <input type="number" min="0" value='0' class="inputNumber" id="0_0_CS">
+                <br>
+                DIN:&nbsp;
+                <input type="number" min="0" value='0' class="inputNumber" id="0_0_DIN"><br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<h3>Программный код для Arduino:<div id="ShowHideArduinoCode" class="show-hide hideSVG"></div></h3>
+<textarea id="CodeFrameResult" class="textarea_codeTickerResult packageSVG" readonly></textarea>
+<a  id="downloadlink" style="display: none">Download</a>
+<input type="file" id="OpenAnimationFileDialog" name="file" style="display: none" />
+</body>
+</html>

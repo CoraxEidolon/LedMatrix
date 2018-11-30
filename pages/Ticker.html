@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Бегущая строка</title>
-    <script type="text/javascript">var GLOBAL_Fonts = [];</script>
-    <script type="text/javascript" src="../js/AddScript.js"></script>
+    <script type="text/javascript" src="../js/AddFont.js"></script>
     <script type="text/javascript" src="../js/ListenerTicker.js"></script>
     <script type="text/javascript" src="../font/.FontList.js"></script>
     <script type="text/javascript" src="../js/CreateTicker.js"></script>
+
     <link rel="shortcut icon" href="../style/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../style/svg.css"/>
     <link rel="stylesheet" type="text/css" href="../style/button.css"/>
@@ -17,11 +17,10 @@
 <body onload="onLoad()">
 <div class="menu menuSVG">
     <div class="subMenu">
-        <a href="Alphabet.html">
-            <div class="roundButtonSmall createFontSVG"></div>
-        </a>
+        <a href="../index.html"><div class="roundButtonSmall homeSVG"></div></a>
+        <a href="Alphabet.html"><div class="roundButtonSmall createFontSVG"></div></a>
         <div class="roundButtonSmall runSVG"></div>
-        <div class="roundButtonSmall testSVG"></div>
+        <a href="Animation.html"><div class="roundButtonSmall testSVG"></div></a>
         <div class="roundButtonSmall helpSVG"></div>
     </div>
 </div>
@@ -54,8 +53,17 @@
         <input type="number" min="1" value="1" id="MatrixRows" class="inputNumber">
     </label><br>
 </div>
+
 <br>
-<h3>Подключение к микроконтроллеру:</h3>
+<div id="SaveArduinoCode" class="roundButton arduinoLogoSVG" title="Сохранить программный код Arduino"></div>
+<div id="CreateTicker" class="roundButton tickerSVG" title="Получить программный код бегущей строки"></div>
+<div class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
+    <div id="WashedCodeTickerResult" class="washedAlphabetButton codeSVG" title="Очистить программный код"></div>
+    <div id="WashedTickerInput" class="matrixClearButton bookASVG" title="Очистить текст бегущей строки"></div>
+</div>
+
+
+<h3>Подключение к микроконтроллеру:<div id="ShowHideConnectMicrocontroller" class="show-hide hideSVG"></div></h3>
 <div id="Div_MatrixTableInput">
     <table id="TableInput" class="tableInput">
         <tbody>
@@ -74,17 +82,8 @@
     </table>
 </div>
 
-<div id="CreateTicker" class="roundButton createTicker tickerSVG" title="Получить программный код бегущей строки"></div>
-<div id="SaveArduinoCode" class="roundButton saveArduinoCode arduinoLogoSVG" title="Сохранить программный код Arduino"></div>
-
-<div class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
-    <div id="WashedCodeTickerResult" class="washedAlphabetButton codeSVG" title="Очистить программный код"></div>
-    <div id="WashedTickerInput" class="matrixClearButton bookASVG" title="Очистить текст бегущей строки"></div>
-</div>
-
-
-
 <div id="Loading"></div>
+<h3>Программный код для Arduino:<div id="ShowHideArduinoCode" class="show-hide hideSVG"></div></h3>
 <textarea id="CodeTickerResult" class="textarea_codeTickerResult packageSVG" readonly></textarea>
 <a  id="downloadlink" style="display: none">Download</a>
 </body>

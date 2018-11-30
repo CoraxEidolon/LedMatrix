@@ -57,7 +57,7 @@ function CreateTicker() {
             arResult[i] = GetTicker(binaryFont[i]);
         }
 
-        CodeOutput(arResult);
+        CodeOutput(arResult,text);
 
         console.log(arResult);
         /*После того, как код бегущей строки получен, отключаем загрузку и показываем окно кода*/
@@ -251,101 +251,107 @@ function GetTicker(binaryFont) {
  * @param arResult - Массив содержащий шестнадцатеричный код бегущей строки
  * @constructor
  */
-function CodeOutput(arResult) {
+function CodeOutput(arResult,Text) {
     /*________________________ВЫВОД________________________*/
     var Columns = Number(document.getElementById("MatrixColumns").value);
     var Rows = Number(document.getElementById("MatrixRows").value);
-    document.getElementById("CodeTickerResult").value += "int i;\nint j;\n";
+    var CodeArduino= document.getElementById("CodeTickerResult");//Поле вывода кода
+    CodeArduino.value +="/*"+Text+"*/\n";
+    var d = new Date();
+    var timeCreation = d.getDate() + "." + Number(d.getMonth() + 1) + "." + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+    CodeArduino.value +="/* Дата создания: "+timeCreation+"*/\n";
+    CodeArduino.value +="/* Количество матриц по горизонтали :"+Columns+" */\n";
+    CodeArduino.value +="/* Количество матриц по вертикали :"+Rows+" */\n";
+    CodeArduino.value += "int i;\nint j;\n";
     /*Подключение к микроконтроллеру.
      В этот раз все удобно, расположение матриц на экране, соответствует матрицам в жизни*/
-    document.getElementById("CodeTickerResult").value +="//M_Строка_Столбец\n";
+    CodeArduino.value +="//M_Строка_Столбец\n";
     for (var j = 0; j < Rows; j++) {
         for (var i = 0; i < Columns; i++) {
-            document.getElementById("CodeTickerResult").value += "//Матрица " + j + "_" + i + "\n";
-            document.getElementById("CodeTickerResult").value += "int M_" + j + "_" + i + "_CLK =" + document.getElementById(j + "_" + i + "_CLK").value + ";\n";
-            document.getElementById("CodeTickerResult").value += "int M_" + j + "_" + i + "_CS =" + document.getElementById(j + "_" + i + "_CS").value + ";\n";
-            document.getElementById("CodeTickerResult").value += "int M_" + j + "_" + i + "_DIN =" + document.getElementById(j + "_" + i + "_DIN").value + ";\n";
+            CodeArduino.value += "//Матрица " + j + "_" + i + "\n";
+            CodeArduino.value += "int M_" + j + "_" + i + "_CLK =" + document.getElementById(j + "_" + i + "_CLK").value + ";\n";
+            CodeArduino.value += "int M_" + j + "_" + i + "_CS =" + document.getElementById(j + "_" + i + "_CS").value + ";\n";
+            CodeArduino.value += "int M_" + j + "_" + i + "_DIN =" + document.getElementById(j + "_" + i + "_DIN").value + ";\n";
         }
     }
-
     for (var j = 0; j < Rows; j++) {
-        document.getElementById("CodeTickerResult").value += "const uint8_t line" + j + "[" + arResult[j].length + "][8]PROGMEM ={\n";
+        CodeArduino.value += "const uint8_t line" + j + "[" + arResult[j].length + "][8]PROGMEM ={\n";
 
         /*Вывод массива бегущей строки*/
         for (var i = 0; i < arResult[j].length; i++) {
-            document.getElementById("CodeTickerResult").value += arResult[j][i] + ",\n";
+            CodeArduino.value += arResult[j][i] + ",\n";
         }
-        document.getElementById("CodeTickerResult").value += "};\n\n";
+        CodeArduino.value += "};\n\n";
     }
-    document.getElementById("CodeTickerResult").value += "\n";
+    CodeArduino.value += "\n";
     /*Функции вывода*/
-    document.getElementById("CodeTickerResult").value += "void Write_Matr_byte(unsigned char DATA, int CS, int CLK, int DIN) {\n";
-    document.getElementById("CodeTickerResult").value += "   unsigned char i;\n";
-    document.getElementById("CodeTickerResult").value += "    digitalWrite(CS,LOW);\n";
-    document.getElementById("CodeTickerResult").value += "    for(i=8;i>=1;i--) {\n";
-    document.getElementById("CodeTickerResult").value += "        digitalWrite(CLK,LOW);\n";
-    document.getElementById("CodeTickerResult").value += "        digitalWrite(DIN,DATA&0x80);\n";
-    document.getElementById("CodeTickerResult").value += "        DATA = DATA<<1;\n";
-    document.getElementById("CodeTickerResult").value += "        digitalWrite(CLK,HIGH);\n";
-    document.getElementById("CodeTickerResult").value += "    }\n";
-    document.getElementById("CodeTickerResult").value += " }\n\n";
-    document.getElementById("CodeTickerResult").value += "void Write_Matr(unsigned char address,unsigned char dat, int CS, int CLK, int DIN){\n";
-    document.getElementById("CodeTickerResult").value += "    digitalWrite(CS,LOW);\n";
-    document.getElementById("CodeTickerResult").value += "    Write_Matr_byte(address,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value += "    Write_Matr_byte(dat,CS,CLK,DIN);\n";
-    document.getElementById("CodeTickerResult").value += "    digitalWrite(CS,HIGH);\n";
-    document.getElementById("CodeTickerResult").value += "}\n\n";
-    document.getElementById("CodeTickerResult").value += " void Init_Matr(int CS, int CLK, int DIN){\n";
-    document.getElementById("CodeTickerResult").value += "    Write_Matr(0x09, 0x00,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value += "    Write_Matr(0x0a, 0x03,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value += "    Write_Matr(0x0b, 0x07,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value += "    Write_Matr(0x0c, 0x01,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value += "    Write_Matr(0x0f, 0x00,CS, CLK, DIN);\n";
-    document.getElementById("CodeTickerResult").value += "}\n\n";
-    document.getElementById("CodeTickerResult").value += "void setup() {\n";
+    CodeArduino.value += "void Write_Matr_byte(unsigned char DATA, int CS, int CLK, int DIN) {\n";
+    CodeArduino.value += "   unsigned char i;\n";
+    CodeArduino.value += "    digitalWrite(CS,LOW);\n";
+    CodeArduino.value += "    for(i=8;i>=1;i--) {\n";
+    CodeArduino.value += "        digitalWrite(CLK,LOW);\n";
+    CodeArduino.value += "        digitalWrite(DIN,DATA&0x80);\n";
+    CodeArduino.value += "        DATA = DATA<<1;\n";
+    CodeArduino.value += "        digitalWrite(CLK,HIGH);\n";
+    CodeArduino.value += "    }\n";
+    CodeArduino.value += " }\n\n";
+    CodeArduino.value += "void Write_Matr(unsigned char address,unsigned char dat, int CS, int CLK, int DIN){\n";
+    CodeArduino.value += "    digitalWrite(CS,LOW);\n";
+    CodeArduino.value += "    Write_Matr_byte(address,CS, CLK, DIN);\n";
+    CodeArduino.value += "    Write_Matr_byte(dat,CS,CLK,DIN);\n";
+    CodeArduino.value += "    digitalWrite(CS,HIGH);\n";
+    CodeArduino.value += "}\n\n";
+    CodeArduino.value += " void Init_Matr(int CS, int CLK, int DIN){\n";
+    CodeArduino.value += "    Write_Matr(0x09, 0x00,CS, CLK, DIN);\n";
+    CodeArduino.value += "    Write_Matr(0x0a, 0x03,CS, CLK, DIN);\n";
+    CodeArduino.value += "    Write_Matr(0x0b, 0x07,CS, CLK, DIN);\n";
+    CodeArduino.value += "    Write_Matr(0x0c, 0x01,CS, CLK, DIN);\n";
+    CodeArduino.value += "    Write_Matr(0x0f, 0x00,CS, CLK, DIN);\n";
+    CodeArduino.value += "}\n\n";
+    CodeArduino.value += "void setup() {\n";
 
     /*Настраиваем пинов вывода матрицы*/
     for (var j = 0; j < Rows; j++) {
         for (var i = 0; i < Columns; i++) {
-            document.getElementById("CodeTickerResult").value += "//Настраиваем выводы матрицы " + i + " как выходы:\n";
-            document.getElementById("CodeTickerResult").value += "pinMode(M_" + j + "_" + i + "_CLK,OUTPUT);\n";
-            document.getElementById("CodeTickerResult").value += "pinMode(M_" + j + "_" + i + "_CS,OUTPUT);\n";
-            document.getElementById("CodeTickerResult").value += "pinMode(M_" + j + "_" + i + "_DIN,OUTPUT);\n";
+            CodeArduino.value += "//Настраиваем выводы матрицы " + i + " как выходы:\n";
+            CodeArduino.value += "pinMode(M_" + j + "_" + i + "_CLK,OUTPUT);\n";
+            CodeArduino.value += "pinMode(M_" + j + "_" + i + "_CS,OUTPUT);\n";
+            CodeArduino.value += "pinMode(M_" + j + "_" + i + "_DIN,OUTPUT);\n";
         }
     }
-    document.getElementById("CodeTickerResult").value += "delay(50);\n";
+    CodeArduino.value += "delay(50);\n";
 
     /*Инициализация матриц*/
     for (var j = 0; j < Rows; j++) {
         for (var i = 0; i < Columns; i++) {
-            document.getElementById("CodeTickerResult").value += "Init_Matr(M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+            CodeArduino.value += "Init_Matr(M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
         }
     }
-    document.getElementById("CodeTickerResult").value += "}\n\n";
-    document.getElementById("CodeTickerResult").value += "void loop(){\n\n";
-    document.getElementById("CodeTickerResult").value += "for (j = 0; j < " + arResult[0].length + "; j++) {\n";
+    CodeArduino.value += "}\n\n";
+    CodeArduino.value += "void loop(){\n\n";
+    CodeArduino.value += "for (j = 0; j < " + arResult[0].length + "; j++) {\n";
 
     for (var j = 0; j < Rows; j++) {
         for (var i = Columns - 1; i >= 0; i--) {
             var coefficient = (Columns - 1) - i;
             if (i === (Columns - 1)) {
-                document.getElementById("CodeTickerResult").value += "for (i = 1; i < 9; i++) {\n";
-                document.getElementById("CodeTickerResult").value += "    Write_Matr(i, pgm_read_byte( &line" + j + "[j][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
-                document.getElementById("CodeTickerResult").value += "}\n\n";
+                CodeArduino.value += "for (i = 1; i < 9; i++) {\n";
+                CodeArduino.value += "    Write_Matr(i, pgm_read_byte( &line" + j + "[j][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+                CodeArduino.value += "}\n\n";
             } else {
-                document.getElementById("CodeTickerResult").value += "if (j <= " + (coefficient * 8 - 1) + ") {\n";
-                document.getElementById("CodeTickerResult").value += "    Write_Matr(i, 0x00, M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
-                document.getElementById("CodeTickerResult").value += "} else {\n";
-                document.getElementById("CodeTickerResult").value += "    for (i = 1; i < 9; i++) {\n";
-                document.getElementById("CodeTickerResult").value += "        Write_Matr(i, pgm_read_byte( &line" + j + "[j - " + (coefficient * 8) + "][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
-                document.getElementById("CodeTickerResult").value += "    }\n";
-                document.getElementById("CodeTickerResult").value += "}\n\n";
+                CodeArduino.value += "if (j <= " + (coefficient * 8 - 1) + ") {\n";
+                CodeArduino.value += "    Write_Matr(i, 0x00, M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+                CodeArduino.value += "} else {\n";
+                CodeArduino.value += "    for (i = 1; i < 9; i++) {\n";
+                CodeArduino.value += "        Write_Matr(i, pgm_read_byte( &line" + j + "[j - " + (coefficient * 8) + "][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+                CodeArduino.value += "    }\n";
+                CodeArduino.value += "}\n\n";
             }///!
         }//i
     }//j
-    document.getElementById("CodeTickerResult").value += "delay(" + document.getElementById("speedTicker").value + ");//Скорость вывода\n";
-    document.getElementById("CodeTickerResult").value += "    }\n";
-    document.getElementById("CodeTickerResult").value += "}\n";
+    CodeArduino.value += "delay(" + document.getElementById("speedTicker").value + ");//Скорость вывода\n";
+    CodeArduino.value += "    }\n";
+    CodeArduino.value += "}\n";
 }
 
 /**
@@ -480,23 +486,27 @@ function BuildTable() {
  * После чего его можно открыть в Arduino IDE и загрузить в МК.
  * @constructor
  */
-function SaveArduinoFile() {
-    var textFile = null,
-        makeTextFile = function (text) {
-            var data = new Blob([text], {type: 'text/plain'});
-            if (textFile !== null) {
-                window.URL.revokeObjectURL(textFile);
-            }
-            textFile = window.URL.createObjectURL(data);
-            return textFile;
-        };
-    var d = new Date();
-    var SketchName = "Sketch_" + d.getDate() + "." + Number(d.getMonth() + 1) + "." + d.getFullYear() + "_" + d.getHours() + "-" + d.getMinutes();
-    var text = document.getElementById("CodeTickerResult").value;
-    var link = document.getElementById('downloadlink');
-    link.href = makeTextFile(text);
-    link.download = SketchName + ".ino";
-    document.getElementById('downloadlink').click();
+function SaveArduinoFile(Content_id, Link_id) {
+  if (document.getElementById(Content_id).value===""){
+      alert("Программный код еще не сгенерирован!");
+  } else {
+      var textFile = null,
+          makeTextFile = function (text) {
+              var data = new Blob([text], {type: 'text/plain'});
+              if (textFile !== null) {
+                  window.URL.revokeObjectURL(textFile);
+              }
+              textFile = window.URL.createObjectURL(data);
+              return textFile;
+          };
+      var d = new Date();
+      var SketchName = "Sketch_" + d.getDate() + "." + Number(d.getMonth() + 1) + "." + d.getFullYear() + "_" + d.getHours() + "-" + d.getMinutes();
+      var text = document.getElementById(Content_id).value;
+      var link = document.getElementById(Link_id);
+      link.href = makeTextFile(text);
+      link.download = SketchName + ".ino";
+      document.getElementById(Link_id).click();
+  }
 }
 
 /**
@@ -513,11 +523,11 @@ function WashedTickerInput() {
  * Очищает поле программного кода
  * @constructor
  */
-function WashedCodeTickerResult() {
+function WashedCodeTickerResult(Content_id) {
     var ok = confirm("Очистить полученный программный код?");
     if (ok === true) {
-        document.getElementById("CodeTickerResult").value = "";
-        document.getElementById("CodeTickerResult").classList.add("packageSVG");
+        document.getElementById(Content_id).value = "";
+        document.getElementById(Content_id).classList.add("packageSVG");
     }
 }
 
@@ -544,5 +554,25 @@ function SizeFontShow(sizeFont) {
     }
 }
 
-
+/**
+ * Показывает или скрывает панель подключения матриц к микроконтроллеру и поле кода Arduino
+ * @constructor
+ */
+function Ticker_ShowHide(event) {
+    event = event || window.event;
+    var target = event.target || event.srcElement;
+    var idElement = {
+        "ShowHideConnectMicrocontroller": "Div_MatrixTableInput",
+        "ShowHideArduinoCode": "CodeTickerResult"
+    };
+    if (document.getElementById(target.id).classList.contains("hideSVG")) {
+        document.getElementById(idElement[target.id]).classList.add("displayNone");
+        document.getElementById(target.id).classList.remove("hideSVG");
+        document.getElementById(target.id).classList.add("showSVG");
+    } else {
+        document.getElementById(idElement[target.id]).classList.remove("displayNone");
+        document.getElementById(target.id).classList.add("hideSVG");
+        document.getElementById(target.id).classList.remove("showSVG");
+    }
+}
 

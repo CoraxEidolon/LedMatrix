@@ -16,11 +16,11 @@ function onLoad() {
     document.getElementById("eng").addEventListener("click", LanguageSelection);
     document.getElementById("num").addEventListener("click", LanguageSelection);
     document.getElementById("FontSelection").addEventListener("click", SelectFont);
-    document.getElementById("NameDownloadFont").addEventListener("change", ValidationNameDownloadFont);
+    document.getElementById("NameDownloadFont").addEventListener("change", ValidationNameDownload.bind(null,"NameDownloadFont"));
     document.getElementById("DiodeSize").addEventListener("change",  DiodeSize);
     document.getElementById("MatrixSize").addEventListener("change",  MatrixSize);
     /*Функция следит за нажатием клавиши Ctrl (№17), при
     этой зажатой клавише над полем создания шрифта, можно "рисовать" символ*/
     runOnKeys(function() {document.getElementById("Matrix").addEventListener("mouseover", OnOffLed);}, 17 );
-    AddFont("../font/");
+    GetListFonts();
 }

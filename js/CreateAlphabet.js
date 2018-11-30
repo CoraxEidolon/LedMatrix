@@ -130,14 +130,8 @@ function LanguageSelection(event) {
  * @constructor
  */
 function LanguageSwitch(choice) {
-    var FontType = []
-    FontType = {
-        "rus": {"TableID": "TableAlphabetRus", "img": "russiaSVG"},
-        "eng": {"TableID": "TableAlphabetEng", "img": "unitedKingdomSVG"},
-        "num": {"TableID": "TableAlphabetNum", "img": "numberSVG"}
-    };
     var keys = Object.keys(FontType);
-
+    document.getElementById("LanguageSelection").setAttribute("data-CurrentLanguage",choice);
     for (var i = 0; i < keys.length; i++) {
         if (keys[i] !== choice) {
             ClearItem(FontType[keys[i]]["TableID"]);
@@ -163,39 +157,15 @@ function WashedMatrix() {
     }
 }
 
-/***
- * Определяет тип текущего шрифта
- * @returns {Array} - Возвращает id его таблицы и краткое наименование шрифта
- * @constructor
- */
-function CurrentTypeFont() {
-    var result=[];
-    if (document.getElementById("LanguageSelection").classList.contains("russiaSVG") === true) {
-        result["Table"]="TableAlphabetRus";
-        result["Short"]="rus";
-    } else
-    if (document.getElementById("LanguageSelection").classList.contains("unitedKingdomSVG") === true) {
-        result["Table"]="TableAlphabetEng";
-        result["Short"]="eng";
-    } else
-    if (document.getElementById("LanguageSelection").classList.contains("numberSVG") === true) {
-        result["Table"]="TableAlphabetNum";
-        result["Short"]="num";
-    }
-return result;
-}
-
 /**
  * Очищает таблицу алфавита, срабатывает при нажатие на кнопку очистки
  * @constructor
  */
 function WashedTableAlphabet() {
-
     var ok=confirm("Очистить таблицу символов текущего шрифта?");
     if(ok===true) {
-        var Table=CurrentTypeFont();
-        ClearItem(Table["Table"]);
-
+        var CurrentLanguage= document.getElementById("LanguageSelection").getAttribute("data-CurrentLanguage");
+        ClearItem(FontType[CurrentLanguage]["TableID"]);
     }
 }
 
@@ -236,9 +206,9 @@ function SaveFile() {
     var textbox = "GLOBAL_Fonts[\"" + fontName + "\"]={\r\n";
     textbox += "\"type\":";
     var ID="";
-    var Table=CurrentTypeFont();
-    textbox += "\""+Table["Short"]+"\",\r\n";
-    ID=Table["Table"];
+    var CurrentLanguage= document.getElementById("LanguageSelection").getAttribute("data-CurrentLanguage");
+    textbox += "\""+CurrentLanguage+"\",\r\n";
+    ID=FontType[CurrentLanguage]["TableID"];
     textbox += "\"size\":" + "\""+document.getElementById("MatrixSize").value+"\",\n";
     textbox += "\"Alphabet\":{\r\n";
     var ok = true;
@@ -252,11 +222,11 @@ function SaveFile() {
         }
         textbox += "\"" + letter + "\":\"" + characterCode + "\", \r\n";
     }
-    textbox += "}\r\n};";
+    textbox += "}\r\n};\n";
     if (ok === true) {
         var link = document.getElementById('downloadlink');
         link.href = makeTextFile(textbox);
-        link.download = fontName + ".js";
+        link.download = fontName + ".json";
         document.getElementById('downloadlink').click();
     }
 }
@@ -277,19 +247,9 @@ function SelectFont(event) {
         var fontName = document.getElementById("CurrentSelectedFont").innerHTML;
         BuildMatrix(GLOBAL_Fonts[fontName]["size"]);
         document.getElementById("MatrixSize").value=GLOBAL_Fonts[fontName]["size"];
-        var id = "";
-        if (GLOBAL_Fonts[fontName]["type"] === "rus") {
-            LanguageSwitch("rus");
-            id = "TableAlphabetRus";
-        } else
-        if (GLOBAL_Fonts[fontName]["type"] === "eng") {
-            LanguageSwitch("eng");
-            id = "TableAlphabetEng";
-        } else
-        if (GLOBAL_Fonts[fontName]["type"] === "num") {
-            LanguageSwitch("num");
-            id = "TableAlphabetNum";
-        }
+
+        LanguageSwitch(GLOBAL_Fonts[fontName]["type"]);
+        var id = FontType[GLOBAL_Fonts[fontName]["type"]]["TableID"];
         for (var i = 0; i < Object.keys(GLOBAL_Fonts[fontName]["Alphabet"]).length; i++) {
             var letter = document.getElementById(id).rows[i].cells[0].innerHTML;
             document.getElementById(id).rows[i].cells[1].innerHTML ="&#9745;";
@@ -303,14 +263,14 @@ function SelectFont(event) {
  * Проверка корректности введённого имени шрифта, запрет на спец символы и тп
  * @constructor
  */
-function ValidationNameDownloadFont() {
-   var fontName= document.getElementById("NameDownloadFont").value;
+function ValidationNameDownload(Name_id) {
+   var fontName= document.getElementById(Name_id).value;
     fontName=fontName.replace(/[^А-яЁёa-zA-Z-0-9]/g, "");
 if (fontName.length>20){
     var cut=fontName.length-20;
     fontName=fontName.substr(0,fontName.length-cut);
 }
-    document.getElementById("NameDownloadFont").value=fontName;
+    document.getElementById(Name_id).value=fontName;
 }
 
 /**
@@ -335,8 +295,8 @@ function DiodeSize() {
  */
 function MatrixSize() {
     var size=document.getElementById("MatrixSize").value;
-    var Table=CurrentTypeFont();
-    ClearItem(Table["Table"]);
+    var CurrentLanguage= document.getElementById("LanguageSelection").getAttribute("data-CurrentLanguage");
+    ClearItem(FontType[CurrentLanguage]["TableID"]);
     BuildMatrix(size);
 }
 
