@@ -193,41 +193,45 @@ function ClearItem(element) {
  * @constructor
  */
 function SaveFile() {
-    var textFile = null,
-        makeTextFile = function (text) {
-            var data = new Blob([text], {type: 'text/plain'});
-            if (textFile !== null) {
-                window.URL.revokeObjectURL(textFile);
-            }
-            textFile = window.URL.createObjectURL(data);
-            return textFile;
-        };
     var fontName = document.getElementById("NameDownloadFont").value;
-    var textbox = "GLOBAL_Fonts[\"" + fontName + "\"]={\r\n";
-    textbox += "\"type\":";
-    var ID="";
-    var CurrentLanguage= document.getElementById("LanguageSelection").getAttribute("data-CurrentLanguage");
-    textbox += "\""+CurrentLanguage+"\",\r\n";
-    ID=FontType[CurrentLanguage]["TableID"];
-    textbox += "\"size\":" + "\""+document.getElementById("MatrixSize").value+"\",\n";
-    textbox += "\"Alphabet\":{\r\n";
-    var ok = true;
-    for (var i = 0; i < document.getElementById(ID).rows.length; i++) {
-        var letter = document.getElementById(ID).rows[i].cells[0].innerHTML;
-        var characterCode = document.getElementById(ID).rows[i].cells[1].getAttribute("data-letterCode");
-        if (characterCode === "") {
-            alert("Заполните все символы алфавита!");
-            ok = false;
-            break;
+    if (fontName.length === 0) {
+        alert("Введите название шрифта!");
+    } else {
+        var textFile = null,
+            makeTextFile = function (text) {
+                var data = new Blob([text], {type: 'text/plain'});
+                if (textFile !== null) {
+                    window.URL.revokeObjectURL(textFile);
+                }
+                textFile = window.URL.createObjectURL(data);
+                return textFile;
+            };
+        var textbox = "GLOBAL_Fonts[\"" + fontName + "\"]={\r\n";
+        textbox += "\"type\":";
+        var ID = "";
+        var CurrentLanguage = document.getElementById("LanguageSelection").getAttribute("data-CurrentLanguage");
+        textbox += "\"" + CurrentLanguage + "\",\r\n";
+        ID = FontType[CurrentLanguage]["TableID"];
+        textbox += "\"size\":" + "\"" + document.getElementById("MatrixSize").value + "\",\n";
+        textbox += "\"Alphabet\":{\r\n";
+        var ok = true;
+        for (var i = 0; i < document.getElementById(ID).rows.length; i++) {
+            var letter = document.getElementById(ID).rows[i].cells[0].innerHTML;
+            var characterCode = document.getElementById(ID).rows[i].cells[1].getAttribute("data-letterCode");
+            if (characterCode === "") {
+                alert("Заполните все символы алфавита!");
+                ok = false;
+                break;
+            }
+            textbox += "\"" + letter + "\":\"" + characterCode + "\", \r\n";
         }
-        textbox += "\"" + letter + "\":\"" + characterCode + "\", \r\n";
-    }
-    textbox += "}\r\n};\n";
-    if (ok === true) {
-        var link = document.getElementById('downloadlink');
-        link.href = makeTextFile(textbox);
-        link.download = fontName + ".json";
-        document.getElementById('downloadlink').click();
+        textbox += "}\r\n};\n";
+        if (ok === true) {
+            var link = document.getElementById('downloadlink');
+            link.href = makeTextFile(textbox);
+            link.download = fontName + ".json";
+            document.getElementById('downloadlink').click();
+        }
     }
 }
 

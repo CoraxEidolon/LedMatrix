@@ -12,7 +12,7 @@
     display: inline-block;
 }
 
-.roundButton:hover, .roundButton:focus {
+.roundButton:hover {
     background-color: rgb(0, 0, 0);
     transition: background-color 1s ease;
     border-style: dotted;
@@ -64,14 +64,12 @@
     transition: background-color 0.02s ease;
 }
 
-
 .washedMatrix:hover .matrixClearButton {
     display: block;
 }
 .washedMatrix:hover .washedAlphabetButton{
     display: block;
 }
-
 
 .subMenuWashed{
     width: 0;
@@ -84,11 +82,22 @@
     left: -20%;
 }
 
+.subMenuWashed td{
+      display: none;
+}
+
+.washedMatrix:hover .subMenuWashed td{
+    display: table-cell;
+}
 .washedMatrix:hover .subMenuWashed{
     width: 130%;
+    z-index: 100;
     opacity: 99;
     display: table;
     animation-delay: 1s;
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
 }
@@ -111,29 +120,6 @@
     transition: background-color 0.02s ease;
 }
 
-.roundButtonSmall {
-    border-radius: 7em;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    display: block;
-    margin: 5px;
-    border: 2px solid #d00015;
-    background-color: rgba(255, 255, 255, 0.51);
-}
-
-.roundButtonSmall:hover, .roundButtonSmall:focus {
-    background-color: #d00015;
-    transition: background-color 1s ease;
-    transition-delay: 0.1s;
-}
-
-.roundButtonSmall:active {
-    background-color: #ff0066;
-    transition: background-color 0.01s ease;
-    transition-delay: 0s;
-}
-
 
 .subMenuLanguageSelection{
     width: 0;
@@ -148,22 +134,30 @@
     opacity: 99;
     display: table;
     animation-delay: 1s;
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
 }
 
+.countryFlag:hover .subMenuLanguageSelection td{
+    display: table-cell;
+}
+
 .subMenuLanguageSelection td {
-    border: 1px solid rgb(225, 77, 23);
-    background-color: rgb(214, 140, 0);
+    border: 2px solid rgb(0, 0, 0);
+    background-color: #24292d;
     border-radius: 50%;
     width: 70px;
     height: 40px;
-
+    display: none;
 }
+
 .subMenuLanguageSelection td:hover{
     transition-duration:1s;
     background-color: rgb(33, 214, 18);
-    border: 1px solid rgb(3, 255, 104);
+    border: 2px solid rgb(193, 12, 9);
 }
 
 .subMenuLanguageSelection td:active{
@@ -198,31 +192,63 @@
 }
 
 /******Меню******/
-.menu{
+.mainMenu{
+    border-collapse: separate;
+    text-align: center;
+    cursor: pointer;
+    position: fixed;
+    left:90%;
+}
+
+.mainMenu th{
     width: 40px;
     height: 40px;
     border: 2px solid #b70029;
     border-radius: 10px 10px 90px 90px ;
-    cursor: pointer;
-    margin-bottom: 1%;
-    position: fixed;
-    left:95%;
 }
 
-.menu:hover .subMenu{
-    display: inline-block;
+.mainMenu td{
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: 0.5s linear;
+    position: absolute;
+    top:-1000%;
+    border-radius:50%;
+    border: 2px solid #d00015;
+    background-color: rgba(255, 255, 255, 0.51);
 }
-.menu:hover{
-    background-color: #ff001b;
+
+.mainMenu td a{
+    width:100%;
+    height: 100%;
+    display: block;
+    border-radius:50%;
+}
+
+.mainMenu:hover td{
+    position: static;
+    width: 40px;
+    height: 40px;
+    opacity: 99;
+    animation-delay: 1s;
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+.mainMenu td:hover, .mainMenu td:focus {
+    background-color: #d00015;
+    border: 2px dotted #000000;
     transition: background-color 1s ease;
     transition-delay: 0.1s;
 }
 
-.subMenu{
-    display: none;
-    position: absolute;
-    top: 84%;
-    right: -20%;
+.mainMenu td:active {
+    background-color: #ff0066;
+    transition: background-color 0.01s ease;
+    transition-delay: 0s;
 }
-
 

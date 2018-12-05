@@ -121,6 +121,11 @@ body {
     border-radius: 1em;
 }
 
+.miniImgFontTypeSize{
+    width: 24px;
+    height: 100%;
+}
+
 .textarea_codeTickerResult{
     border: 4px solid black;
     height: 200px;
@@ -147,7 +152,6 @@ body {
     border: 2px solid #b70029;
     background-color: #e5e5e5;
     color: black;
-
 }
 
 .div_inline-block{
@@ -173,7 +177,6 @@ body {
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
-
 
 .animationFrame{
     display: inline-block;
@@ -201,24 +204,18 @@ body {
     text-shadow: #d50000 1px 1px 0;
 }
 
-
 .AnimationSetting{
     display: inline-block;
 }
 
-
 .div_AnimationFrame {
     white-space: nowrap;
-    width: 95%;
+    width: 90%;
     margin-left: 10px;
     overflow-x: scroll;
     display: inline-block;
     padding-right: 5px;
 }
-
-
-
-
 
 /*Полоса прокрутки*/
 ::-webkit-scrollbar {

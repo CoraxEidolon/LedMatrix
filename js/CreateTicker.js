@@ -56,10 +56,7 @@ function CreateTicker() {
         for (var i = 0; i < fontSize; i++) {
             arResult[i] = GetTicker(binaryFont[i]);
         }
-
         CodeOutput(arResult,text);
-
-        console.log(arResult);
         /*После того, как код бегущей строки получен, отключаем загрузку и показываем окно кода*/
         document.getElementById("Loading").classList.remove("loader");
         document.getElementById("CodeTickerResult").classList.remove("displayNone");

@@ -29,7 +29,7 @@ function GetListFonts() {
             buf += "<tr>";
         }
         buf += "<td>" + keys[i] + "</td>";
-        buf += "<th class='" + FontType[GLOBAL_Fonts[keys[i]]["type"]]["img"] + "'>&emsp;</th>"
+        buf += "<th class='" + FontType[GLOBAL_Fonts[keys[i]]["type"]]["img"] + " miniImgFontTypeSize'></th>"
         buf += "<th>" + GLOBAL_Fonts[keys[i]]["size"] + "</th>"
         buf += "</tr>";
     }

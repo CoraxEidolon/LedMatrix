@@ -19,6 +19,7 @@ function Animation_BuildMatrix(){
         var Columns = document.getElementById("MatrixColumns").value;
         var Lines = document.getElementById("MatrixLine").value;
         document.getElementById("Matrix").innerHTML = "";
+        document.getElementById("FrameAmount").innerHTML="0";
         var buf = "<tr>";
         for (var i = 0; i < Lines * 8; i++) {
             for (var j = 0; j < Columns; j++) {
@@ -364,51 +365,55 @@ function ClearAllFrame() {
  */
 function SaveAnimationFile() {
     var Content = document.getElementById("AnimationFrame").innerHTML;
-    if (Content.innerHTML === "") {
+    if (Content.length === 0) {
         alert("В анимации отсутствуют кадры!");
     } else {
-        var Link_id = "downloadlink";
         var AnimationName = document.getElementById("AnimationName").value;
-        var Rows = Number(document.getElementById("MatrixLine").value);
-        var Columns = Number(document.getElementById("MatrixColumns").value);
-        var Speed = document.getElementById("AnimationSpeed").value;
-        var FrameAmount = document.getElementById("FrameAmount").innerHTML;
+        if(AnimationName.length===0){
+            alert("Не заданно имя анимации!");
+        } else {
+            var Link_id = "downloadlink";
+            var Rows = Number(document.getElementById("MatrixLine").value);
+            var Columns = Number(document.getElementById("MatrixColumns").value);
+            var Speed = document.getElementById("AnimationSpeed").value;
+            var FrameAmount = document.getElementById("FrameAmount").innerHTML;
 
-        var text = "";
-        text += "{\n";
-        text += "\"name\":\"" + AnimationName + "\",\n";
-        text += "\"rows\":\"" + Rows + "\",\n";
-        text += "\"columns\":\"" + Columns + "\",\n";
-        text += "\"speed\":\"" + Speed + "\",\n";
-        text += "\"frameAmount\":\"" + FrameAmount + "\",\n";
+            var text = "";
+            text += "{\n";
+            text += "\"name\":\"" + AnimationName + "\",\n";
+            text += "\"rows\":\"" + Rows + "\",\n";
+            text += "\"columns\":\"" + Columns + "\",\n";
+            text += "\"speed\":\"" + Speed + "\",\n";
+            text += "\"frameAmount\":\"" + FrameAmount + "\",\n";
 
-        /* Запоминаем подключение матриц к микроконтроллеру */
-        for (var j = 0; j < Rows; j++) {
-            for (var i = 0; i < Columns; i++) {
+            /* Запоминаем подключение матриц к микроконтроллеру */
+            for (var j = 0; j < Rows; j++) {
+                for (var i = 0; i < Columns; i++) {
 
-                text += "\"" + j + "_" + i + "_CLK\":\"" + document.getElementById(j + "_" + i + "_CLK").value + "\",\n";
-                text += "\"" + j + "_" + i + "_CS\":\"" + document.getElementById(j + "_" + i + "_CS").value + "\",\n";
-                text += "\"" + j + "_" + i + "_DIN\":\"" + document.getElementById(j + "_" + i + "_DIN").value + "\",\n";
-            }
-        }
-
-        Content = Content.replace(/"/g, "'"); //Т.к. будем заносить в строку, заменяем все двойные кавычки на одинарные
-        text += "\"animation\":\"" + Content + "\" \n";
-        text += "}";
-        var textFile = null,
-            makeTextFile = function (text) {
-                var data = new Blob([text], {type: 'text/plain'});
-                if (textFile !== null) {
-                    window.URL.revokeObjectURL(textFile);
+                    text += "\"" + j + "_" + i + "_CLK\":\"" + document.getElementById(j + "_" + i + "_CLK").value + "\",\n";
+                    text += "\"" + j + "_" + i + "_CS\":\"" + document.getElementById(j + "_" + i + "_CS").value + "\",\n";
+                    text += "\"" + j + "_" + i + "_DIN\":\"" + document.getElementById(j + "_" + i + "_DIN").value + "\",\n";
                 }
-                textFile = window.URL.createObjectURL(data);
-                return textFile;
-            };
+            }
 
-        var link = document.getElementById(Link_id);
-        link.href = makeTextFile(text);
-        link.download = AnimationName + ".json";
-        document.getElementById(Link_id).click();
+            Content = Content.replace(/"/g, "'"); //Т.к. будем заносить в строку, заменяем все двойные кавычки на одинарные
+            text += "\"animation\":\"" + Content + "\" \n";
+            text += "}";
+            var textFile = null,
+                makeTextFile = function (text) {
+                    var data = new Blob([text], {type: 'text/plain'});
+                    if (textFile !== null) {
+                        window.URL.revokeObjectURL(textFile);
+                    }
+                    textFile = window.URL.createObjectURL(data);
+                    return textFile;
+                };
+
+            var link = document.getElementById(Link_id);
+            link.href = makeTextFile(text);
+            link.download = AnimationName + ".json";
+            document.getElementById(Link_id).click();
+        }
     }
 }
 
@@ -444,8 +449,8 @@ function OpenAnimationFileDialog(evt) {
             document.getElementById("AnimationSpeed").value = AnimationParse["speed"];
             document.getElementById("MatrixLine").value = AnimationParse["rows"];
             document.getElementById("MatrixColumns").value = AnimationParse["columns"];
-            document.getElementById("FrameAmount").innerHTML = AnimationParse["frameAmount"];
             Animation_BuildMatrix();
+            document.getElementById("FrameAmount").innerHTML = AnimationParse["frameAmount"];
             document.getElementById("AnimationFrame").innerHTML = AnimationParse["animation"];
 
             /*Загружаем подключение матриц на форму: */

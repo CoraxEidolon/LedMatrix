@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Анимация</title>
-    <script type="text/javascript">var GLOBAL_Animation=[];</script>
     <link rel="shortcut icon" href="../style/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../style/svg.css"/>
     <link rel="stylesheet" type="text/css" href="../style/button.css"/>
@@ -13,11 +12,7 @@
     <script type="text/javascript" src="../js/CreateTicker.js"></script>
     <script type="text/javascript" src="../js/CreateAnimation.js"></script>
     <script type="text/javascript" src="../js/ListenerAnimation.js"></script>
-
-
     <script type="text/javascript" src="" id="LoadAnimation"> </script>
-
-
     <style>
         .matrix td {
             padding-left: 10px;
@@ -28,15 +23,16 @@
     </style>
 </head>
 <body onload="onLoad()">
-<div class="menu menuSVG">
-    <div class="subMenu">
-        <a href="../index.html"><div class="roundButtonSmall homeSVG"></div></a>
-        <a href="Alphabet.html"><div class="roundButtonSmall createFontSVG"></div></a>
-        <a href="Ticker.html"> <div class="roundButtonSmall runSVG"></div></a>
-        <div class="roundButtonSmall testSVG"></div>
-        <div class="roundButtonSmall helpSVG"></div>
-    </div>
-</div>
+
+<table class="mainMenu">
+    <tr><th class="menuSVG"></th></tr>
+    <tr><td class="homeSVG"> <a href="../index.html"> </a></td> </tr>
+    <tr><td class="createFontSVG"><a href="Alphabet.html"></a></td></tr>
+    <tr><td class="runSVG"><a href="Ticker.html"></a></td></tr>
+    <tr><td class="testSVG"></td></tr>
+    <tr><td class="helpSVG"></td></tr>
+</table>
+
 <b class="frameAmountText">Количество кадров:</b><b id="FrameAmount">0</b>
 <div id="AnimationFrame" class="div_AnimationFrame"></div>
 <table class="AnimationSetting">
@@ -46,11 +42,7 @@
     <tr><td>Скорость:</td><td><input id="AnimationSpeed" type="number" class="inputNumber" min="1" value="40"></td></tr>
     <tr><td>Название анимации:</td><td><input id="AnimationName" type="text" class="inputDownloadName"></td></tr>
 </table>
-
-
-
 <br>
-
 <div id="SaveArduinoCode" class="roundButton arduinoLogoSVG" title="Сохранить программный код Arduino"></div>
 <div id="SaveAnimation"  class="roundButton videoCassetteSVG" title="Сохранить анимацию"></div>
 
@@ -62,11 +54,8 @@
 </div>
 <div id="CreateFrame" class="roundButton cameraSVG" title="Создать кадр"></div>
 <div id="CreateAnimation" class="roundButton clapperboardSVG" title="Склеить анимацию из кадров"></div>
-
-
 <div id="OpenAnimationFileButton" class="roundButton folderSVG" title="Открыть файл анимации"></div>
 <br>
-
 <table class="matrix" id="Matrix">
     <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
     <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>
@@ -95,7 +84,6 @@
         </tbody>
     </table>
 </div>
-
 <h3>Программный код для Arduino:<div id="ShowHideArduinoCode" class="show-hide hideSVG"></div></h3>
 <textarea id="CodeFrameResult" class="textarea_codeTickerResult packageSVG" readonly></textarea>
 <a  id="downloadlink" style="display: none">Download</a>
