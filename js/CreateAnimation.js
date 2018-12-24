@@ -74,6 +74,11 @@ function SelectFrame(event) {
     }
 }
 
+
+function insertAfter(elem, refElem) {
+    return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
+}
+
 /**
  * Создает кадр
  * @constructor
@@ -133,7 +138,31 @@ function CreateFrame() {
     /*Склеиваем массив в единую строку для добавления к кадру*/
    var JoinMatricesCode= arResult8.join("_");
     /*Добавляем полученный кадр*/
-    document.getElementById("AnimationFrame").innerHTML += "<div class='frameSVG_" + rand + " animationFrame' title='Кадр: " + animationFrameCount + "' data-AnimationFrameCode='" + result + "' data-AnimationMatricesCode='"+JoinMatricesCode+"'></div>";
+
+
+  if( document.getElementsByClassName("animationFrame").length<=0) {
+      document.getElementById("AnimationFrame").innerHTML += "<div id='SelectAnimationFrame' class='frameSVG_" + rand + " animationFrame' title='Кадр: " + animationFrameCount + "' data-AnimationFrameCode='" + result + "' data-AnimationMatricesCode='" + JoinMatricesCode + "'></div>";
+  } else{
+
+      var current =document.getElementById("SelectAnimationFrame");
+      document.getElementById("SelectAnimationFrame").removeAttribute("id");
+
+      var div = document.createElement('div');
+      div.id = "SelectAnimationFrame";
+      div.className = "frameSVG_" + rand + " animationFrame";
+      div.title = "Кадр: " + animationFrameCount;
+      div.dataset.animationframecode = result;
+      div.dataset.animationmatricescode = JoinMatricesCode;
+
+
+      insertAfter(div,current);
+
+
+
+  }
+
+
+
 
     document.getElementById("FrameAmount").innerHTML=String(animationFrameCount);
 }
@@ -228,7 +257,6 @@ function DeleteCurrentFrame() {
             for (var i = 0; i < animationFrameCount; i++) {
                 Frame[i].setAttribute("title", "Кадр: " + (i + 1));
             }
-            alert(animationFrameCount);
             document.getElementById("FrameAmount").innerHTML=String(animationFrameCount);
         }
     }

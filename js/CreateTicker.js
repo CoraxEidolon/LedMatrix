@@ -333,14 +333,14 @@ function CodeOutput(arResult,Text) {
             var coefficient = (Columns - 1) - i;
             if (i === (Columns - 1)) {
                 CodeArduino.value += "for (i = 1; i < 9; i++) {\n";
-                CodeArduino.value += "    Write_Matr(i, pgm_read_byte( &line" + j + "[j][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+                CodeArduino.value += "    Write_Matr(i, pgm_read_byte( &line" + Number(Rows-1-j)+ "[j][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
                 CodeArduino.value += "}\n\n";
             } else {
                 CodeArduino.value += "if (j <= " + (coefficient * 8 - 1) + ") {\n";
                 CodeArduino.value += "    Write_Matr(i, 0x00, M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
                 CodeArduino.value += "} else {\n";
                 CodeArduino.value += "    for (i = 1; i < 9; i++) {\n";
-                CodeArduino.value += "        Write_Matr(i, pgm_read_byte( &line" + j + "[j - " + (coefficient * 8) + "][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+                CodeArduino.value += "        Write_Matr(i, pgm_read_byte( &line" + Number(Rows-1-j) + "[j - " + (coefficient * 8) + "][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
                 CodeArduino.value += "    }\n";
                 CodeArduino.value += "}\n\n";
             }///!
