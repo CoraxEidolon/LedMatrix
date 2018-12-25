@@ -3,7 +3,8 @@ function onLoad() {
     document.getElementById("WashedMatrix").addEventListener("click", WashedMatrix);
     document.getElementById("AnimationFrame").addEventListener("click", SelectFrame);
     document.getElementById("DiodeSize").addEventListener("change", DiodeSize);
-    document.getElementById("CreateFrame").addEventListener("click", CreateFrame);
+    document.getElementById("AddNewFrame").addEventListener("click", CreateFrame);
+    document.getElementById("EditSelectedFrame").addEventListener("click", EditSelectedFrame);
     document.getElementById("MatrixColumns").addEventListener("change", Animation_BuildMatrix);
     document.getElementById("MatrixLine").addEventListener("change", Animation_BuildMatrix);
     document.getElementById("ShowHideConnectMicrocontroller").addEventListener("click", Animation_ShowHide);

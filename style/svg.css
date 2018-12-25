@@ -176,3 +176,16 @@
     background-position: center;
     background-size: 70% 70%;
 }
+.editFrameSVG{
+    background-image: url("../svg/EditFrame.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 85% 85%;
+}
+
+.addNewFrameSVG{
+    background-image: url("../svg/AddNewFrame.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 95% 95%;
+}

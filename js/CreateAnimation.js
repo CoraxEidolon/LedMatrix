@@ -74,16 +74,23 @@ function SelectFrame(event) {
     }
 }
 
-
+/**
+ * Добавляет элемент после выбранного
+ * @param elem - Элемент который будет добавлен
+ * @param refElem - После чего добавить
+ * @returns {Node}
+ */
 function insertAfter(elem, refElem) {
     return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
 }
 
+
 /**
- * Создает кадр
+ * Формирует код анимации
+ * @returns {Array}
  * @constructor
  */
-function CreateFrame() {
+function CreateFrameCode() {
     /*создаем сначала кадр всего поля, для более простого предварительного просмотра*/
     var result = "";
     for (var i = 0; i < document.getElementById('Matrix').rows[0].cells.length; i++) {
@@ -101,11 +108,6 @@ function CreateFrame() {
             result += ",";
         }
     }
-
-    /* Генерируем случайное число, соответствующее номеру иконки кадра */
-    var rand = getRandomInt(1, 42);
-    /*Получаем количество элементов с классом animationFrame, соответствует текущему кадры*/
-    var animationFrameCount = document.getElementsByClassName("animationFrame").length + 1;
 
     /*Формируем массив для каждой матрицы*/
     var Columns = document.getElementById("MatrixColumns").value;
@@ -135,11 +137,29 @@ function CreateFrame() {
             arResult8.push(result8);
         }
     }
+
     /*Склеиваем массив в единую строку для добавления к кадру*/
-   var JoinMatricesCode= arResult8.join("_");
+    var ReturnResult=[];
+    ReturnResult["JoinMatricesCode"]=arResult8.join("_");
+    ReturnResult["result"]=result;
+    return ReturnResult;
+}
+
+/**
+ * Создает кадр
+ * @constructor
+ */
+function CreateFrame() {
+    var FrameCode = CreateFrameCode();
+    var JoinMatricesCode = FrameCode["JoinMatricesCode"];
+    var result = FrameCode["result"];
+
+    /* Генерируем случайное число, соответствующее номеру иконки кадра */
+    var rand = getRandomInt(1, 42);
+    /*Получаем количество элементов с классом animationFrame, соответствует текущему кадры*/
+    var animationFrameCount = document.getElementsByClassName("animationFrame").length + 1;
+
     /*Добавляем полученный кадр*/
-
-
   if( document.getElementsByClassName("animationFrame").length<=0) {
       document.getElementById("AnimationFrame").innerHTML += "<div id='SelectAnimationFrame' class='frameSVG_" + rand + " animationFrame' title='Кадр: " + animationFrameCount + "' data-AnimationFrameCode='" + result + "' data-AnimationMatricesCode='" + JoinMatricesCode + "'></div>";
   } else{
@@ -153,17 +173,8 @@ function CreateFrame() {
       div.title = "Кадр: " + animationFrameCount;
       div.dataset.animationframecode = result;
       div.dataset.animationmatricescode = JoinMatricesCode;
-
-
       insertAfter(div,current);
-
-
-
   }
-
-
-
-
     document.getElementById("FrameAmount").innerHTML=String(animationFrameCount);
 }
 
@@ -176,6 +187,23 @@ function CreateFrame() {
 function CreateFrameOnMouse(event){
     CreateFrame();
     event.returnValue = false;
+}
+
+/**
+ * Внести изменения в выбранный кадр
+ * @constructor
+ */
+function EditSelectedFrame() {
+    if (document.getElementById("SelectAnimationFrame") === null) {
+        alert("Выберете кадр!");
+    } else {
+       var selectedFrame = document.getElementById("SelectAnimationFrame");
+        var FrameCode = CreateFrameCode();
+        var JoinMatricesCode = FrameCode["JoinMatricesCode"];
+        var result = FrameCode["result"];
+        selectedFrame.dataset.animationframecode = result;
+        selectedFrame.dataset.animationmatricescode = JoinMatricesCode;
+    }
 }
 
 /**
@@ -267,111 +295,117 @@ function DeleteCurrentFrame() {
  * @constructor
  */
 function CreateAnimation() {
-    /*________________________ВЫВОД________________________*/
 
-    var Rows=Number(document.getElementById("MatrixLine").value);
-    var Columns = Number(document.getElementById("MatrixColumns").value);
-    var CodeArduino= document.getElementById("CodeFrameResult");//Поле вывода кода
-    CodeArduino.value ="";//Очищаем поле вывода кода
-    CodeArduino.classList.remove("packageSVG");//Убираем "пустую коробку" с фона, т.к. поле больше не пустое
-    CodeArduino.value += "int i;\nint j;\n";
-    /*Подключение к микроконтроллеру.
-     В этот раз все удобно, расположение матриц на экране, соответствует матрицам в жизни*/
-    CodeArduino.value +="//M_Строка_Столбец\n";
-    for (var j = 0; j < Rows; j++) {
-        for (var i = 0; i < Columns; i++) {
-            CodeArduino.value += "//Матрица " + j + "_" + i + "\n";
-            CodeArduino.value += "int M_" + j + "_" + i + "_CLK =" + document.getElementById(j + "_" + i + "_CLK").value + ";\n";
-            CodeArduino.value += "int M_" + j + "_" + i + "_CS =" + document.getElementById(j + "_" + i + "_CS").value + ";\n";
-            CodeArduino.value += "int M_" + j + "_" + i + "_DIN =" + document.getElementById(j + "_" + i + "_DIN").value + ";\n";
+    var FrameLength = document.getElementById("AnimationFrame").innerHTML.length;
+    if (FrameLength === 0) {
+        alert("В анимации отсутствуют кадры!");
+    } else{
+        /*________________________ВЫВОД________________________*/
+
+        var Rows = Number(document.getElementById("MatrixLine").value);
+        var Columns = Number(document.getElementById("MatrixColumns").value);
+        var CodeArduino = document.getElementById("CodeFrameResult");//Поле вывода кода
+        CodeArduino.value = "";//Очищаем поле вывода кода
+        CodeArduino.classList.remove("packageSVG");//Убираем "пустую коробку" с фона, т.к. поле больше не пустое
+        CodeArduino.value += "int i;\nint j;\n";
+        /*Подключение к микроконтроллеру.
+         В этот раз все удобно, расположение матриц на экране, соответствует матрицам в жизни*/
+        CodeArduino.value += "//M_Строка_Столбец\n";
+        for (var j = 0; j < Rows; j++) {
+            for (var i = 0; i < Columns; i++) {
+                CodeArduino.value += "//Матрица " + j + "_" + i + "\n";
+                CodeArduino.value += "int M_" + j + "_" + i + "_CLK =" + document.getElementById(j + "_" + i + "_CLK").value + ";\n";
+                CodeArduino.value += "int M_" + j + "_" + i + "_CS =" + document.getElementById(j + "_" + i + "_CS").value + ";\n";
+                CodeArduino.value += "int M_" + j + "_" + i + "_DIN =" + document.getElementById(j + "_" + i + "_DIN").value + ";\n";
+            }
         }
-    }
-    CodeArduino.value +="\n";
-    /*-=ВЫВОД МАССИВОВ АНИМАЦИИ=-*/
+        CodeArduino.value += "\n";
+        /*-=ВЫВОД МАССИВОВ АНИМАЦИИ=-*/
 
-    /*Формируем массив значений для каждой матрицы*/
-    var Frame=[];
-    var animationFrame= document.getElementsByClassName("animationFrame");
-    for(var i=0; i<animationFrame.length; i++){
-       var bufFrame=animationFrame[i].getAttribute("data-AnimationMatricesCode")
-        bufFrame=bufFrame.split("_");
-        Frame.push(bufFrame);
-    }
-
-    /*Для каждой матрицы*/
-    for (var i= 0; i < Frame[0].length; i++) {
-        CodeArduino.value += "const uint8_t display_" + i + "[" +  Frame.length + "][8]PROGMEM ={\n";
-
-        /*Для каждого кадра*/
-        for (var j = 0; j < Frame.length ; j++) {
-            CodeArduino.value +="{"+ Frame[j][i] + "},\n";
+        /*Формируем массив значений для каждой матрицы*/
+        var Frame = [];
+        var animationFrame = document.getElementsByClassName("animationFrame");
+        for (var i = 0; i < animationFrame.length; i++) {
+            var bufFrame = animationFrame[i].getAttribute("data-AnimationMatricesCode")
+            bufFrame = bufFrame.split("_");
+            Frame.push(bufFrame);
         }
-        CodeArduino.value += "};\n\n";
-    }
-    CodeArduino.value += "\n";
 
-    /*Функции вывода*/
-     CodeArduino.value += "void Write_Matr_byte(unsigned char DATA, int CS, int CLK, int DIN) {\n";
-     CodeArduino.value += "   unsigned char i;\n";
-     CodeArduino.value += "    digitalWrite(CS,LOW);\n";
-     CodeArduino.value += "    for(i=8;i>=1;i--) {\n";
-     CodeArduino.value += "        digitalWrite(CLK,LOW);\n";
-     CodeArduino.value += "        digitalWrite(DIN,DATA&0x80);\n";
-     CodeArduino.value += "        DATA = DATA<<1;\n";
-     CodeArduino.value += "        digitalWrite(CLK,HIGH);\n";
-     CodeArduino.value += "    }\n";
-     CodeArduino.value += " }\n\n";
-     CodeArduino.value += "void Write_Matr(unsigned char address,unsigned char dat, int CS, int CLK, int DIN){\n";
-     CodeArduino.value += "    digitalWrite(CS,LOW);\n";
-     CodeArduino.value += "    Write_Matr_byte(address,CS, CLK, DIN);\n";
-     CodeArduino.value += "    Write_Matr_byte(dat,CS,CLK,DIN);\n";
-     CodeArduino.value += "    digitalWrite(CS,HIGH);\n";
-     CodeArduino.value += "}\n\n";
-     CodeArduino.value += " void Init_Matr(int CS, int CLK, int DIN){\n";
-     CodeArduino.value += "    Write_Matr(0x09, 0x00,CS, CLK, DIN);\n";
-     CodeArduino.value += "    Write_Matr(0x0a, 0x03,CS, CLK, DIN);\n";
-     CodeArduino.value += "    Write_Matr(0x0b, 0x07,CS, CLK, DIN);\n";
-     CodeArduino.value += "    Write_Matr(0x0c, 0x01,CS, CLK, DIN);\n";
-     CodeArduino.value += "    Write_Matr(0x0f, 0x00,CS, CLK, DIN);\n";
-     CodeArduino.value += "}\n\n";
+        /*Для каждой матрицы*/
+        for (var i = 0; i < Frame[0].length; i++) {
+            CodeArduino.value += "const uint8_t display_" + i + "[" + Frame.length + "][8]PROGMEM ={\n";
 
-    /*_____void setup()_____*/
-     CodeArduino.value += "void setup() {\n";
-    /*Настраиваем пинов вывода матрицы*/
-    for (var j = 0; j < Rows; j++) {
-        for (var i = 0; i < Columns; i++) {
-            CodeArduino.value += "//Настраиваем выводы матрицы " + i + " как выходы:\n";
-            CodeArduino.value += "pinMode(M_" + j + "_" + i + "_CLK,OUTPUT);\n";
-            CodeArduino.value += "pinMode(M_" + j + "_" + i + "_CS,OUTPUT);\n";
-            CodeArduino.value += "pinMode(M_" + j + "_" + i + "_DIN,OUTPUT);\n";
+            /*Для каждого кадра*/
+            for (var j = 0; j < Frame.length; j++) {
+                CodeArduino.value += "{" + Frame[j][i] + "},\n";
+            }
+            CodeArduino.value += "};\n\n";
         }
-    }
-    CodeArduino.value += "delay(50);\n";
+        CodeArduino.value += "\n";
 
-    /*Инициализация матриц*/
-    for (var j = 0; j < Rows; j++) {
-        for (var i = 0; i < Columns; i++) {
-            CodeArduino.value += "Init_Matr(M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+        /*Функции вывода*/
+        CodeArduino.value += "void Write_Matr_byte(unsigned char DATA, int CS, int CLK, int DIN) {\n";
+        CodeArduino.value += "   unsigned char i;\n";
+        CodeArduino.value += "    digitalWrite(CS,LOW);\n";
+        CodeArduino.value += "    for(i=8;i>=1;i--) {\n";
+        CodeArduino.value += "        digitalWrite(CLK,LOW);\n";
+        CodeArduino.value += "        digitalWrite(DIN,DATA&0x80);\n";
+        CodeArduino.value += "        DATA = DATA<<1;\n";
+        CodeArduino.value += "        digitalWrite(CLK,HIGH);\n";
+        CodeArduino.value += "    }\n";
+        CodeArduino.value += " }\n\n";
+        CodeArduino.value += "void Write_Matr(unsigned char address,unsigned char dat, int CS, int CLK, int DIN){\n";
+        CodeArduino.value += "    digitalWrite(CS,LOW);\n";
+        CodeArduino.value += "    Write_Matr_byte(address,CS, CLK, DIN);\n";
+        CodeArduino.value += "    Write_Matr_byte(dat,CS,CLK,DIN);\n";
+        CodeArduino.value += "    digitalWrite(CS,HIGH);\n";
+        CodeArduino.value += "}\n\n";
+        CodeArduino.value += " void Init_Matr(int CS, int CLK, int DIN){\n";
+        CodeArduino.value += "    Write_Matr(0x09, 0x00,CS, CLK, DIN);\n";
+        CodeArduino.value += "    Write_Matr(0x0a, 0x03,CS, CLK, DIN);\n";
+        CodeArduino.value += "    Write_Matr(0x0b, 0x07,CS, CLK, DIN);\n";
+        CodeArduino.value += "    Write_Matr(0x0c, 0x01,CS, CLK, DIN);\n";
+        CodeArduino.value += "    Write_Matr(0x0f, 0x00,CS, CLK, DIN);\n";
+        CodeArduino.value += "}\n\n";
+
+        /*_____void setup()_____*/
+        CodeArduino.value += "void setup() {\n";
+        /*Настраиваем пинов вывода матрицы*/
+        for (var j = 0; j < Rows; j++) {
+            for (var i = 0; i < Columns; i++) {
+                CodeArduino.value += "//Настраиваем выводы матрицы " + i + " как выходы:\n";
+                CodeArduino.value += "pinMode(M_" + j + "_" + i + "_CLK,OUTPUT);\n";
+                CodeArduino.value += "pinMode(M_" + j + "_" + i + "_CS,OUTPUT);\n";
+                CodeArduino.value += "pinMode(M_" + j + "_" + i + "_DIN,OUTPUT);\n";
+            }
         }
-    }
-    CodeArduino.value += "}\n\n";
+        CodeArduino.value += "delay(50);\n";
 
-    /*_____void loop()_____*/
-    CodeArduino.value += "void loop(){\n\n";
-    CodeArduino.value += "for (j = 0; j < " + Frame.length + "; j++) {\n";
+        /*Инициализация матриц*/
+        for (var j = 0; j < Rows; j++) {
+            for (var i = 0; i < Columns; i++) {
+                CodeArduino.value += "Init_Matr(M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
+            }
+        }
+        CodeArduino.value += "}\n\n";
 
-    var matrixCount=0;
-    for (var j = 0; j < Rows; j++) {
-        for (var i = 0; i <Columns; i++) {
-            CodeArduino.value += "//Матрица"+ matrixCount+":\n";
+        /*_____void loop()_____*/
+        CodeArduino.value += "void loop(){\n\n";
+        CodeArduino.value += "for (j = 0; j < " + Frame.length + "; j++) {\n";
+
+        var matrixCount = 0;
+        for (var j = 0; j < Rows; j++) {
+            for (var i = 0; i < Columns; i++) {
+                CodeArduino.value += "//Матрица" + matrixCount + ":\n";
                 CodeArduino.value += "for (i = 1; i < 9; i++) {\n";
                 CodeArduino.value += "    Write_Matr(i, pgm_read_byte( &display_" + matrixCount + "[j][i - 1]), M_" + j + "_" + i + "_CS, M_" + j + "_" + i + "_CLK, M_" + j + "_" + i + "_DIN);\n";
                 CodeArduino.value += "}\n\n";
-            matrixCount++;
-        }//i
-    }//j
-    CodeArduino.value += "delay(" + document.getElementById("AnimationSpeed").value + ");//Скорость вывода\n";
-    CodeArduino.value += "    }\n}\n";
+                matrixCount++;
+            }//i
+        }//j
+        CodeArduino.value += "delay(" + document.getElementById("AnimationSpeed").value + ");//Скорость вывода\n";
+        CodeArduino.value += "    }\n}\n";
+    }
 }
 
 /**
