@@ -1,26 +1,26 @@
 /*Файл содержит классы SVG файлов*/
-.packageSVG{
+.packageSVG {
     background-image: url("../svg/Package.svg");
     background-repeat: no-repeat;
     background-position: center;
     opacity: 0.3;
 }
 
-.unitedKingdomSVG{
+.unitedKingdomSVG {
     background-image: url("../svg/united-kingdom.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 80% 80%;
 }
 
-.russiaSVG{
+.russiaSVG {
     background-image: url("../svg/Russia.svg");
     background-size: 80% 80%;
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.numberSVG{
+.numberSVG {
     background-image: url("../svg/maths.svg");
     background-repeat: no-repeat;
     background-position: center;
@@ -41,67 +41,68 @@
     background-position: center;
 }
 
-.plusSVG{
+.plusSVG {
     background-image: url("../svg/like.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70% 70%;
 }
 
-.saveSVG{
+.saveSVG {
     background-image: url("../svg/diskette.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70% 70%;
 }
 
-.washedSVG{
+.washedSVG {
     background-image: url("../svg/Washed.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70% 70%;
 }
 
-.menuSVG{
+.menuSVG {
     background-image: url("../svg/pro.svg");
 }
 
-.createFontSVG{
+.createFontSVG {
     background-image: url("../svg/pencilPictogram.svg");
     background-size: 80% 80%;
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.runSVG{
+.runSVG {
     background-image: url("../svg/running.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 80% 80%;
 }
-.helpSVG{
+
+.helpSVG {
     background-image: url("../svg/help.svg");
 }
 
-.testSVG{
+.testSVG {
     background-image: url("../svg/test.svg");
 }
 
-.tickerSVG{
+.tickerSVG {
     background-image: url("../svg/sneaker.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70% 70%;
 }
 
-.arduinoLogoSVG{
-     background-image: url("../svg/download.svg");
-     background-repeat: no-repeat;
-     background-position: center;
-     background-size: 70% 70%;
- }
+.arduinoLogoSVG {
+    background-image: url("../svg/download.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
+}
 
-.codeSVG{
+.codeSVG {
     background-image: url("../svg/code-break.svg");
     background-repeat: no-repeat;
     background-position: center;
@@ -109,83 +110,102 @@
 
 }
 
-.bookASVG{
+.bookASVG {
     background-image: url("../svg/open-book.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 85% 85%;
 }
 
-.photoSVG{
+.photoSVG {
     background-image: url("../svg/photo.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 80% 80%;
 }
 
-.cameraSVG{
+.cameraSVG {
     background-image: url("../svg/camera.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70% 70%;
 }
 
-.homeSVG{
+.homeSVG {
     background-image: url("../svg/mansion.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 85% 85%;
 }
-.showSVG{
+
+.showSVG {
     background-image: url("../svg/view.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 85% 85%;
 }
-.hideSVG{
-     background-image: url("../svg/hide.svg");
-     background-repeat: no-repeat;
-     background-position: center;
-     background-size: 85% 85%;
- }
-.clapperboardSVG{
+
+.hideSVG {
+    background-image: url("../svg/hide.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 85% 85%;
+}
+
+.clapperboardSVG {
     background-image: url("../svg/clapperboard.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70% 70%;
 }
 
-.clearAllFrameSVG{
+.clearAllFrameSVG {
     background-image: url("../svg/edit-video.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 85% 85%;
 }
 
-.folderSVG{
+.folderSVG {
     background-image: url("../svg/folder.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70% 70%;
 }
 
-
-.videoCassetteSVG{
+.videoCassetteSVG {
     background-image: url("../svg/vhs.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70% 70%;
 }
-.editFrameSVG{
+
+.editFrameSVG {
     background-image: url("../svg/EditFrame.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 85% 85%;
 }
 
-.addNewFrameSVG{
+.addNewFrameSVG {
     background-image: url("../svg/AddNewFrame.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 95% 95%;
+}
+
+.stopAnimationSVG {
+    background-image: url("../svg/stop.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 65% 65%;
+    border-radius: 0 100% 100% 0;
+}
+
+.playAnimationSVG {
+    background-image: url("../svg/play.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75% 75%;
+    border-radius: 100% 0 0 100%;
 }

@@ -23,7 +23,7 @@
     </style>
 </head>
 <body onload="onLoad()">
-
+<div id="Veil" class="displayNone"></div>
 <table class="mainMenu">
     <tr><th class="menuSVG"></th></tr>
     <tr><td class="homeSVG" title="Главная страница"> <a href="../index.html"> </a></td> </tr>
@@ -46,20 +46,25 @@
 <div id="SaveArduinoCode" class="roundButton arduinoLogoSVG" title="Сохранить программный код Arduino"></div>
 <div id="SaveAnimation"  class="roundButton videoCassetteSVG" title="Сохранить анимацию"></div>
 
-<div class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
+<div id="DeleteButton" class="washedMatrix roundButton washedSVG" title="Очистка элементов до стандартных значений">
 <table class="subMenuWashed">
     <tr> <td id="DeleteCurrentFrame" class="photoSVG" title="Удалить текущий кадр"></td> <td id="ClearAllFrame" class="clearAllFrameSVG" title="Удалить все кадры"></td> </tr>
     <tr> <td id="WashedMatrix" class="matrixClearSVG" title="Очистить матрицу"></td> <td  id="WashedCodeFrameResult" class="codeSVG" title="Очистить программный код"></td> </tr>
 </table>
 </div>
 <div id="CreateFrame" class="roundButton washedMatrix cameraSVG">
-
     <div id="AddNewFrame" class="washedAlphabetButton addNewFrameSVG" title="Добавить новый кадр"></div>
     <div id="EditSelectedFrame" class="matrixClearButton editFrameSVG" title="Изменить выбранный кадр"></div>
-
 </div>
 <div id="CreateAnimation" class="roundButton clapperboardSVG" title="Склеить анимацию из кадров, получить программный код"></div>
 <div id="OpenAnimationFileButton" class="roundButton folderSVG" title="Открыть файл анимации"></div>
+<div>
+    Предварительный просмотр
+    <br>
+    <div id="StartShowingAnimation" class="playerButtons playAnimationSVG"></div>
+    <div id="StopShowingAnimation" class="playerButtons stopAnimationSVG"></div>
+    <span id="AnimationGo"></span>
+</div>
 <br>
 <table class="matrix" id="Matrix">
     <tr> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> </tr>

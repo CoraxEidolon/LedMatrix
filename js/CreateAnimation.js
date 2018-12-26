@@ -527,3 +527,50 @@ function OpenAnimationFileDialog(evt) {
         }
     }
 }
+
+
+var GLOBAL_countTimer = 0;//Счетчик таймера
+var GLOBAL_TimerStop = true;//Остановить таймер Да/Нет
+/**
+ * Начать показ анимации, запустить таймер
+ * @constructor
+ */
+function StartShowingAnimation() {
+    var FrameLength = document.getElementById("AnimationFrame").innerHTML.length;
+    if (FrameLength === 0) {
+        alert("В анимации отсутствуют кадры!");
+    } else {
+        document.getElementById("Veil").classList.remove("displayNone");
+        document.getElementById("AnimationGo").innerHTML=" Идет показ кадров:";
+        GLOBAL_countTimer = 0;
+        GLOBAL_TimerStop = false;
+        var speed = Number(document.getElementById("AnimationSpeed").value);
+        var frames = document.getElementsByClassName("animationFrame");
+
+        var timerId = setTimeout(function tick() {
+            frames[GLOBAL_countTimer].click();
+            if (GLOBAL_countTimer < frames.length - 1 && GLOBAL_TimerStop === false) {
+                GLOBAL_countTimer++;
+                timerId = setTimeout(tick, speed);
+            } else {
+                document.getElementById("Veil").classList.add("displayNone");
+                document.getElementById("AnimationGo").innerHTML="";
+            }
+        }, speed);
+    }
+}
+
+/**
+ * Остановить показ анимации, отключить таймер
+ * @constructor
+ */
+function StopShowingAnimation() {
+    var FrameLength = document.getElementById("AnimationFrame").innerHTML.length;
+    if (FrameLength === 0) {
+        alert("В анимации отсутствуют кадры!");
+    } else {
+        GLOBAL_TimerStop = true;
+        document.getElementById("Veil").classList.add("displayNone");
+        document.getElementById("AnimationGo").innerHTML="";
+    }
+}

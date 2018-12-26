@@ -215,6 +215,21 @@ body {
     overflow-x: scroll;
     display: inline-block;
     padding-right: 5px;
+    position: relative;
+    z-index: 5;
+}
+
+#Veil{
+    z-index: 1;
+    width: 1000%;
+    height: 1000%;
+    position: fixed;
+}
+
+#AnimationGo{
+    color: #d70000;
+    font-weight: bolder;
+    font-style: italic;
 }
 
 /*Полоса прокрутки*/

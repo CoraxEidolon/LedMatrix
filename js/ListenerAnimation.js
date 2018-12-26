@@ -19,6 +19,8 @@ function onLoad() {
     document.getElementById('OpenAnimationFileDialog').addEventListener('change', OpenAnimationFileDialog, false);
     document.getElementById('OpenAnimationFileButton').addEventListener('click', OpenAnimationFile, false);
     document.getElementById("Matrix").addEventListener("contextmenu", CreateFrameOnMouse );
+    document.getElementById("StartShowingAnimation").addEventListener("click", StartShowingAnimation);
+    document.getElementById("StopShowingAnimation").addEventListener("click", StopShowingAnimation);
 
      /*Функция следит за нажатием клавиши Ctrl (№17), при
      этой зажатой клавише над полем создания анимации, можно "рисовать" символ*/
