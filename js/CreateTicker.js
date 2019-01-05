@@ -246,6 +246,7 @@ function GetTicker(binaryFont) {
 /**
  * Выводит код пригодный для загрузки в МК в соответствующее поле на экране
  * @param arResult - Массив содержащий шестнадцатеричный код бегущей строки
+ * @param Text - Текст бегущей строки
  * @constructor
  */
 function CodeOutput(arResult,Text) {

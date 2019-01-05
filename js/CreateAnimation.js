@@ -170,10 +170,17 @@ function CreateFrame() {
       var div = document.createElement('div');
       div.id = "SelectAnimationFrame";
       div.className = "frameSVG_" + rand + " animationFrame";
-      div.title = "Кадр: " + animationFrameCount;
+      div.title = "";
       div.dataset.animationframecode = result;
       div.dataset.animationmatricescode = JoinMatricesCode;
       insertAfter(div,current);
+
+      var Frame = document.getElementsByClassName("animationFrame");
+      /*После добавления кадра в произвольную область номера сбились. Возвращаем правильные номера*/
+      for (var i = 0; i < animationFrameCount; i++) {
+          Frame[i].setAttribute("title", "Кадр: " + (i + 1));
+      }
+
   }
     document.getElementById("FrameAmount").innerHTML=String(animationFrameCount);
 }
@@ -305,8 +312,16 @@ function CreateAnimation() {
         var Rows = Number(document.getElementById("MatrixLine").value);
         var Columns = Number(document.getElementById("MatrixColumns").value);
         var CodeArduino = document.getElementById("CodeFrameResult");//Поле вывода кода
+        var AnimationName = document.getElementById("AnimationName").value;
         CodeArduino.value = "";//Очищаем поле вывода кода
         CodeArduino.classList.remove("packageSVG");//Убираем "пустую коробку" с фона, т.к. поле больше не пустое
+
+        var d = new Date();
+        var timeCreation = d.getDate() + "." + Number(d.getMonth() + 1) + "." + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+        CodeArduino.value +="/* Дата создания: "+timeCreation+"*/\n";
+        CodeArduino.value +="/* Название: "+AnimationName+"*/\n";
+        CodeArduino.value +="/* Количество матриц по горизонтали :"+Columns+" */\n";
+        CodeArduino.value +="/* Количество матриц по вертикали :"+Rows+" */\n";
         CodeArduino.value += "int i;\nint j;\n";
         /*Подключение к микроконтроллеру.
          В этот раз все удобно, расположение матриц на экране, соответствует матрицам в жизни*/

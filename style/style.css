@@ -16,10 +16,12 @@ body {
 
 .matrix td {
     border: 1px solid black;
-    border-radius:3em;
+    border-radius:50%;
 }
 
-.ledON{background-color: #d70000;}
+/*.ledON{background-color: #a30700;}*/
+.ledON{background: #9e0000 radial-gradient(ellipse at 42% 42%, #ffffff 0%, #a32300 25%, #be0000 50%);}
+
 #EditCharInAlphabet{background-color: #74d700;}
 .displayNone{display: none;}
 
@@ -54,7 +56,7 @@ body {
 
 #CurrentSelectedFont{
     border-radius: 1em;
-    background-color: rgba(41, 90, 255, 0.64);
+    background-color: rgba(13, 13, 27, 0.64);
     color: #daff00;
 }
 
@@ -87,7 +89,6 @@ body {
 .tickerTextBox:focus{
     background-color: rgba(183, 0, 41, 0.42);
     color: white;
-
 }
 
 .fontSize {
@@ -110,6 +111,8 @@ body {
 
 .fontSelection TD{
     cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .buttonDiv {
