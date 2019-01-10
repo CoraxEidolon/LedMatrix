@@ -160,29 +160,28 @@ function CreateFrame() {
     var animationFrameCount = document.getElementsByClassName("animationFrame").length + 1;
 
     /*Добавляем полученный кадр*/
-  if( document.getElementsByClassName("animationFrame").length<=0) {
-      document.getElementById("AnimationFrame").innerHTML += "<div id='SelectAnimationFrame' class='frameSVG_" + rand + " animationFrame' title='Кадр: " + animationFrameCount + "' data-AnimationFrameCode='" + result + "' data-AnimationMatricesCode='" + JoinMatricesCode + "'></div>";
-  } else{
+    if (document.getElementsByClassName("animationFrame").length <= 0) {
+        document.getElementById("AnimationFrame").innerHTML += "<div id='SelectAnimationFrame' class='frameSVG_" + rand + " animationFrame' title='Кадр: " + animationFrameCount + "' data-AnimationFrameCode='" + result + "' data-AnimationMatricesCode='" + JoinMatricesCode + "'></div>";
+    } else {
 
-      var current =document.getElementById("SelectAnimationFrame");
-      document.getElementById("SelectAnimationFrame").removeAttribute("id");
+        var current = document.getElementById("SelectAnimationFrame");
+        var currentNumber = Number(current.getAttribute("title").replace("Кадр: ", ""));
+        document.getElementById("SelectAnimationFrame").removeAttribute("id");
 
-      var div = document.createElement('div');
-      div.id = "SelectAnimationFrame";
-      div.className = "frameSVG_" + rand + " animationFrame";
-      div.title = "";
-      div.dataset.animationframecode = result;
-      div.dataset.animationmatricescode = JoinMatricesCode;
-      insertAfter(div,current);
+        var div = document.createElement('div');
+        div.id = "SelectAnimationFrame";
+        div.className = "frameSVG_" + rand + " animationFrame";
+        div.title = "";
+        div.dataset.animationframecode = result;
+        div.dataset.animationmatricescode = JoinMatricesCode;
+        insertAfter(div, current);
 
-      var Frame = document.getElementsByClassName("animationFrame");
-      /*После добавления кадра в произвольную область номера сбились. Возвращаем правильные номера*/
-      for (var i = 0; i < animationFrameCount; i++) {
-          Frame[i].setAttribute("title", "Кадр: " + (i + 1));
-      }
-
-  }
-    document.getElementById("FrameAmount").innerHTML=String(animationFrameCount);
+        var allElements = document.getElementsByClassName("animationFrame");
+        for (var i = currentNumber - 1; i < allElements.length; i++) {
+            allElements[i].setAttribute("title", "Кадр: " + Number(i + 1));
+        }
+    }
+    document.getElementById("FrameAmount").innerHTML = String(animationFrameCount);
 }
 
 
@@ -284,15 +283,27 @@ function DeleteCurrentFrame() {
     } else {
         var ok = confirm("Удалить выбранный кадр?");
         if (ok) {
-
+            var currentElement = document.getElementById("SelectAnimationFrame");
+            var currentNumber = Number(currentElement.getAttribute("title").replace("Кадр: ", ""));
             document.getElementById("SelectAnimationFrame").remove();
+
             var animationFrameCount = document.getElementsByClassName("animationFrame").length;
-            var Frame = document.getElementsByClassName("animationFrame");
-            /*После удаления кадра номера сбились. Возвращаем правильные номера*/
-            for (var i = 0; i < animationFrameCount; i++) {
-                Frame[i].setAttribute("title", "Кадр: " + (i + 1));
+            var allElements = document.getElementsByClassName("animationFrame");
+            if (currentNumber - 2 >= 0) {
+                allElements[currentNumber - 2].setAttribute("id", "SelectAnimationFrame");
+                for (var i = currentNumber - 2; i < allElements.length; i++) {
+                    allElements[i].setAttribute("title", "Кадр: " + Number(i + 1));
+                }
+            } else {
+                /*Иначе кадр первый, значит он не имеет предыдущего*/
+                if (allElements.length > 0) {
+                    allElements[0].setAttribute("id", "SelectAnimationFrame");
+                    for (var i = 0; i < allElements.length; i++) {
+                        allElements[i].setAttribute("title", "Кадр: " + Number(i + 1));
+                    }
+                }
             }
-            document.getElementById("FrameAmount").innerHTML=String(animationFrameCount);
+            document.getElementById("FrameAmount").innerHTML = String(animationFrameCount);
         }
     }
 }
